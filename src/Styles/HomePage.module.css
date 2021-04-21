@@ -1,29 +1,88 @@
 .mainSection {
     min-height: 100%;
-    min-width: 100%;
-    display: flex;
+    min-width: 1920px;
+    max-width: 1440px;
+    display:flex;
     flex-direction: row;
-    background-color: aquas;
 }
 
 .listSection {
     flex: 1.4;
-    background-color: #8B868A;
     flex-direction: column;
     display: flex;
     align-items: center;
+    margin-top: 10px;
+}
+
+.listContainer {
+    height: 880px;
+    width: 400px;
+    background-color: #E6E6E6;
+    flex-direction: column;
+    overflow-y: scroll;
+    border-radius: 10px;
+}
+
+.listItemWrapper 
+{
+    width: 364px;
+    height: 114px;
+    padding-left: 10px;
+    padding-top:10px;
+}
+
+.listItem {
+    width: 360px;
+    height: 110px;
+    background-color: #A30F32;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     justify-content: center;
+    box-shadow: 4px 4px #838383;
+    color: white;
+}
+
+.listItem:hover {
+    background-color: #820d28;
+    box-shadow: 0px 0px;
+    margin-top: 4px;
+    margin-left: 4px;
 }
 
 .mapSection {
     flex: 5;
-    background-color: #414141;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
+.mapContainer 
+{
+    height: 850px;
+    width: 1450px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 10px 10px 5px rgb(85, 85, 85);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
 .mapImage {
-    height: 100%;
-    width: 100%;
+    height: 800px;
+    width: 1370px;
+}
+
+.hallHighlight {
+    position: absolute;
+    height: 100px;
+    width: 100px;
+    background-color: rgba(255, 0, 0, 0.501);
+    
+    left: 560px;
+    top: 520px;
 }

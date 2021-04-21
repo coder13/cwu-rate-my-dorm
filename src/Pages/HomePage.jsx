@@ -14,11 +14,58 @@ class HomePage extends Component {
                     <div className = {styles.mainSection}>
 
                         <div className = {styles.listSection}>
-                            <h1>List Section</h1>
+                            <div className = {styles.listContainer}>
+                               
+                                <div className = {styles.listItemWrapper}> 
+                                    <div className = {styles.listItem}>
+                                        Kamola Hall
+                                    </div>
+                                </div>
+                                <div className = {styles.listItemWrapper}> 
+                                    <div className = {styles.listItem}>
+                                        Hall 2
+                                    </div>
+                                </div>
+                                <div className = {styles.listItemWrapper}> 
+                                    <div className = {styles.listItem}>
+                                        Hall 3
+                                    </div>
+                                </div>
+                                <div className = {styles.listItemWrapper}> 
+                                    <div className = {styles.listItem}>
+                                        Hall 4
+                                    </div>
+                                </div>
+                                <div className = {styles.listItemWrapper}> 
+                                    <div className = {styles.listItem}>
+                                        Hall 5
+                                    </div>
+                                </div>
+                                <div className = {styles.listItemWrapper}> 
+                                    <div className = {styles.listItem}>
+                                        Hall 6
+                                    </div>
+                                </div>
+                                <div className = {styles.listItemWrapper}> 
+                                    <div className = {styles.listItem}>
+                                        Hall 7
+                                    </div>
+                                </div>
+                                <div className = {styles.listItemWrapper}> 
+                                    <div className = {styles.listItem}>
+                                        Hall 8
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
 
                         <div className = {styles.mapSection}>
-                            <img className = {styles.mapImage} src = {CWUMap} alt = ''/>
+
+                            <div className= {styles.mapContainer}>
+                                <img src = {CWUMap} className = {styles.mapImage} alt = ''/>
+                            </div>
+
                         </div>
 
 
