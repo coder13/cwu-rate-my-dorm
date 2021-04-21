@@ -1,0 +1,44 @@
+@keyframes loading {
+
+    0% {
+        background: crimson;
+        transform: rotate(0deg);
+    }
+    25% {
+        background: black; 
+        transform: rotate(360deg);
+    }
+    50% {
+        background: #8B0025;
+        transform: rotate(720deg);
+    }
+    75% {
+        background: #BFBFBF;
+        transform: rotate(1080deg);
+    }
+    100% {
+        transform: rotate(1440deg);
+        background: crimson; 
+    }
+
+}
+
+.loader {
+    height: 50px;
+    width: 50px;
+    position: relative;
+    border-radius: 15px;
+    background-color: red;
+    animation-name: loading;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    min-width: 100vh; /*100% of veiwport*/
+}
