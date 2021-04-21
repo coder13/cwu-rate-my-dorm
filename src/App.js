@@ -1,3 +1,5 @@
+import UserProvider, { useUser } from './providers/UserProvider';
+import { auth } from './firebase';
 import './App.css';
 import HomePage from'./Pages/HomePage'
 import React from 'react';
