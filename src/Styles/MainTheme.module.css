@@ -16,8 +16,7 @@
 }
 
 .mainDivSection {
-    background-color: grey;
-    display: flex;
+    background-color: #8B868A;
 
     /* To adjust for the top bar component. */
     margin-top: 70px;
