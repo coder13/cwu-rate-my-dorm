@@ -28,143 +28,152 @@ class HomePage extends Component {
         <TopBarComponent />
         <div className='mainDivSection'>
 
+          <div className='sideSection'>
+            <h1>Side Section 1</h1>
+          </div>
+
           <div className='mainSection'>
+            
+            <div className='listAndMapSection'>
+              
+              <div className='listSection'>
+                
+                <div className='listContainer'>
+                  
+                  {/* HARD CODED TO SHOW AS EXAMPLE! */}
 
-            <div className='listSection'>
-              <div className='listContainer'>
-
-                <div className='listItemWrapper'>
-                  <div className='listItem'>
-                    Barto Hall
-                                </div>
-                </div>
-                <div className='listItemWrapper'>
-                  <div className='listItem'>
-                    Beck Hall
-                                    </div>
-                </div>
-                <div className='listItemWrapper'>
-                  <div className='listItem'>
-                    Meisner Hall
-                                    </div>
-                </div>
-                <div className='listItemWrapper'>
-                  <div className='listItem'>
-                    Davies Hall
-                                    </div>
-                </div>
-                <div className='listItemWrapper'>
-                  <div className='listItem'>
-                    Sparks Hall
-                                    </div>
-                </div>
-                <div className='listItemWrapper'>
-                  <div className='listItem'>
-                    Hitchcock Hall
+                  <div className='listItemWrapper'>
+                    <div className='listItem'>
+                      Barto Hall
+                    </div>
                   </div>
-                </div>
-                <div className='listItemWrapper'>
-                  <div className='listItem'>
-                    Quigley Hall
+                  <div className='listItemWrapper'>
+                    <div className='listItem'>
+                      Beck Hall
+                    </div>
                   </div>
-                </div>
-                <div className='listItemWrapper'>
-                  <div className='listItem'>
-                    Wilson Hall
+                  <div className='listItemWrapper'>
+                    <div className='listItem'>
+                      Meisner Hall
+                    </div>
                   </div>
-                </div>
-                <div className='listItemWrapper'>
-                  <div className='listItem'>
-                    Alford-Monthomery Hall
+                  <div className='listItemWrapper'>
+                    <div className='listItem'>
+                      Davies Hall
+                    </div>
                   </div>
-                </div>
-                <div className='listItemWrapper'>
-                  <div className='listItem'>
-                    Kennedy Hall
+                  <div className='listItemWrapper'>
+                    <div className='listItem'>
+                      Sparks Hall
+                    </div>
                   </div>
-                </div>
-                <div className='listItemWrapper'>
-                  <div className='listItem'>
-                    Green Hall
+                  <div className='listItemWrapper'>
+                    <div className='listItem'>
+                      Hitchcock Hall
+                    </div>
                   </div>
-                </div>
-                <div className='listItemWrapper'>
-                  <div className='listItem'>
-                    Carmody-Munro Hall
+                  <div className='listItemWrapper'>
+                    <div className='listItem'>
+                      Quigley Hall
+                    </div>
                   </div>
-                </div>
-                <div className='listItemWrapper'>
-                  <div className='listItem'>
-                    Wendell Hill Hall
+                  <div className='listItemWrapper'>
+                    <div className='listItem'>
+                      Wilson Hall
+                    </div>
                   </div>
-                </div>
-                <div className='listItemWrapper'>
-                  <div className='listItem'>
-                    North Hall
+                  <div className='listItemWrapper'>
+                    <div className='listItem'>
+                      Alford-Monthomery Hall
+                    </div>
                   </div>
-                </div>
-                <div className='listItemWrapper'>
-                  <div className='listItem'>
-                    Stephens-Whitney Hall
+                  <div className='listItemWrapper'>
+                    <div className='listItem'>
+                      Kennedy Hall
+                    </div>
                   </div>
-                </div>
-                <div className='listItemWrapper'>
-                  <div className='listItem'>
-                    Sue Lombard Hall
+                  <div className='listItemWrapper'>
+                    <div className='listItem'>
+                      Green Hall
+                    </div>
                   </div>
-                </div>
-                <div className='listItemWrapper'>
-                  <div className='listItem'>
-                    Kamola Hall
+                  <div className='listItemWrapper'>
+                    <div className='listItem'>
+                      Carmody-Munro Hall
+                    </div>
                   </div>
-                </div>
-                <div className='listItemWrapper'>
-                  <div className='listItem'>
-                    Moore Hall
+                  <div className='listItemWrapper'>
+                    <div className='listItem'>
+                      Wendell Hill Hall
+                    </div>
                   </div>
-                </div>
-                <div className='listItemWrapper'>
-                  <div className='listItem'>
-                    Dougmore Hall
+                  <div className='listItemWrapper'>
+                    <div className='listItem'>
+                      North Hall
+                    </div>
                   </div>
-                </div>
-                <div className='listItemWrapper'>
-                  <div className='listItem'>
-                    Brooklane Village
+                  <div className='listItemWrapper'>
+                    <div className='listItem'>
+                      Stephens-Whitney Hall
+                    </div>
                   </div>
-                </div>
-                <div className='listItemWrapper'>
-                  <div className='listItem'>
-                    Getz-Short Apartments
+                  <div className='listItemWrapper'>
+                    <div className='listItem'>
+                      Sue Lombard Hall
+                    </div>
                   </div>
-                </div>
-                <div className='listItemWrapper'>
-                  <div className='listItem'>
-                    Wahle Apartments
+                  <div className='listItemWrapper'>
+                    <div className='listItem'>
+                      Kamola Hall
+                    </div>
                   </div>
-                </div>
-                <div className='listItemWrapper'>
-                  <div className='listItem'>
-                    Anderson Apartments
+                  <div className='listItemWrapper'>
+                    <div className='listItem'>
+                      Moore Hall
+                    </div>
                   </div>
-                </div>
-                <div className='listItemWrapper' style={{ "margin-bottom": "10px" }}>
-                  <div className='listItem'>
-                    Student Village
+                  <div className='listItemWrapper'>
+                    <div className='listItem'>
+                      Dougmore Hall
+                    </div>
                   </div>
+                  <div className='listItemWrapper'>
+                    <div className='listItem'>
+                      Brooklane Village
+                    </div>
+                  </div>
+                  <div className='listItemWrapper'>
+                    <div className='listItem'>
+                      Wahle Apartments
+                    </div>
+                  </div>
+                  <div className='listItemWrapper'>
+                    <div className='listItem'>
+                      Anderson Apartments
+                    </div>
+                  </div>
+                  <div className='listItemWrapper' style={{ "margin-bottom": "10px" }}>
+                    <div className='listItem'>
+                      Student Village
+                    </div>
+                  </div>
+          
                 </div>
 
               </div>
-            </div>
 
-            <div className='mapSection'>
-
-              <div className='mapContainer'>
-                <img src={CWUMap} className='mapImage' alt='' />
+              <div className='mapSection'>
+                <div className='mapContainer'>
+                  <img src={CWUMap} className='mapImage' alt =''/>
+                </div>
               </div>
 
             </div>
 
+          </div>
+
+          <div className='sideSection'>
+            <h1>Side Section 2</h1>
           </div>
 
         </div>

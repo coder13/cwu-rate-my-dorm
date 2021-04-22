@@ -31,14 +31,25 @@ class ExampleHallPage extends Component {
             <div className='infoAndReviewSection'>
               
               <div className='informationSection'>
-                Info Section
+                <div className='amenities'>
+                  <h1>Amenities</h1>
+                </div>
+                <div className='imageGallery'>
+                  <h1>Image Gallery</h1>
+                </div>
+
               </div>
 
-              <div className='reviewSection'>
-                Review Section
+              <div className='topReviewSection'>
+                <h1>Top Review Section</h1>
               </div>
 
             </div>
+
+            <div className='reviewsSection'>
+              <h1>Reviews Section</h1>
+            </div>
+
           </div>
 
           <div className='sideSection'>
