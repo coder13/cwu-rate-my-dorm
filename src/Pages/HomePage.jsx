@@ -28,9 +28,7 @@ class HomePage extends Component {
         <TopBarComponent />
         <div className='mainDivSection'>
 
-          <div className='sideSection'>
-            <h1>Side Section 1</h1>
-          </div>
+          <div className='sideSection'></div>
 
           <div className='mainSection'>
             
@@ -38,7 +36,7 @@ class HomePage extends Component {
               
               <div className='listSection'>
                 
-                <div className='listContainer'>
+                <div id='listContainerScroll' className='listContainer'>
                   
                   {/* HARD CODED TO SHOW AS EXAMPLE! */}
 
@@ -172,9 +170,7 @@ class HomePage extends Component {
 
           </div>
 
-          <div className='sideSection'>
-            <h1>Side Section 2</h1>
-          </div>
+          <div className='sideSection'></div>
 
         </div>
 
