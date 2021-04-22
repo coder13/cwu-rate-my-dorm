@@ -1,4 +1,5 @@
 import './App.css';
+import ExPage from'./Pages/ExampleHallPage'
 import HomePage from'./Pages/HomePage'
 import React from 'react';
 
@@ -14,7 +15,7 @@ class App extends React.Component {
   render() {
     
     return (
-      <HomePage />
+      <ExPage />
     )
   }
 
