@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 import UserProvider from './providers/UserProvider';
 import HomePage from'./Pages/HomePage'
+import ExPage from'./Pages/ExampleHallPage'
 // import LoginPage from'./Pages/Login'
 import './App.css';
 
@@ -25,6 +26,9 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/">
               <HomePage />
+            </Route>
+            <Route exact path="/ex">
+              <ExPage />
             </Route>
             <Route path="*">
               <p>404: Page not Found</p>
