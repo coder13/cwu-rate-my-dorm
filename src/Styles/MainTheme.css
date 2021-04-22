@@ -1,33 +1,50 @@
-.buttonTheme {
-    border-radius: 10px;
-    height: 40px;
-    width: auto;
-
-    padding-left: 15px;
-    padding-right: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background-color:  black;
-    color: white;
-    cursor: pointer;
-    box-shadow: 4px 4px rgb(149, 14, 41);
+.mainDivSection {
+  /* To adjust for the top bar component. */
+  margin-top: 70px;
+  min-height: calc(100vh - 70px);
+  min-width: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: #E6E6E6;
+}
+  
+.mainSection {
+  flex: 1;
+  min-height: 100%;
+  max-width: 1250px;
+  min-width: 1250px;
+  display: flex;
+  flex-direction: column;
+}
+  
+.sideSection {
+  flex: 1;
+  display: flex;
+  justify-content: center;
 }
 
-.mainDivSection {
-    background-color: #8B868A;
+.buttonTheme {
+  border-radius: 10px;
+  height: 40px;
+  width: auto;
 
-    /* To adjust for the top bar component. */
-    margin-top: 70px;
-    min-height: calc(100vh - 70px);
-    min-width: 100vh;
+  padding-left: 15px;
+  padding-right: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color:  black;
+  color: white;
+  cursor: pointer;
+  box-shadow: 4px 4px rgb(149, 14, 41);
 }
 
 .primaryRed {
-    background-color: #CC1540;
+  background-color: #CC1540;
 }
 
 .primaryGray {
-    background-color: #414141;
+  background-color: #414141;
 }

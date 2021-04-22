@@ -1,100 +1,118 @@
 .mainDivSection {
-    background-color: #8B868A;
-
-    /* To adjust for the top bar component. */
-    margin-top: 70px;
-    min-height: calc(100vh - 70px);
-    min-width: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  /* To adjust for the top bar component. */
+  margin-top: 70px;
+  min-height: calc(100vh - 70px);
+  min-width: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: #E6E6E6;
 }
 
 .mainSection {
-    min-height: 100%;
-    width: 1920px;
-    display:flex;
-    flex-direction: row;
+  flex: 1;
+  min-height: 100%;
+  max-width: 1250px;
+  min-width: 1250px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sideSection {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.listAndMapSection{
+  flex: 1;
+  min-height: 880px;
+  max-height: 880px;
+  display: flex;
+  flex-direction: row;
 }
 
 .listSection {
-    flex: 1.4;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
+  flex: 1.8;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
 }
 
 .listContainer {
-    height: 880px;
-    width: 400px;
-    background-color: #E6E6E6;
-    flex-direction: column;
-    overflow-y: scroll;
-    border-radius: 10px;
+  height: 880px;
+  width: 370px;
+  background-color: white;
+  flex-direction: column;
+  overflow-y: scroll;
+  border: 1px solid grey;
+  border-radius: 5px;
 }
 
 .listItemWrapper 
 {
-    width: 364px;
-    height: 114px;
-    padding-left: 10px;
-    padding-top:10px;
+  width: 330px;
+  height: 114px;
+  padding-left: 10px;
+  padding-top:10px;
 }
 
 .listItem {
-    width: 360px;
-    height: 110px;
-    background-color: #A30F32;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 4px 4px #838383;
-    color: white;
-    cursor: pointer;
+  width: 330px;
+  height: 110px;
+  background-color: #A30F32;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 4px 4px #838383;
+  color: white;
+  cursor: pointer;
 }
 
 .listItem:hover {
-    background-color: #820d28;
-    box-shadow: 0px 0px;
-    margin-top: 4px;
-    margin-left: 4px;
+  background-color: #820d28;
+  box-shadow: 0px 0px;
+  margin-top: 4px;
+  margin-left: 4px;
 }
 
 .mapSection {
-    flex: 5;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  flex: 5;
+  display: flex;
+  margin-top: 10px;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
 }
 
 .mapContainer 
 {
-    height: 850px;
-    width: 1450px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 10px 10px 5px rgb(85, 85, 85);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
+  height: 100%;
+  width: 100%;
+  border-radius: 5px;
+  display: flex;
+  background-color: white;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border: 1px solid grey;
 }
 
 .mapImage {
-    height: 800px;
-    width: 1370px;
+  height: 670px;
+  width: 820px;
+  margin-right: 10px;
 }
 
 .hallHighlight {
-    position: absolute;
-    height: 100px;
-    width: 100px;
-    background-color: rgba(255, 0, 0, 0.501);
-    
-    left: 560px;
-    top: 520px;
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  background-color: rgba(255, 0, 0, 0.501);
+  left: 560px;
+  top: 520px;
 }
