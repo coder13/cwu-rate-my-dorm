@@ -18,21 +18,43 @@ const provider = new firebase.auth.GoogleAuthProvider();
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
+
 export const signInWithGoogle = () => {
-  auth.signInWithPopup(provider);
+  auth
+    .signInWithPopup(provider)
+    .then((result) => {
+      /** @type {firebase.auth.OAuthCredential} */
+      let credential = result.credential;
+
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      let token = credential.accessToken;
+      // The signed-in user info.
+      let user = result.user;
+      // ...
+      console.log(33, credential, token, user);
+    }).catch((error) => {
+      // Handle Errors here.
+      let errorCode = error.code;
+      let errorMessage = error.message;
+      // The email of the user's account used.
+      let email = error.email;
+      // The firebase.auth.AuthCredential type that was used.
+      let credential = error.credential;
+      // ...
+      console.log(43, errorCode, errorMessage, email, credential);
+    });
 };
 
-function generateUserDocument (user, additionalData) {
-  if (!user) return;
-  export const userRef = firestore.doc(`users/${user.uid}`);
-  export const snapshot = await userRef.get();
-
-}
-
+/* Stores user information in firebase */
 export const generateUserDocument = async (user, additionalData) => {
-  if (!user) return;
-  export const userRef = firestore.doc(`users/${user.uid}`);
-  export const snapshot = await userRef.get();
+  if (!user) {
+    console.error('No user provided to save');
+    return;
+  };
+
+  const userRef = firestore.doc(`users/${user.uid}`);
+  const snapshot = await userRef.get();
+
   if (!snapshot.exists) {
     const { email, displayName, photoURL } = user;
     try {
@@ -43,11 +65,13 @@ export const generateUserDocument = async (user, additionalData) => {
         ...additionalData
       });
     } catch (error) {
-      console.error("Error creating user document", error);
+      console.error('Error creating user document', error);
     }
   }
+
   return getUserDocument(user.uid);
 };
+
 const getUserDocument = async uid => {
   if (!uid) return null;
   try {
