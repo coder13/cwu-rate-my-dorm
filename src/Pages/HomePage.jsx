@@ -1,3 +1,8 @@
+/* Dev: Eli McCoy
+ * Date: 4/22/21
+ * Desc: Home page component.
+ */
+
 import React, { Component } from "react";
 import CWUMap from '../Assets/CWU_Campus_Map.jpg'
 import '../Styles/HomePage.css';
@@ -5,27 +10,89 @@ import TopBarComponent from '../Components/TopBarComponent'
 
 class HomePage extends Component {
 
-  alerting() {
-    var x = this.textContent;
-    alert(x);
-  }
+  constructor() {
+    super();
 
-  //Where your normal JS script goes. This function runs after all the HTML
-  //Has mounted.
-  componentDidMount() {
+    //Initilize class vars. (Could be loaded by database)
+    this.hallNames = ["Barto Hall", "Beck Hall", "Meisner Hall", "Davies Hall",
+    "Sparks Hall", "Hitchcock Hall", "Quigley Hall", "Wilson Hall",
+    "Alford-Monthomery Hall", "Kennedy Hall", "Green Hall", "Carmody-Munro Hall",
+    "Wendell Hill Hall", "North Hall", "Stephens-Whitney Hall", "Sue Lombard Hall",
+    "Kamola Hall", "Moore Hall", "Dougmore Hall", "Brooklane Village",
+    "Wahle Apartments", "Anderson Apartments", "Student Village"];
 
-    var hallButtons = document.getElementsByClassName('listItem');
-
-    for (var i = 0; i < hallButtons.length; i++) {
-      hallButtons[i].addEventListener('click', this.alerting);
+    //Set Up State:
+    this.state = {
+      isSignedIn: "False"
     }
 
   }
 
+  //===navigateToPage===
+  //Desc: Handles navigation to next page.
+  navigateToPage() {
+    alert(this.textContent);
+
+    //Navigate with props including name.
+  }
+
+  //===loadButtons===
+  //Desc: Load / creates buttons.
+  loadButtons() {
+
+    //Get list section:
+    var listContainer = document.getElementById('listContainerScroll');
+
+    //Iterate over halls and creat buttons:
+    for(var i = 0; i < this.hallNames.length; i++ ) {
+
+      //Create the wrapper:
+      var newListWrapper = document.createElement("div");
+      newListWrapper.className = "listItemWrapper";
+
+      var newListItem = document.createElement("div");
+      newListItem.className = "listItem";
+
+      var text = document.createElement("h1");
+      text.textContent = this.hallNames[i];
+      newListItem.appendChild(text);
+
+      newListWrapper.appendChild(newListItem);
+
+      //Add all elements:
+      //newListWrapper.appendChild(newListItem);
+      listContainer.appendChild(newListWrapper);
+
+    }
+
+    //Add even listeners:
+    var hallButtons = document.getElementsByClassName('listItem');
+
+    for (var i = 0; i < hallButtons.length; i++) 
+    {
+      hallButtons[i].addEventListener('click', this.navigateToPage);
+    }
+
+  }
+
+  //===componentDidMount===
+  //Desc: JS for once the render method is mounted.
+  componentDidMount() {
+
+    //Load the different hall buttons:
+    this.loadButtons();
+
+  }
+
+  //===render===
+  //Desc: Renders the html.
   render() {
     return (
+
       <div>
+
         <TopBarComponent />
+
         <div className='mainDivSection'>
 
           <div className='sideSection'></div>
@@ -38,132 +105,18 @@ class HomePage extends Component {
                 
                 <div id='listContainerScroll' className='listContainer'>
                   
-                  {/* HARD CODED TO SHOW AS EXAMPLE! */}
-
-                  <div className='listItemWrapper'>
-                    <div className='listItem'>
-                      Barto Hall
-                    </div>
-                  </div>
-                  <div className='listItemWrapper'>
-                    <div className='listItem'>
-                      Beck Hall
-                    </div>
-                  </div>
-                  <div className='listItemWrapper'>
-                    <div className='listItem'>
-                      Meisner Hall
-                    </div>
-                  </div>
-                  <div className='listItemWrapper'>
-                    <div className='listItem'>
-                      Davies Hall
-                    </div>
-                  </div>
-                  <div className='listItemWrapper'>
-                    <div className='listItem'>
-                      Sparks Hall
-                    </div>
-                  </div>
-                  <div className='listItemWrapper'>
-                    <div className='listItem'>
-                      Hitchcock Hall
-                    </div>
-                  </div>
-                  <div className='listItemWrapper'>
-                    <div className='listItem'>
-                      Quigley Hall
-                    </div>
-                  </div>
-                  <div className='listItemWrapper'>
-                    <div className='listItem'>
-                      Wilson Hall
-                    </div>
-                  </div>
-                  <div className='listItemWrapper'>
-                    <div className='listItem'>
-                      Alford-Monthomery Hall
-                    </div>
-                  </div>
-                  <div className='listItemWrapper'>
-                    <div className='listItem'>
-                      Kennedy Hall
-                    </div>
-                  </div>
-                  <div className='listItemWrapper'>
-                    <div className='listItem'>
-                      Green Hall
-                    </div>
-                  </div>
-                  <div className='listItemWrapper'>
-                    <div className='listItem'>
-                      Carmody-Munro Hall
-                    </div>
-                  </div>
-                  <div className='listItemWrapper'>
-                    <div className='listItem'>
-                      Wendell Hill Hall
-                    </div>
-                  </div>
-                  <div className='listItemWrapper'>
-                    <div className='listItem'>
-                      North Hall
-                    </div>
-                  </div>
-                  <div className='listItemWrapper'>
-                    <div className='listItem'>
-                      Stephens-Whitney Hall
-                    </div>
-                  </div>
-                  <div className='listItemWrapper'>
-                    <div className='listItem'>
-                      Sue Lombard Hall
-                    </div>
-                  </div>
-                  <div className='listItemWrapper'>
-                    <div className='listItem'>
-                      Kamola Hall
-                    </div>
-                  </div>
-                  <div className='listItemWrapper'>
-                    <div className='listItem'>
-                      Moore Hall
-                    </div>
-                  </div>
-                  <div className='listItemWrapper'>
-                    <div className='listItem'>
-                      Dougmore Hall
-                    </div>
-                  </div>
-                  <div className='listItemWrapper'>
-                    <div className='listItem'>
-                      Brooklane Village
-                    </div>
-                  </div>
-                  <div className='listItemWrapper'>
-                    <div className='listItem'>
-                      Wahle Apartments
-                    </div>
-                  </div>
-                  <div className='listItemWrapper'>
-                    <div className='listItem'>
-                      Anderson Apartments
-                    </div>
-                  </div>
-                  <div className='listItemWrapper' style={{ "margin-bottom": "10px" }}>
-                    <div className='listItem'>
-                      Student Village
-                    </div>
-                  </div>
-          
                 </div>
 
               </div>
 
               <div className='mapSection'>
+
                 <div className='mapContainer'>
+
                   <img src={CWUMap} className='mapImage' alt =''/>
+
                 </div>
+
               </div>
 
             </div>
