@@ -4,6 +4,12 @@
  */
 
 import React, { Component } from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 import CWUMap from '../Assets/CWU_Campus_Map.jpg'
 import '../Styles/HomePage.css';
 import TopBarComponent from '../Components/TopBarComponent'
@@ -50,6 +56,12 @@ class HomePage extends Component {
       var newListWrapper = document.createElement("div");
       newListWrapper.className = "listItemWrapper";
 
+      //Account for last bottom margin:
+      if(i === this.hallNames.length - 1)
+      {
+        newListWrapper.style.marginBottom = "10px";
+      }
+
       var newListItem = document.createElement("div");
       newListItem.className = "listItem";
 
@@ -68,9 +80,9 @@ class HomePage extends Component {
     //Add even listeners:
     var hallButtons = document.getElementsByClassName('listItem');
 
-    for (var i = 0; i < hallButtons.length; i++) 
+    for (var j = 0; j < hallButtons.length; j++) 
     {
-      hallButtons[i].addEventListener('click', this.navigateToPage);
+      hallButtons[j].addEventListener('click', this.navigateToPage);
     }
 
   }
@@ -113,6 +125,7 @@ class HomePage extends Component {
 
                 <div className='mapContainer'>
 
+                  {/*Could be loaded from database*/}
                   <img src={CWUMap} className='mapImage' alt =''/>
 
                 </div>
