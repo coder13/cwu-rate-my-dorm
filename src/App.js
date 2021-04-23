@@ -1,8 +1,8 @@
-import UserProvider, { useUser } from './providers/UserProvider';
-import { auth } from './firebase';
-import './App.css';
-import HomePage from'./Pages/HomePage'
 import React from 'react';
+import UserProvider from './providers/UserProvider';
+import HomePage from'./Pages/HomePage'
+// import LoginPage from'./Pages/Login'
+import './App.css';
 
 class App extends React.Component {
   
@@ -14,11 +14,10 @@ class App extends React.Component {
   }
 
   render() {
-
     return (
       <UserProvider>
         <HomePage />
-    </UserProvider>
+      </UserProvider>
     )
   }
 }

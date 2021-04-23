@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import '../Styles/TopBarComponent.css';
 import CWULogo from '../Assets/CWU_Logo.png'
-import UserContext from '../providers/UserProvider';
+import { UserContext } from '../providers/UserProvider';
+import { signInWithGoogle } from '../firebase';
 
 class TopBarComponent extends Component {
-    
+    static contextType = UserContext;
+
     render() {
-        let { user } = this.context;
+        console.log(this.context);
         return (
             <div className="topbar">
 
@@ -26,11 +28,13 @@ class TopBarComponent extends Component {
                 </div>
             
                 <div className="signInSection">
-
-                    { user
-                        ? <div>{`logged in as ${user}`}</div>
-                        : <div className="LogInSignUpButtons">Login with Google</div>
-                    }
+                    <UserContext.Consumer>
+                        {(user) => (
+                            user
+                            ? <div>{`logged in as ${user.displayName}`}</div>
+                            : <div className="LogInSignUpButtons" onClick={signInWithGoogle}>Login with Google</div>
+                        )}
+                    </UserContext.Consumer>
                     <div className="LogInSignUpButtons">Sign-up</div>
                     <div className="LeaveAReviwButton">Leave a Review</div>
                 </div>
@@ -39,7 +43,5 @@ class TopBarComponent extends Component {
         )
     }
 }
-
-TopBarComponent.contextType = UserContext;
 
 export default TopBarComponent;
