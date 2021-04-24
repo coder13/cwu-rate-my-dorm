@@ -4,6 +4,7 @@
  */
 
 import React, { Component } from "react";
+//import {auth, firestore} from '../firebase';
 import { withRouter } from "react-router-dom";
 import CWUMap from '../Assets/CWU_Campus_Map.jpg'
 import '../Styles/HomePage.css';
@@ -13,6 +14,9 @@ class HomePage extends Component {
 
   constructor(props) {
     super(props);
+
+    //Set up firebase:
+    //firestore.settings({ timestampsInSnapshots: true });
 
     //Set up state:
     this.state = {
@@ -24,69 +28,55 @@ class HomePage extends Component {
     "Sparks Hall", "Hitchcock Hall", "Quigley Hall", "Wilson Hall",
     "Alford-Monthomery Hall", "Kennedy Hall", "Green Hall", "Carmody-Munro Hall",
     "Wendell Hill Hall", "North Hall", "Stephens-Whitney Hall", "Sue Lombard Hall",
-    "Kamola Hall", "Moore Hall", "Dougmore Hall", "Brooklane Village",
+    "Kamola Hall", "Moore Hall", "Dogmore Hall", "Brooklane Village",
     "Wahle Apartments", "Anderson Apartments", "Student Village"];
 
     //Bind function to class instance.
     this.navigateToPage = this.navigateToPage.bind(this);
+    this.buttonList = this.buttonList.bind(this);
   }
+
+  // //===getDormList===
+  // //Desc: Returns a list of dorm names.
+  // async getDormList() {
+  //   return await firestore.collection('Dorms').get().then((snapshot) => {
+  //       snapshot.docs.forEach(doc => {
+  //           // name, description, rating, amenities[], images[]
+  //           console.log(doc.get('name'))
+  //       })
+  //   });
+  // }
 
   //===navigateToPage===
   //Desc: Handles navigation to next page.
-  navigateToPage() {
-    this.props.history.push({pathname: "/ExampleHallPage", state:{ hallName: "Testing!"}});
+  navigateToPage(toPass) {
+    this.props.history.push({pathname: "/ExampleHallPage", state:{hallName: toPass}});
   }
 
-  //===loadButtons===
-  //Desc: Load / creates buttons.
-  loadButtons() {
+  //===buttonList===
+  //Desc: Component for displaying button list.
+  buttonList(props) {
+    
+    //Store listButtons:
+    const hallNames = props.hallNames;
+    const listButtonItems = hallNames.map((hallName) =>
+      <div className='listItemWrapper'>
+        <div className='listItem' key={hallName.toString()} onClick={() =>{this.navigateToPage(hallName.toString())}}>
+          <h1>{hallName}</h1>
+        </div>
+      </div>
+    );
 
-    //Get list section:
-    var listContainer = document.getElementById('listContainerScroll');
-
-    //Iterate over halls and creat buttons:
-    for(var i = 0; i < this.hallNames.length; i++ ) {
-      
-      //Create the wrapper:
-      var newListWrapper = document.createElement("div");
-      newListWrapper.className = "listItemWrapper";
-
-      //Account for last bottom margin:
-      if(i === this.hallNames.length - 1)
-      {
-        newListWrapper.style.marginBottom = "10px";
-      }
-
-      //Create new list item:
-      var newListItem = document.createElement("div");
-      newListItem.className = "listItem";
-
-      //Create text:
-      var text = document.createElement("h1");
-      text.textContent = this.hallNames[i];
-
-      //Add all elements:
-      newListItem.appendChild(text);
-      newListWrapper.appendChild(newListItem);
-      listContainer.appendChild(newListWrapper);
-    }
-
-    //Add even listeners:
-    var hallButtons = document.getElementsByClassName('listItem');
-
-    for (var j = 0; j < hallButtons.length; j++) 
-    {
-      hallButtons[j].addEventListener('click', this.navigateToPage);
-    }
-
+    return(
+      <div className='listSection'>
+        <div id='listContainerScroll' className='listContainer'>{listButtonItems}</div>
+      </div>
+    );
   }
 
   //===componentDidMount===
   //Desc: JS for once the render method is mounted.
   componentDidMount() {
-
-    //Load the different hall buttons:
-    this.loadButtons();
 
   }
 
@@ -106,12 +96,8 @@ class HomePage extends Component {
           <div className='mainSection'>
             
             <div className='listAndMapSection'>
-              
-              <div className='listSection'>
-                
-                <div id='listContainerScroll' className='listContainer'></div>
 
-              </div>
+              <this.buttonList hallNames = {this.hallNames}/>
 
               <div className='mapSection'>
 
