@@ -4,10 +4,10 @@ import TopBarComponent from '../Components/TopBarComponent'
 
 class ExampleHallPage extends Component {
 
-  constructor()
+  constructor(props)
   {
-    super();
-    //Set up state and passed props.
+    super(props);
+    this.state = this.props.location.state;
   }
 
   componentDidMount()
@@ -34,6 +34,8 @@ class ExampleHallPage extends Component {
 
           <div className='middleSection'>
 
+            {/*Need to add top bar for hall name.*/}  
+      
             <div className='infoAndReviewSection'>
               
               <div className='informationSection'>

@@ -1,5 +1,9 @@
 import './App.css';
-import ExPage from'./Pages/ExampleHallPage'
+import {
+  BrowserRouter as Router,
+  Route
+} from "react-router-dom";
+import ExampleHallPage from'./Pages/ExampleHallPage'
 import HomePage from'./Pages/HomePage'
 import React from 'react';
 
@@ -15,7 +19,14 @@ class App extends React.Component {
   render() {
     
     return (
-      <HomePage />
+
+      <Router>
+
+        <Route exact path="/" component={() => {return(<HomePage name = "name"/>)}} />
+        <Route path="/ExampleHallPage" component={ExampleHallPage} />
+        
+      </Router>
+
     )
   }
 
