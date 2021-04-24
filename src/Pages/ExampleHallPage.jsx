@@ -8,6 +8,9 @@ class ExampleHallPage extends Component {
   {
     super(props);
     this.state = this.props.location.state;
+
+    //Get hall name:
+    this.hallName = this.props.location.state.hallName;
   }
 
   componentDidMount()
@@ -42,7 +45,7 @@ class ExampleHallPage extends Component {
 
                 <div className='amenities'>
 
-                  <h1>Amenities</h1>
+                  <h1>{this.hallName}</h1>
 
                 </div>
 
