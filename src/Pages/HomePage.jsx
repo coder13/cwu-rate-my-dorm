@@ -4,20 +4,20 @@
  */
 
 import React, { Component } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import CWUMap from '../Assets/CWU_Campus_Map.jpg'
 import '../Styles/HomePage.css';
 import TopBarComponent from '../Components/TopBarComponent'
 
 class HomePage extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
+    //Set up state:
+    this.state = {
+      hallToPass: ""
+    };
 
     //Initilize class vars. (Could be loaded by database)
     this.hallNames = ["Barto Hall", "Beck Hall", "Meisner Hall", "Davies Hall",
@@ -27,19 +27,14 @@ class HomePage extends Component {
     "Kamola Hall", "Moore Hall", "Dougmore Hall", "Brooklane Village",
     "Wahle Apartments", "Anderson Apartments", "Student Village"];
 
-    //Set Up State:
-    this.state = {
-      isSignedIn: "False"
-    }
-
+    //Bind function to class instance.
+    this.navigateToPage = this.navigateToPage.bind(this);
   }
 
   //===navigateToPage===
   //Desc: Handles navigation to next page.
   navigateToPage() {
-    alert(this.textContent);
-
-    //Navigate with props including name.
+    this.props.history.push({pathname: "/ExampleHallPage", state:{ hallName: "Testing!"}});
   }
 
   //===loadButtons===
@@ -51,7 +46,7 @@ class HomePage extends Component {
 
     //Iterate over halls and creat buttons:
     for(var i = 0; i < this.hallNames.length; i++ ) {
-
+      
       //Create the wrapper:
       var newListWrapper = document.createElement("div");
       newListWrapper.className = "listItemWrapper";
@@ -62,19 +57,18 @@ class HomePage extends Component {
         newListWrapper.style.marginBottom = "10px";
       }
 
+      //Create new list item:
       var newListItem = document.createElement("div");
       newListItem.className = "listItem";
 
+      //Create text:
       var text = document.createElement("h1");
       text.textContent = this.hallNames[i];
-      newListItem.appendChild(text);
-
-      newListWrapper.appendChild(newListItem);
 
       //Add all elements:
-      //newListWrapper.appendChild(newListItem);
+      newListItem.appendChild(text);
+      newListWrapper.appendChild(newListItem);
       listContainer.appendChild(newListWrapper);
-
     }
 
     //Add even listeners:
@@ -115,9 +109,7 @@ class HomePage extends Component {
               
               <div className='listSection'>
                 
-                <div id='listContainerScroll' className='listContainer'>
-                  
-                </div>
+                <div id='listContainerScroll' className='listContainer'></div>
 
               </div>
 
@@ -146,4 +138,4 @@ class HomePage extends Component {
   }
 }
 
-export default HomePage;
+export default withRouter(HomePage);
