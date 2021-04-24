@@ -1,6 +1,13 @@
-import './App.css';
-import HomePage from'./Pages/HomePage'
 import React from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from 'react-router-dom';
+import UserProvider from './providers/UserProvider';
+import HomePage from'./Pages/HomePage'
+// import LoginPage from'./Pages/Login'
+import './App.css';
 
 class App extends React.Component {
   
@@ -12,9 +19,19 @@ class App extends React.Component {
   }
 
   render() {
-
     return (
-      <HomePage />
+      <UserProvider>
+        <Router>
+          <Switch>
+            <Route exact path="/">
+              <HomePage />
+            </Route>
+            <Route path="*">
+              <p>404: Page not Found</p>
+            </Route>
+          </Switch>
+        </Router>
+      </UserProvider>
     )
   }
 }
