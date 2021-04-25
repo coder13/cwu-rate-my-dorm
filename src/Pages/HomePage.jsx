@@ -4,7 +4,7 @@
  */
 
 import React, { Component } from "react";
-//import {auth, firestore} from '../firebase';
+import { firestore } from '../firebase';
 import { withRouter } from "react-router-dom";
 import CWUMap from '../Assets/CWU_Campus_Map.jpg'
 import '../Styles/HomePage.css';
@@ -20,7 +20,7 @@ class HomePage extends Component {
 
     //Set up state:
     this.state = {
-      hallToPass: ""
+      hallNamesTest: []
     };
 
     //Initilize class vars. (Could be loaded by database)
@@ -36,17 +36,6 @@ class HomePage extends Component {
     this.buttonList = this.buttonList.bind(this);
   }
 
-  // //===getDormList===
-  // //Desc: Returns a list of dorm names.
-  // async getDormList() {
-  //   return await firestore.collection('Dorms').get().then((snapshot) => {
-  //       snapshot.docs.forEach(doc => {
-  //           // name, description, rating, amenities[], images[]
-  //           console.log(doc.get('name'))
-  //       })
-  //   });
-  // }
-
   //===navigateToPage===
   //Desc: Handles navigation to next page.
   navigateToPage(toPass) {
@@ -59,7 +48,7 @@ class HomePage extends Component {
     
     //Store listButtons:
     const hallNames = props.hallNames;
-    const listButtonItems = hallNames.map((hallName) =>
+    const listButtonItems = this.state.hallNamesTest.map((hallName) =>
       <div className='listItemWrapper'>
         <div className='listItem' key={hallName.toString()} onClick={() =>{this.navigateToPage(hallName.toString())}}>
           <h1>{hallName}</h1>
@@ -77,12 +66,26 @@ class HomePage extends Component {
   //===componentDidMount===
   //Desc: JS for once the render method is mounted.
   componentDidMount() {
+    //Loading from database. SHOULD BE in didmount?
 
+    var tempList = [];
+
+    const ref = firestore.collection('Dorms');
+    ref.get().then((snapshot) => {
+      snapshot.docs.forEach(doc => {
+        // name, description, rating, amenities[], images[]
+        this.state.hallNamesTest.push(doc.get('name'));
+      });
+    });
+
+    console.log("NAMES", this.state.hallNamesTest);
+    console.log("temp", tempList);
   }
 
   //===render===
   //Desc: Renders the html.
   render() {
+    console.log("NAMES RENDER", this.state.hallNamesTest);
     return (
 
       <div>
@@ -94,17 +97,17 @@ class HomePage extends Component {
           <div className='sideSection'></div>
 
           <div className='mainSection'>
-            
+
             <div className='listAndMapSection'>
 
-              <this.buttonList hallNames = {this.hallNames}/>
+              <this.buttonList hallNames={this.state.hallNamesTest} />
 
               <div className='mapSection'>
 
                 <div className='mapContainer'>
 
                   {/*Could be loaded from database*/}
-                  <img src={CWUMap} className='mapImage' alt =''/>
+                  <img src={CWUMap} className='mapImage' alt='' />
 
                 </div>
 
@@ -121,6 +124,7 @@ class HomePage extends Component {
       </div>
 
     )
+
   }
 }
 
