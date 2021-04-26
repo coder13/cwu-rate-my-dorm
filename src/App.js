@@ -5,7 +5,7 @@ import {
   Route,
 } from 'react-router-dom';
 import UserProvider from './providers/UserProvider';
-import HomePage from'./Pages/HomePage'
+import MapPage from'./Pages/MapPage'
 import ExampleHallPage from'./Pages/ExampleHallPage'
 // import LoginPage from'./Pages/Login'
 import './App.css';
@@ -25,7 +25,7 @@ class App extends React.Component {
         <Router>
           <Switch>
             <Route exact path="/">
-              <HomePage name="name" />
+              <MapPage name="name" />
             </Route>
             <Route exact path="/ExampleHallPage">
               <ExampleHallPage />
