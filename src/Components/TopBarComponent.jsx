@@ -1,14 +1,14 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom';
 import '../Styles/TopBarComponent.css';
 import CWULogo from '../Assets/CWU_Logo.png'
 import { UserContext } from '../providers/UserProvider';
-import { signInWithGoogle } from '../firebase';
+import { auth } from "../firebase";
 
 class TopBarComponent extends Component {
     static contextType = UserContext;
 
     render() {
-        console.log(this.context);
         return (
             <div className="topbar">
 
@@ -31,11 +31,30 @@ class TopBarComponent extends Component {
                     <UserContext.Consumer>
                         {(user) => (
                             user
-                            ? <div>{`logged in as ${user.displayName}`}</div>
-                            : <div className="LogInSignUpButtons" onClick={signInWithGoogle}>Login with Google</div>
+                            ? (
+                                <>
+                                    <div>{`logged in as ${user.displayName}`}</div>
+                                    <div className="LogInSignUpButtons" onClick={() => auth.signOut()}>Sign-out</div>
+                                </>
+                            )
+                            : (
+                                <>
+                                    <Link
+                                        className="LogInSignUpButtons"
+                                        to={{
+                                            pathname: '/signin',
+                                            state: {
+                                                from: document.location.pathname
+                                            }
+                                        }}
+                                        >
+                                        Sign-in
+                                    </Link>
+                                    <div className="LogInSignUpButtons">Sign-up</div>
+                                </>
+                            )
                         )}
                     </UserContext.Consumer>
-                    <div className="LogInSignUpButtons">Sign-up</div>
                     <div className="LeaveAReviwButton">Leave a Review</div>
                 </div>
 

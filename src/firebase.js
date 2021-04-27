@@ -20,7 +20,7 @@ const provider = new firebase.auth.GoogleAuthProvider();
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
-export const signInWithGoogle = () => {
+export const signInWithGoogle = () =>
   firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
     .then(() => {
       firebase.auth().signInWithPopup(provider)
@@ -33,7 +33,6 @@ export const signInWithGoogle = () => {
     }).catch((err) => {
       console.error(err);
     });
-  };
 
 /* Stores user information in firebase */
 export const generateUserDocument = async (user, additionalData) => {

@@ -12,21 +12,35 @@ class SignInPage extends Component {
 
     componentDidMount() {
       this.signInWithEmailAndPasswordHandler = this.signInWithEmailAndPasswordHandler.bind(this);
+      // this.signInWithGoogleHandler = this.signInWithGoogleHandler.bind(this);
     }
 
     signInWithEmailAndPasswordHandler(event) {
       event.preventDefault();
       const { email, password } = this.state;
-      auth.signInWithEmailAndPassword(email, password).catch(error => {
-        this.setState({
-          error,
-          password: '',
-        });
+      auth.signInWithEmailAndPassword(email, password)
+        .then((result) => {
+          console.log(result);
+        })
+        .catch(error => {
+          this.setState({
+            error,
+            password: '',
+          });
         console.error('Error signing in with password and email', error);
       });
     }
 
+    signInWithGoogleHandler(event) {
+      const { history, location } = this.props;
+      signInWithGoogle()
+        .then((result) => {
+          history.push(location.state.from);
+        })
+    }
+
     render() {
+      console.log(44, this.props);
       const { error, email, password } = this.state;
 
       return (
@@ -54,7 +68,7 @@ class SignInPage extends Component {
             <button type="submit" onClick={this.signInWithEmailAndPasswordHandler}>Login</button>
           </form>
           <p>OR</p>
-          <button onClick={signInWithGoogle}>Login With Google</button>
+          <button onClick={() => this.signInWithGoogleHandler()}>Login With Google</button>
         </div>
       );
     }
