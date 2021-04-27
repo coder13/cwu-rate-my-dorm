@@ -4,9 +4,12 @@ import {
   Switch,
   Route,
 } from 'react-router-dom';
+import SignIn from "./Pages/SignIn";
+import SignUp from "./Pages/SignUp";
+import ProfilePage from "./Pages/ProfilePage";
+import PasswordReset from "./Pages/PasswordReset";
 import UserProvider from './providers/UserProvider';
 import HomePage from'./Pages/HomePage'
-// import LoginPage from'./Pages/Login'
 import './App.css';
 
 class App extends React.Component {
@@ -26,6 +29,9 @@ class App extends React.Component {
             <Route exact path="/">
               <HomePage />
             </Route>
+            <SignUp path="signUp" />
+          <SignIn path="/" />
+          <PasswordReset path = "passwordReset" />
             <Route path="*">
               <p>404: Page not Found</p>
             </Route>
