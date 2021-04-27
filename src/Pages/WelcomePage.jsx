@@ -32,11 +32,11 @@ class WelcomePage extends Component {
   render() {
     return(
       
-      <div className='mainDivSection'>
+      <div className='mainDivSectionWelcome'>
 
         <TopBarComponent/>
         
-        <Container className='mainSection'>
+        <Container className='mainSectionWelcome'>
 
           <Row className='titleRow'>
             CWU Rate My Dorm
