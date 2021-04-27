@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
+import 'firebase/storage';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyA8A93K6mRFUIv7C1qOMffL0c46iQjkcrU',
@@ -19,6 +20,7 @@ const provider = new firebase.auth.GoogleAuthProvider();
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
+export const storage = firebase.storage();
 
 export const signInWithGoogle = () => {
   firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
