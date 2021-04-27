@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import '../Styles/ExampleHallPage.css';
 import TopBarComponent from '../Components/TopBarComponent'
 
@@ -88,4 +89,4 @@ class ExampleHallPage extends Component {
 
 }
 
-export default ExampleHallPage;
+export default withRouter(ExampleHallPage);

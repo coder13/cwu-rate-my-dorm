@@ -7,11 +7,11 @@ import React, { Component } from "react";
 import { firestore } from '../firebase';
 import { withRouter } from "react-router-dom";
 import CWUMap from '../Assets/CWU_Campus_Map.jpg'
-import '../Styles/HomePage.css';
+import '../Styles/MapPage.css';
 import TopBarComponent from '../Components/TopBarComponent'
 import LoaderComponent from '../Components/LoaderComponent'
 
-class HomePage extends Component {
+class MapPage extends Component {
 
   constructor(props) {
     super(props);
@@ -122,4 +122,4 @@ class HomePage extends Component {
   }
 }
 
-export default withRouter(HomePage);
+export default withRouter(MapPage);
