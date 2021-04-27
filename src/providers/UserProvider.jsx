@@ -30,7 +30,6 @@ class UserProvider extends Component {
     return (
       <UserContext.Provider value={this.state.user}>
         {this.props.children}
-        <button onClick={() => alert(auth.currentUser)}>Check</button>
       </UserContext.Provider>
     );
   }
