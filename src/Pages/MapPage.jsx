@@ -6,6 +6,12 @@
 import React, { Component } from "react";
 import { firestore } from '../firebase';
 import { withRouter } from "react-router-dom";
+import {Button, 
+  Container,
+  Row,
+  Col,
+  Carousel
+} from 'react-bootstrap'
 import CWUMap from '../Assets/CWU_Campus_Map.jpg'
 import '../Styles/MapPage.css';
 import TopBarComponent from '../Components/TopBarComponent'
@@ -48,9 +54,9 @@ class MapPage extends Component {
     );
 
     return(
-      <div className='listSection'>
+      <Col className='listSection'>
         <div id='listContainerScroll' className='listContainer'>{listButtonItems}</div>
-      </div>
+      </Col>
     );
   }
 
@@ -83,34 +89,30 @@ class MapPage extends Component {
           
           <TopBarComponent />
 
-          <div className='mainDivSection'>
+          <Container fluid='true' className='mainDivSection'>
 
-            <div className='sideSection'></div>
+              <Container fluid='true' className='mainSection'>
 
-              <div className='mainSection'>
-
-                <div className='listAndMapSection'>
+                <Container fluid='true' className='listAndMapSection'>
   
                   <this.buttonList hallNames={this.state.hallNames} />
   
-                  <div className='mapSection'>
+                  <Col className='mapSection'>
   
-                    <div className='mapContainer'>
+                    <Row className='mapContainer'>
   
                       {/*Could be loaded from database*/}
                       <img src={CWUMap} className='mapImage' alt='' />
   
-                    </div>
+                    </Row>
   
-                  </div>
+                  </Col>
   
-                </div>
+                </Container>
   
-              </div>
+              </Container>
   
-            <div className='sideSection'></div>
-  
-          </div>
+          </Container>
   
         </div>
       )
