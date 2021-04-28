@@ -6,12 +6,7 @@
 import React, { Component } from "react";
 import { firestore } from '../firebase';
 import { withRouter } from "react-router-dom";
-import {Button, 
-  Container,
-  Row,
-  Col,
-  Carousel
-} from 'react-bootstrap'
+import {Container, Row, Col} from 'react-bootstrap'
 import CWUMap from '../Assets/CWU_Campus_Map.jpg'
 import '../Styles/MapPage.css';
 import TopBarComponent from '../Components/TopBarComponent'
