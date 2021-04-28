@@ -1,0 +1,70 @@
+.mainDivSection {
+  /* To adjust for the top bar component. */
+  margin-top: 70px;
+  min-height: calc(100vh - 70px);
+  min-width: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: #E6E6E6;
+}
+
+.mainSectionWelcome {
+  margin-top: 15px;
+  height: 875px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 5px;
+  border: gray 1px solid;
+}
+
+.titleRow {
+  flex: 1.5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 100px;
+}
+
+.buttonRow {
+  flex: 1;
+}
+
+.buttonBoxLeft {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 120px;
+}
+
+.buttonBoxRight {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 120px;
+}
+
+.btn-danger {
+  height: 100px;
+  width: 400px;
+  font-size: 200px;
+  background-color: #A30F32;
+}
+
+.imageRow {
+  flex: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imageSize {
+  height: 300px;
+  width: 600px;
+}
+
+.carouselSize {
+  height: 300px;
+  width: 600px;
+}

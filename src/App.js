@@ -7,6 +7,7 @@ import {
 import UserProvider from './providers/UserProvider';
 import MapPage from'./Pages/MapPage'
 import ExampleHallPage from'./Pages/ExampleHallPage'
+import WelcomePage from './Pages/WelcomePage'
 // import LoginPage from'./Pages/Login'
 import './App.css';
 
@@ -25,6 +26,9 @@ class App extends React.Component {
         <Router>
           <Switch>
             <Route exact path="/">
+              <WelcomePage name="name" />
+            </Route>
+            <Route exact path="/MapPage">
               <MapPage name="name" />
             </Route>
             <Route exact path="/ExampleHallPage">
