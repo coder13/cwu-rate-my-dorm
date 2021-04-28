@@ -1,37 +1,6 @@
 import React from "react";
-import { auth, firestore, storage } from '../firebase';
+import { auth, firestore, storage } from './firebase';
 import uuid from 'react-uuid';
-
-const storageRef = storage.ref();
-
-export async function addImage(dormID, image) {
-    // Create a unique uuid
-    var newUuid = uuid();
-    console.log(newUuid);
-    // Navigate to a path with that uuid
-    // TODO: GET EXTENSION FROM IMAGE
-    var imageLocation = storageRef.child(`/${newUuid}`);
-    //var imageLocation = firestore.collection('Dorms').doc(dormID).collection("Photos").get();
-
-    // Convert image to blob
-    // https://github.com/expo/expo/issues/2402#issuecomment-443726662
-    const blob = await new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-        xhr.onload = function () {
-            resolve(xhr.response);
-        };
-        xhr.onerror = function () {
-            reject(new TypeError('Network request failed'));
-        };
-        xhr.responseType = 'blob';
-        xhr.open('GET', image, true);
-        xhr.send(null);
-    });
-
-    await imageLocation.put(blob);
-    console.log('ImageLocation: ' + blob);
-    // Put file in storage at that location
-}
 
 // Get all data of all dorms
 export function getDorms() {
@@ -56,6 +25,7 @@ export function getDormNames() {
     });
     return dormNames;
 }
+
 // Get all info from all reviews by a user
 export function getReviewsByUser(userID) {
     var reviews = [];
@@ -67,6 +37,7 @@ export function getReviewsByUser(userID) {
     });
     return reviews;
 }
+
 // Add a new dorm to firestore
 export function newDorm(name, description, rating, amenities, images) {
     const dormRef = firestore.collection('Dorms');
@@ -80,8 +51,62 @@ export function newDorm(name, description, rating, amenities, images) {
 }
 //newDorm('', '', 5, [], []);
 
+// Add a given image to firebase storage
+export async function addImage(dormName, image) {
+    var newUuid = uuid();
+    const storageRef = storage.ref();
+    var imagesRef = storageRef.child('dormImages');
+    var dormRef = imagesRef.child(`${dormName}/${newUuid}`);
+    // Convert image to blob
+    // Remove this later; it only helps when uploading from project files
+    // https://github.com/expo/expo/issues/2402#issuecomment-443726662
+    const blob = await new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            resolve(xhr.response);
+        };
+        xhr.onerror = function () {
+            reject(new TypeError('Network request failed'));
+        };
+        xhr.responseType = 'blob';
+        xhr.open('GET', image, true);
+        xhr.send(null);
+    });
+    await dormRef.put(blob);
+    return dormRef.getDownloadURL();
+}
+
+// Adds image to storage w/example of user file input
+function addImageToStorage(dormName){
+    const btn = document.createElement('input');
+    btn.setAttribute('type', "file");
+    btn.setAttribute('id', "up");
+
+    btn.onclick = function(){
+        console.log("click up");
+    }
+    btn.click(); 
+
+    btn.addEventListener('change', function(e){
+        var file = e.target.files[0];
+        var storageRef = storage.ref();
+        var imagesRef = storageRef.child('dormImages');
+        var dormRef = imagesRef.child( `${dormName}/${file.name}`);
+        var task = dormRef.put(file). then(() => {
+            console.log('successfully uploaded image');
+        });
+    });
+}
+
 // Add a new Review to firestore
 export function newReview(dormID, author, date, dormName, email, floor, images, rating, review, roomType, likes) {
+    
+    // Add every image to firebase storage
+    var imageIDs = [];
+    images.array.forEach(image => {
+        imageIDs.push(addImage(image));
+    });
+    // Add review to firestore
     const dormRef = firestore.collection('Dorms').doc(dormID).collection('Reviews');
     return dormRef.add({
         author: author,
@@ -89,7 +114,7 @@ export function newReview(dormID, author, date, dormName, email, floor, images, 
         dormName: dormName,
         email: email,
         floor: floor,
-        images: images,
+        images: imageIDs,
         likes: likes,
         rating: rating,
         review: review,
@@ -97,12 +122,6 @@ export function newReview(dormID, author, date, dormName, email, floor, images, 
     })
 }
 //newReview('', '', '', '', '', '', [], 0, 0, '', {});
-
-
-
-// Edit function editReview
-
-// Edit user information
 
 // Add a new user to firestore
 export function newUser(username, email, graduationYear) {
@@ -114,5 +133,6 @@ export function newUser(username, email, graduationYear) {
 }
 //newUser('', '', 2010);
 
+// Add edit functions
 
 export default firestore;
