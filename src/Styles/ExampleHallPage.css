@@ -19,34 +19,23 @@
   flex-direction: column;
 }
 
-.sideSection {
-  flex: 1;
-  display: flex;
-  justify-content: center;
+.infoAndTopReviewSection {
+  min-height: 860px;
 }
 
-.infoAndReviewSection {
-  flex: 1;
-  display:flex;
-  flex-direction: row;
-  min-height: 890px;
-}
-
-.informationSection {
-  height: 860px;
-  width: 611px;
-  margin-left: 15px;
-  margin-top: 15px;
+.titleAndInformationSection {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-left: 0px;
 }
 
-.amenities {
-  flex: 1;
-  border-radius: 5px;
+.titleBlock {
+  flex: .5;
   width: 100%;
+  margin-top: 15px;
+  border-radius: 5px;
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -55,43 +44,101 @@
   border: gray 1px solid;
 }
 
-.imageGallery {
-  flex : 2;
-  border-radius: 5px;
-  margin-top: 15px;
+.infoBlock {
+  flex: 2.5;
   width: 100%;
+  margin-bottom: 15px;
+  border-radius: 5px;
   background-color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border: gray 1px solid;
+}
+
+.imageGalleryBlock {
+  flex: 2;
+  width: 100%;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: gray 1px solid;
+}
+
+.imageCarousel {
+  height:300px;
+  width: 595px;
+}
+
+.carouselImageExample {
+  height: 300px;
+  width: 595px;
 }
 
 .topReviewSection {
-  height: 858px;
-  width: 611px;
-  border-radius: 5px;
-  margin-top: 15px;
-  margin-right: 15px;
-  margin-left: 15px;
-  background-color: white;
   display: flex;
-  justify-content: center;
+}
+
+.topReviewBlock 
+{
+  flex: 1;
+  display: flex;
+  margin-top: 15px;
+  margin-left: 15px;
+  margin-bottom: 15px;
   align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  background-color: white;
   border: gray 1px solid;
 }
 
 .reviewsSection {
-  flex: 1;
-  min-height: 900px;
+  height: 700px;
+}
+
+.reviewsBlock 
+{
+  width: 100%;
+  margin-bottom: 15px;
   border-radius: 5px;
   background-color: white;
-  margin-left: 15px;
-  margin-right: 15px;
-  margin-bottom: 15px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   border: gray 1px solid;
 }
+
+.spacer {
+  max-width: 15px;
+  min-width: 15px;
+}
+
+/*Getting rid of bootstrap padding / margins*/
+.row {
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
+.col {
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
+.container{
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+ }
