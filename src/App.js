@@ -37,6 +37,7 @@ class App extends React.Component {
             <Route exact path="/signin" component={SignInPage} />
             <Route exact path="/signUp" component={SignUp} />
             <Route exact path="/passwordReset" component={PasswordReset} />
+            <Route exact path="/profile" component={ProfilePage} />
 
             <Route path="*">
               <p>404: Page not Found</p>

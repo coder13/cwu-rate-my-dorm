@@ -22,16 +22,12 @@ export const firestore = firebase.firestore();
 
 export const signInWithGoogle = () =>
   firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-    .then(() => {
-      firebase.auth().signInWithPopup(provider)
-        .then((result) => {
-          /** @type {firebase.auth.OAuthCredential} */
-          console.log(result);
-        }).catch((error) => {
-          console.errr(error);
-        });
-    }).catch((err) => {
-      console.error(err);
+    .then(() => firebase.auth().signInWithPopup(provider))
+    .then((result) => {
+      /** @type {firebase.auth.OAuthCredential} */
+      console.log(result);
+    }).catch((error) => {
+      console.errr(error);
     });
 
 /* Stores user information in firebase */

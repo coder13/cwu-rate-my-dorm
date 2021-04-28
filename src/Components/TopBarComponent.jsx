@@ -50,7 +50,17 @@ class TopBarComponent extends Component {
                                         >
                                         Sign-in
                                     </Link>
-                                    <div className="LogInSignUpButtons">Sign-up</div>
+                                    <Link
+                                        className="LogInSignUpButtons"
+                                        to={{
+                                            pathname: '/signup',
+                                            state: {
+                                                from: document.location.pathname
+                                            }
+                                        }}
+                                    >
+                                        Sign-up
+                                    </Link>
                                 </>
                             )
                         )}

@@ -1,25 +1,43 @@
-import React from "react";
+import { useContext } from "react";
+import { Link } from 'react-router-dom';
+import LoaderComponent from '../Components/LoaderComponent';
+import { UserContext } from "../providers/UserProvider";
+import { auth } from "../firebase";
 
 const ProfilePage = () => {
+  const user = useContext(UserContext);
+  
+  if (user === undefined) {
+    return (
+      <LoaderComponent />
+    )
+  } else if (user === null) {
+    return (
+      <Link to="/signin">
+        Sign In
+      </Link>
+    )
+  }
+
+  const { photoURL, displayName, email } = user;
+  
   return (
-    <div className = "mx-auto w-11/12 md:w-2/4 py-8 px-4 md:px-8">
-      <div className="flex border flex-col items-center md:flex-row md:items-start border-blue-400 px-3 py-4">
+    <div>
+      <div>
         <div
           style={{
-            background:
-                `url(https://res.cloudinary.com/dqcsk8rsc/image/upload/v1577268053/avatar-1-bitmoji_upgwhc.png)  no-repeat center center`,
+            background: `url(${photoURL || 'https://res.cloudinary.com/dqcsk8rsc/image/upload/v1577268053/avatar-1-bitmoji_upgwhc.png'})  no-repeat center center`,
             backgroundSize: "cover",
             height: "200px",
             width: "200px"
           }}
-          className="border border-blue-300"
-        ></div>
-        <div className = "md:pl-4">
-        <h2 className = "text-2xl font-semibold">Faruq</h2>
-        <h3 className = "italic">faruq123@gmail.com</h3>
+        />
+        <div>
+          <h2>{displayName}</h2>
+          <h3>{email}</h3>
         </div>
       </div>
-      <button className = "w-full py-3 bg-red-600 mt-4 text-white">Sign out</button>
+      <button onClick={() => {auth.signOut()}}>Sign out</button>
     </div>
   ) 
 };
