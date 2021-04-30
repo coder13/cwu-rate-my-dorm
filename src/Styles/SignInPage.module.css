@@ -16,4 +16,11 @@ input {
   background-color: #7f0000;
   color: white;
   padding: 0.5em;
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
 }

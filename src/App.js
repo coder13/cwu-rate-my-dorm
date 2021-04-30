@@ -5,10 +5,13 @@ import {
   Route,
 } from 'react-router-dom';
 import UserProvider from './providers/UserProvider';
+import SignInPage from'./Pages/SignInPage'
+import SignUp from "./Pages/SignUp";
+import ProfilePage from "./Pages/ProfilePage";
+import PasswordReset from "./Pages/PasswordReset";
 import MapPage from'./Pages/MapPage'
 import ExampleHallPage from'./Pages/ExampleHallPage'
 import WelcomePage from './Pages/WelcomePage'
-// import LoginPage from'./Pages/Login'
 import './App.css';
 
 class App extends React.Component {
@@ -34,6 +37,12 @@ class App extends React.Component {
             <Route exact path="/ExampleHallPage">
               <ExampleHallPage />
             </Route>
+
+            <Route exact path="/signin" component={SignInPage} />
+            <Route exact path="/signUp" component={SignUp} />
+            <Route exact path="/passwordReset" component={PasswordReset} />
+            <Route exact path="/profile" component={ProfilePage} />
+
             <Route path="*">
               <p>404: Page not Found</p>
             </Route>

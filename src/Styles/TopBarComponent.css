@@ -91,6 +91,7 @@
     margin-top: 15px;
     cursor: pointer;
     box-shadow: 4px 4px rgb(149, 14, 41);
+    text-decoration: none;
 }
 
 .LogInSignUpButtons:hover {

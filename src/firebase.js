@@ -22,20 +22,15 @@ export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 export const storage = firebase.storage();
 
-export const signInWithGoogle = () => {
+export const signInWithGoogle = () =>
   firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-    .then(() => {
-      firebase.auth().signInWithPopup(provider)
-        .then((result) => {
-          /** @type {firebase.auth.OAuthCredential} */
-          console.log(result);
-        }).catch((error) => {
-          console.errr(error);
-        });
-    }).catch((err) => {
-      console.error(err);
+    .then(() => firebase.auth().signInWithPopup(provider))
+    .then((result) => {
+      /** @type {firebase.auth.OAuthCredential} */
+      console.log(result);
+    }).catch((error) => {
+      console.errr(error);
     });
-  };
 
 /* Stores user information in firebase */
 export const generateUserDocument = async (user, additionalData) => {
