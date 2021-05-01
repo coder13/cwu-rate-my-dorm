@@ -8,7 +8,7 @@ import { firestore } from '../firebase';
 import { withRouter } from "react-router-dom";
 import {Container, Row, Col} from 'react-bootstrap'
 import CWUMap from '../Assets/CWU_Campus_Map.jpg'
-import '../Styles/MapPage.css';
+import MapPageStyles from '../Styles/MapPage.module.css';
 import TopBarComponent from '../Components/TopBarComponent'
 import LoaderComponent from '../Components/LoaderComponent'
 
@@ -41,16 +41,16 @@ class MapPage extends Component {
     //Store listButtons:
     const hallNames = props.hallNames;
     const listButtonItems = hallNames.map((hallName) =>
-      <div className='listItemWrapper'>
-        <div className='listItem' key={hallName.toString()} onClick={() =>{this.navigateToPage(hallName.toString())}}>
+      <div className={MapPageStyles.listItemWrapper}>
+        <div className={MapPageStyles.listItem} key={hallName.toString()} onClick={() =>{this.navigateToPage(hallName.toString())}}>
           <h1>{hallName}</h1>
         </div>
       </div>
     );
 
     return(
-      <Col className='listSection'>
-        <div id='listContainerScroll' className='listContainer'>{listButtonItems}</div>
+      <Col className={MapPageStyles.listSection}>
+        <div id='listContainerScroll' className={MapPageStyles.listContainer}>{listButtonItems}</div>
       </Col>
     );
   }
@@ -84,20 +84,20 @@ class MapPage extends Component {
           
           <TopBarComponent />
 
-          <Container fluid='true' className='mainDivSection'>
+          <Container fluid='true' className={MapPageStyles.mainDivSection}>
 
-              <Container fluid='true' className='mainSection'>
+              <Container fluid='true' className={MapPageStyles.mainSection}>
 
-                <Container fluid='true' className='listAndMapSection'>
+                <Container fluid='true' className={MapPageStyles.listAndMapSection}>
   
                   <this.buttonList hallNames={this.state.hallNames} />
   
-                  <Col className='mapSection'>
+                  <Col className={MapPageStyles.mapSection}>
   
-                    <Row className='mapContainer'>
+                    <Row className={MapPageStyles.mapContainer}>
   
                       {/*Could be loaded from database*/}
-                      <img src={CWUMap} className='mapImage' alt='' />
+                      <img src={CWUMap} className={MapPageStyles.mapImage} alt='' />
   
                     </Row>
   

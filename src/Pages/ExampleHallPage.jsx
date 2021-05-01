@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import {Container, Row, Col, Carousel} from 'react-bootstrap'
-import '../Styles/ExampleHallPage.css';
+import ExampleStyles from '../Styles/ExampleHallPage.module.css';
 import TopBarComponent from '../Components/TopBarComponent'
 
 class ExampleHallPage extends Component {
@@ -29,26 +29,26 @@ class ExampleHallPage extends Component {
 
         <TopBarComponent />
 
-        <Container fluid='true' className='windowDivSection'>
+        <Container fluid='true' className={ExampleStyles.windowDivSection}>
           
           <Row>
 
-            <Col className='middleSection'>
+            <Col className={ExampleStyles.middleSection}>
 
-             <Row className='infoAndTopReviewSection'>
+             <Row className={ExampleStyles.infoAndTopReviewSection}>
 
-              <Col className='titleAndInformationSection'>
+              <Col className={ExampleStyles.titleAndInformationSection}>
                   
-                <Row className='titleBlock'>
+                <Row className={ExampleStyles.titleBlock}>
                   <h1>{this.hallName}</h1>
                 </Row>
 
-                  <Row className='imageGalleryBlock'>
+                  <Row className={ExampleStyles.imageGalleryBlock}>
 
-                    <Carousel className='imageCarousel'>
+                    <Carousel className={ExampleStyles.imageCarousel}>
                       <Carousel.Item>
                         <img
-                          className='carouselImageExample'
+                          className={ExampleStyles.carouselImageExample}
                           src="https://www.kpq.com/wp-content/uploads/2018/07/CWU.jpg"
                           alt="First slide"
                         />
@@ -56,7 +56,7 @@ class ExampleHallPage extends Component {
 
                       <Carousel.Item>
                         <img
-                          className='carouselImageExample'
+                          className={ExampleStyles.carouselImageExample}
                           src="https://katu.com/resources/media/b2bd1ced-1737-478c-92d9-fa0fc374d6a2-large16x9_190419_pio_central_washington_university_cwu.jpg?1555702482536"
                           alt="First slide"
                         />
@@ -64,7 +64,7 @@ class ExampleHallPage extends Component {
 
                       <Carousel.Item>
                         <img
-                          className='carouselImageExample'
+                          className={ExampleStyles.carouselImageExample}
                           src="https://www.kpq.com/wp-content/uploads/2018/07/CWU.jpg"
                           alt="First slide"
                         />
@@ -73,17 +73,15 @@ class ExampleHallPage extends Component {
 
                   </Row>
 
-                <Row className='infoBlock'>
+                <Row className={ExampleStyles.infoBlock}>
                   <h1>Info</h1>
                 </Row>
 
               </Col>
 
-              <div className ='spacer'></div>
+              <Col className={ExampleStyles.topReviewSection}>
 
-              <Col className='topReviewSection'>
-
-                <Row className='topReviewBlock'>
+                <Row className={ExampleStyles.topReviewBlock}>
                   <h1>Top Reviews Here</h1>
                 </Row>
 
@@ -91,11 +89,11 @@ class ExampleHallPage extends Component {
 
              </Row>
 
-             <Row className='reviewsSection'>
+             <Row className={ExampleStyles.reviewsSection}>
                
-               <Row className='reviewsBlock'>
+               <div className={ExampleStyles.reviewsBlock}>
                   <h1>Reviews</h1>
-               </Row>
+               </div>
 
              </Row>
 
