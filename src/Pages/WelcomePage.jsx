@@ -33,8 +33,6 @@ class WelcomePage extends Component {
     return(
       
       <div className={WelcomePageStyles.mainDivSectionWelcome}>
-
-        <TopBarComponent/>
         
         <Container className={WelcomePageStyles.mainSectionWelcome}>
 
@@ -44,7 +42,7 @@ class WelcomePage extends Component {
 
           <Row className={WelcomePageStyles.buttonRow}>
 
-            <Col className={WelcomePageStyles.buttonBoxLeft}>
+            <Col className={WelcomePageStyles.buttonBoxLeft} onClick={()=>{this.navigateToPage("ReviewPage")}}>
               <Button size='lg' variant="danger">Write a Review</Button>
             </Col>
             <Col className={WelcomePageStyles.buttonBoxRight} onClick={()=>{this.navigateToPage("MapPage")}}>

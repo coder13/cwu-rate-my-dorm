@@ -1,0 +1,8 @@
+.mainSection {
+  min-height: calc(100vh - 70px);
+  min-width: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: #E6E6E6;
+}

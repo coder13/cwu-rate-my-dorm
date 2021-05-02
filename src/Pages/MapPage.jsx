@@ -81,8 +81,6 @@ class MapPage extends Component {
     {
       return (
         <div>
-          
-          <TopBarComponent />
 
           <Container fluid='true' className={MapPageStyles.mainDivSection}>
 

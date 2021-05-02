@@ -27,8 +27,6 @@ class ExampleHallPage extends Component {
 
       <div>
 
-        <TopBarComponent />
-
         <Container fluid='true' className={ExampleStyles.windowDivSection}>
           
           <Row>
