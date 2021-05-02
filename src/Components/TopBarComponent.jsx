@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
-import '../Styles/TopBarComponent.css';
+import TopBarCompStyles from '../Styles/TopBarComponent.module.css';
 import CWULogo from '../Assets/CWU_Logo.png'
 import { UserContext } from '../providers/UserProvider';
 import { auth } from "../firebase";
@@ -10,37 +10,37 @@ class TopBarComponent extends Component {
 
     render() {
         return (
-            <div className="topbar">
+            <div className={TopBarCompStyles.topbar}>
 
-                <div className="SearchBox">
+                <div className={TopBarCompStyles.SearchBox}>
 
-                    <img className="CwuLogo" src={CWULogo} alt="logo" />
+                    <img className={TopBarCompStyles.CwuLogo} src={CWULogo} alt="logo" />
                     
                     <form>
-                        <input className="searchInput" type="Text" name="search" placeholder="Search Rate My Dorm"/>
+                        <input className={TopBarCompStyles.searchInput} type="Text" name="search" placeholder="Search Rate My Dorm"/>
                     </form>
 
-                    <div className="MenuItemBox">
-                        <div className="MenuItem">Home</div>
-                        <div className="MenuItem">Other Sections</div>
+                    <div className={TopBarCompStyles.MenuItemBox}>
+                        <div className={TopBarCompStyles.MenuItem}>Home</div>
+                        <div className={TopBarCompStyles.MenuItem}>Other Sections</div>
                     </div>
 
                 </div>
             
-                <div className="signInSection">
+                <div className={TopBarCompStyles.signInSection}>
                     <UserContext.Consumer>
                         {(user) => (
                             user
                             ? (
                                 <>
                                     <div>{`logged in as ${user.displayName}`}</div>
-                                    <div className="LogInSignUpButtons" onClick={() => auth.signOut()}>Sign-out</div>
+                                    <div className={TopBarCompStyles.LogInSignUpButtons} onClick={() => auth.signOut()}>Sign-out</div>
                                 </>
                             )
                             : (
                                 <>
                                     <Link
-                                        className="LogInSignUpButtons"
+                                        className={TopBarCompStyles.LogInSignUpButtons}
                                         to={{
                                             pathname: '/signin',
                                             state: {
@@ -51,7 +51,7 @@ class TopBarComponent extends Component {
                                         Sign-in
                                     </Link>
                                     <Link
-                                        className="LogInSignUpButtons"
+                                        className={TopBarCompStyles.LogInSignUpButtons}
                                         to={{
                                             pathname: '/signup',
                                             state: {
@@ -65,7 +65,7 @@ class TopBarComponent extends Component {
                             )
                         )}
                     </UserContext.Consumer>
-                    <div className="LeaveAReviwButton">Leave a Review</div>
+                    <div className={TopBarCompStyles.LeaveAReviwButton}>Leave a Review</div>
                 </div>
 
             </div>    

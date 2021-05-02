@@ -5,7 +5,7 @@
 
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import '../Styles/WelcomePage.css'
+import WelcomePageStyles from '../Styles/WelcomePage.module.css'
 import {Button, 
         Container,
         Row,
@@ -32,33 +32,33 @@ class WelcomePage extends Component {
   render() {
     return(
       
-      <div className='mainDivSectionWelcome'>
+      <div className={WelcomePageStyles.mainDivSectionWelcome}>
 
         <TopBarComponent/>
         
-        <Container className='mainSectionWelcome'>
+        <Container className={WelcomePageStyles.mainSectionWelcome}>
 
-          <Row className='titleRow'>
+          <Row className={WelcomePageStyles.titleRow}>
             CWU Rate My Dorm
           </Row>
 
-          <Row className='buttonRow'>
+          <Row className={WelcomePageStyles.buttonRow}>
 
-            <Col className='buttonBoxLeft'>
+            <Col className={WelcomePageStyles.buttonBoxLeft}>
               <Button size='lg' variant="danger">Write a Review</Button>
             </Col>
-            <Col className='buttonBoxRight' onClick={()=>{this.navigateToPage("MapPage")}}>
+            <Col className={WelcomePageStyles.buttonBoxRight} onClick={()=>{this.navigateToPage("MapPage")}}>
               <Button size='lg' variant="danger">Read Reviews</Button>
             </Col>
 
           </Row>
 
-          <Row className='imageRow'>
+          <Row className={WelcomePageStyles.imageRow}>
 
-            <Carousel className='carouselSize'>
+            <Carousel className={WelcomePageStyles.carouselSize}>
               <Carousel.Item>
                 <img
-                  className='imageSize'
+                  className={WelcomePageStyles.imageSize}
                   src="https://www.kpq.com/wp-content/uploads/2018/07/CWU.jpg"
                   alt="First slide"
                 />
@@ -66,7 +66,7 @@ class WelcomePage extends Component {
 
               <Carousel.Item>
                 <img
-                  className='imageSize'
+                  className={WelcomePageStyles.imageSize}
                   src="https://katu.com/resources/media/b2bd1ced-1737-478c-92d9-fa0fc374d6a2-large16x9_190419_pio_central_washington_university_cwu.jpg?1555702482536"
                   alt="First slide"
                 />
@@ -74,7 +74,7 @@ class WelcomePage extends Component {
 
               <Carousel.Item>
                 <img
-                  className='imageSize'
+                  className={WelcomePageStyles.imageSize}
                   src="https://www.kpq.com/wp-content/uploads/2018/07/CWU.jpg"
                   alt="First slide"
                 />

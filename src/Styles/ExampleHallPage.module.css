@@ -73,12 +73,12 @@
 
 .imageCarousel {
   height:300px;
-  width: 595px;
+  width: 570px;
 }
 
 .carouselImageExample {
   height: 300px;
-  width: 595px;
+  width: 570px;
 }
 
 .topReviewSection {
@@ -114,6 +114,7 @@
   justify-content: center;
   align-items: center;
   border: gray 1px solid;
+  margin-left: 15px;
 }
 
 .spacer {
