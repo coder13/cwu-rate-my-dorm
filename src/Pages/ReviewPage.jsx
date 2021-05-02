@@ -10,6 +10,11 @@ class ReviewPage extends Component {
     super(props);
   }
 
+  submitReview() 
+  {
+
+  }
+
   componentDidMount()
   {
 
@@ -21,6 +26,7 @@ class ReviewPage extends Component {
 
       <div className={ReviewStyles.mainDivSection}> 
         <h1>Review Section Main Section</h1>
+        <div onClick={this.submitReview}>ButtonTest</div>
       </div>
     )
 

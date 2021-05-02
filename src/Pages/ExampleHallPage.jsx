@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import {Container, Row, Col, Carousel} from 'react-bootstrap'
 import ExampleStyles from '../Styles/ExampleHallPage.module.css';
-import TopBarComponent from '../Components/TopBarComponent'
 
 class ExampleHallPage extends Component {
 

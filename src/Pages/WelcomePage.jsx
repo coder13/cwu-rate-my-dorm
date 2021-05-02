@@ -12,7 +12,6 @@ import {Button,
         Col,
         Carousel
       } from 'react-bootstrap'
-import TopBarComponent from "../Components/TopBarComponent";
 
 class WelcomePage extends Component {
 
