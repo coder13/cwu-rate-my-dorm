@@ -43,7 +43,7 @@ const SignInPage = () => {
         <label htmlFor="emailInput">Email: </label>
         <input
           id="emailInput"
-          type="text"
+          type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
