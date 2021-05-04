@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { Alert, Form, Button } from 'react-bootstrap';
 import { auth } from '../firebase';
 import Styles from '../Styles/SignInPage.module.css';
 
@@ -16,8 +17,8 @@ const PasswordReset = () => {
         setEmailHasBeenSent(true);
         setTimeout(() => { setEmailHasBeenSent(false) }, 3000);
       })
-      .catch(() => {
-        setError("Error resetting password");
+      .catch((e) => {
+        setError(e);
       });
   };
 
@@ -26,28 +27,33 @@ const PasswordReset = () => {
       <h1>
         Reset your Password
       </h1>
-      <form className={Styles.form} onSubmit={sendResetEmail}>
+      <Form className={Styles.form} onSubmit={sendResetEmail}>
         {emailHasBeenSent && (
-          <p>
+          <Alert variant="success">
             An email has been sent to you!
-          </p>
+          </Alert>
         )}
-        {error && (<p className={Styles.error}>{error.code}<br />{error.message}</p>)}
-        <label htmlFor="userEmail">
-          Email:
-        </label>
-        <input
-          type="email"
-          name="userEmail"
-          id="userEmail"
-          value={email}
-          placeholder="Input your email"
-          onChange={(event) => setEmail(event.target.value)}
-        />
-        <button type="submit">
+        {error && (
+          <Alert variant="danger" dismissible onClose={() => setError(null)}>
+            <Alert.Heading>{error.code}</Alert.Heading>
+            <p>{error.message}</p>
+          </Alert>
+        )}
+        <Form.Group controlId="email">
+          <Form.Label>Email</Form.Label>
+          <Form.Control
+            type="email"
+            name="userEmail"
+            value={email}
+            placeholder="E.g: faruq123@gmail.com"
+            onChange={(event) => setEmail(event.target.value)}
+          />
+        </Form.Group>
+        <Button disabled={!email} type="submit" className="btn btn-primary">
           Send me a reset link
-        </button>
-      </form>
+        </Button>
+      </Form>
+      <hr className="w-50 border" />
       <Link
         to="/signin"
       >
