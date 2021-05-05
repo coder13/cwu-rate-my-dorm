@@ -9,7 +9,6 @@ import { withRouter } from "react-router-dom";
 import {Container, Row, Col} from 'react-bootstrap'
 import CWUMap from '../Assets/CWU_Campus_Map.jpg'
 import MapPageStyles from '../Styles/MapPage.module.css';
-import TopBarComponent from '../Components/TopBarComponent'
 import LoaderComponent from '../Components/LoaderComponent'
 
 class MapPage extends Component {
@@ -81,8 +80,6 @@ class MapPage extends Component {
     {
       return (
         <div>
-          
-          <TopBarComponent />
 
           <Container fluid='true' className={MapPageStyles.mainDivSection}>
 

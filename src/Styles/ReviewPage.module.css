@@ -1,0 +1,153 @@
+.mainDivSection {
+    /* To adjust for the top bar component. */
+    margin-top: 70px;
+    min-height: calc(100vh - 70px);
+    min-width: 100vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: #E6E6E6;
+    width: 100%;
+}
+
+.mainContainerSection {
+    display: flex;
+    flex-direction: row;
+    width: 1800px;
+    max-width: 1800px;
+    min-width: 1800px;
+}
+
+.sideSection {
+    flex: 1;
+}
+
+.content {
+    flex: 8;
+    margin-top: 15px;
+    height: 875px;
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+    border-radius: 5px;
+    border: gray 1px solid;
+    width: 100%;
+}
+
+.leftContentSide {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 30px;
+}
+
+.rightContentSide {
+    flex: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.reviewTitleBlock {
+    flex: 1;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.reviewDropDown {
+    flex: 3;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.reviewText {
+    flex: 2;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.reviewImages {
+    flex: 1;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sliderSection {
+    flex: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.buttonSection {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sliderBox {
+    height: 550px;
+    width: 700px;
+    display: flex;
+    border: black solid 1px;
+    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
+}
+
+.submitButton {
+    width: 330px;
+    height: 110px;
+    background-color: #A30F32;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 4px 4px #838383;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 45px;
+}
+
+.submitButton:hover {
+    background-color: #820d28;
+    box-shadow: 0px 0px;
+    margin-top: 4px;
+    margin-left: 4px;
+}
+
+.dropDownForm {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.formItem {
+    display: flex;
+    width: 100%;
+    margin-left: 5px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.label {
+    flex: 1.2;
+    font-weight: bold;
+}
+
+.dropDown {
+    flex: 3
+}

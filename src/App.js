@@ -12,7 +12,9 @@ import PasswordReset from "./Pages/PasswordReset";
 import MapPage from'./Pages/MapPage'
 import ExampleHallPage from'./Pages/ExampleHallPage'
 import WelcomePage from './Pages/WelcomePage'
-import './App.css';
+import AppStyle from './App.module.css';
+import ReviewPage from './Pages/ReviewPage';
+import TopBarComp from './Components/TopBarComponent'
 
 class App extends React.Component {
   
@@ -25,30 +27,35 @@ class App extends React.Component {
 
   render() {
     return (
-      <UserProvider>
-        <Router>
-          <Switch>
-            <Route exact path="/">
-              <WelcomePage name="name" />
-            </Route>
-            <Route exact path="/MapPage">
-              <MapPage name="name" />
-            </Route>
-            <Route exact path="/ExampleHallPage">
-              <ExampleHallPage />
-            </Route>
 
-            <Route exact path="/signin" component={SignInPage} />
-            <Route exact path="/signUp" component={SignUp} />
-            <Route exact path="/passwordReset" component={PasswordReset} />
-            <Route exact path="/profile" component={ProfilePage} />
+      <div>
 
-            <Route path="*">
-              <p>404: Page not Found</p>
-            </Route>
-          </Switch>
-        </Router>
-      </UserProvider>
+        <TopBarComp/>
+
+        <div className={AppStyle.mainSection}>
+
+          <UserProvider>
+            <Router>
+              <Switch>
+                <Route exact path="/" component={WelcomePage} />
+                <Route exact path="/MapPage" component={MapPage} />
+                <Route exact path="/ExampleHallPage" component={ExampleHallPage} />
+                <Route exact path="/ReviewPage" component={ReviewPage} />
+                <Route exact path="/signin" component={SignInPage} />
+                <Route exact path="/signUp" component={SignUp} />
+                <Route exact path="/passwordReset" component={PasswordReset} />
+                <Route exact path="/profile" component={ProfilePage} />
+                <Route path="*">
+                  <p>404: Page not Found</p>
+                </Route>
+              </Switch>
+            </Router>
+          </UserProvider>
+
+        </div>
+
+      </div>
+
     )
   }
 }
