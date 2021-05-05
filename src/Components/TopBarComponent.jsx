@@ -33,6 +33,7 @@ class TopBarComponent extends Component {
                   <>
                     <div>{`logged in as ${user.displayName}`}</div>
                     <div className={TopBarCompStyles.LogInSignUpButtons} onClick={() => auth.signOut()}>Sign-out</div>
+                    <Link className={TopBarCompStyles.LogInSignUpButtons} to="/account">Account Settings</Link>
                   </>
                 )
                 : (

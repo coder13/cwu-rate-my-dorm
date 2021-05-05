@@ -8,6 +8,7 @@ import UserProvider from './providers/UserProvider';
 import SignInPage from'./Pages/SignInPage'
 import SignUp from "./Pages/SignUp";
 import ProfilePage from "./Pages/ProfilePage";
+import AccountPage from './Pages/AccountPage'
 import PasswordReset from "./Pages/PasswordReset";
 import MapPage from'./Pages/MapPage'
 import ExampleHallPage from'./Pages/ExampleHallPage'
