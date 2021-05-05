@@ -8,6 +8,7 @@ import UserProvider from './providers/UserProvider';
 import SignInPage from'./Pages/SignInPage'
 import SignUp from "./Pages/SignUp";
 import ProfilePage from "./Pages/ProfilePage";
+import AccountPage from './Pages/AccountPage'
 import PasswordReset from "./Pages/PasswordReset";
 import MapPage from'./Pages/MapPage'
 import ExampleHallPage from'./Pages/ExampleHallPage'
@@ -42,6 +43,7 @@ class App extends React.Component {
             <Route exact path="/signUp" component={SignUp} />
             <Route exact path="/passwordReset" component={PasswordReset} />
             <Route exact path="/profile" component={ProfilePage} />
+            <Route exact path="/account" component={AccountPage} />
 
             <Route path="*">
               <p>404: Page not Found</p>
