@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import {Form, Col, Button, Row} from 'react-bootstrap'
+import {Form} from 'react-bootstrap'
 import ReviewStyles from '../Styles/ReviewPage.module.css';
 
 class ReviewPage extends Component {
@@ -10,6 +10,8 @@ class ReviewPage extends Component {
     super(props);
 
     this.dropDownForm = this.dropDownForm.bind(this);
+    this.reviewTextForm = this.reviewTextForm.bind(this);
+    this.imageUpload = this.imageUpload.bind(this);
   }
 
   submitReview() 
@@ -26,7 +28,7 @@ class ReviewPage extends Component {
     return (
       <Form className={ReviewStyles.dropDownForm}>
         
-        <div className={ReviewStyles.dropDownItem}>
+        <div className={ReviewStyles.formItem}>
           <div className={ReviewStyles.label}>
             <Form.Label className="my-1 mr-2" htmlFor="inlineFormCustomSelectPref">
               Drom/Apt. Hall
@@ -36,7 +38,7 @@ class ReviewPage extends Component {
             <Form.Control
               as="select"
               className="my-1 mr-sm-2"
-              id="inlineFormCustomSelectPref"
+              id="DormHallID"
               custom
             >
               <option value="0">Choose...</option>
@@ -47,28 +49,51 @@ class ReviewPage extends Component {
           </div>
         </div>
 
-        <div className={ReviewStyles.dropDownItem}>
+        <div className={ReviewStyles.formItem}>
+          <div className={ReviewStyles.label}>
+            <Form.Label className="my-1 mr-2" htmlFor="inlineFormCustomSelectPref">
+              First Quarter
+            </Form.Label>
+          </div>
+          <div  className={ReviewStyles.dropDown}>
+            <Form.Control type="text" placeholder="Ex. Fall 2019" />
+          </div>
+        </div>
+
+        <div className={ReviewStyles.formItem}>
+          <div className={ReviewStyles.label}>
+            <Form.Label className="my-1 mr-2">
+              Last Quarter
+            </Form.Label>
+          </div>
+          <div  className={ReviewStyles.dropDown}>
+            <Form.Control type="text" placeholder="Ex. Spring 2020" />
+          </div>
+        </div>
+
+        <div className={ReviewStyles.formItem}>
           <div className={ReviewStyles.label}>
             <Form.Label className="my-1 mr-2" htmlFor="inlineFormCustomSelectPref">
               Room Type
             </Form.Label>
           </div>
-          <div  className={ReviewStyles.dropDown}>
+          <div className={ReviewStyles.dropDown}>
             <Form.Control
               as="select"
               className="my-1 mr-sm-2"
-              id="inlineFormCustomSelectPref"
-              custom
+              id="roomTypeID"
             >
               <option value="0">Choose...</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+              <option value="1">Single Room</option>
+              <option value="2">Double Room</option>
+              <option value="3">Triple Room</option>
+              <option value="4">Single Suite</option>
+              <option value="5">Double Suite</option>
             </Form.Control>
           </div>
         </div>
 
-        <div className={ReviewStyles.dropDownItem}>
+        <div className={ReviewStyles.formItem}>
           <div className={ReviewStyles.label}>
             <Form.Label className="my-1 mr-2" htmlFor="inlineFormCustomSelectPref">
               Floor
@@ -78,13 +103,14 @@ class ReviewPage extends Component {
             <Form.Control
               as="select"
               className="my-1 mr-sm-2"
-              id="inlineFormCustomSelectPref"
+              id="floorNumID"
               custom
             >
               <option value="0">Choose...</option>
               <option value="1">One</option>
               <option value="2">Two</option>
               <option value="3">Three</option>
+              <option value="3">Four</option>
             </Form.Control>
           </div>
         </div>
@@ -92,6 +118,27 @@ class ReviewPage extends Component {
       </Form>
     );
   }
+
+  reviewTextForm()
+  {
+    return (
+      <Form className={ReviewStyles.dropDownForm}>
+        <Form.Label className={ReviewStyles.label}>Review:</Form.Label>
+        <Form.Control as="textarea" rows={6} />
+      </Form>
+    );
+ 
+  }
+
+  imageUpload()
+  {
+    return(
+      <Form className={ReviewStyles.dropDownForm}>
+        <Form.File id="exampleFormControlFile1" label="Upload Image" className={ReviewStyles.label}/>
+      </Form>
+    );
+  }
+
 
   render()
   {
@@ -115,11 +162,11 @@ class ReviewPage extends Component {
               </div>
 
               <div className={ReviewStyles.reviewText}>
-                <h1>Text</h1>
+                <this.reviewTextForm/>
               </div>
 
               <div className={ReviewStyles.reviewImages}>
-                <h1>Images</h1>
+                <this.imageUpload/>
               </div>
 
             </div>

@@ -39,6 +39,7 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    margin-left: 30px;
 }
 
 .rightContentSide {
@@ -51,7 +52,6 @@
 .reviewTitleBlock {
     flex: 1;
     border-radius: 10px;
-    border: 1px solid black;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -61,7 +61,6 @@
     flex: 3;
     border-radius: 10px;
     display: flex;
-    border: 1px solid black;
     justify-content: center;
     align-items: center;
 }
@@ -70,7 +69,6 @@
     flex: 2;
     border-radius: 10px;
     display: flex;
-    border: 1px solid black;
     justify-content: center;
     align-items: center;
 }
@@ -79,7 +77,6 @@
     flex: 1;
     border-radius: 10px;
     display: flex;
-    border: 1px solid black;
     justify-content: center;
     align-items: center;
 }
@@ -90,7 +87,6 @@
     justify-content: center;
     align-items: center;
     border-radius: 10px;
-    border: 1px solid black;
 }
 
 .buttonSection {
@@ -98,15 +94,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 10px;
-    border: 1px solid black;
 }
 
 .sliderBox {
-    height: 400px;
+    height: 550px;
     width: 700px;
-    border: 1px solid black;
     display: flex;
+    border: black solid 1px;
+    border-radius: 5px;
     justify-content: center;
     align-items: center;
 }
@@ -124,6 +119,7 @@
     color: white;
     text-align: center;
     cursor: pointer;
+    margin-bottom: 45px;
 }
 
 .submitButton:hover {
@@ -139,15 +135,17 @@
     flex-direction: column;
 }
 
-.dropDownItem {
+.formItem {
     display: flex;
     width: 100%;
     margin-left: 5px;
     font-weight: bold;
+    margin-bottom: 5px;
 }
 
 .label {
     flex: 1.2;
+    font-weight: bold;
 }
 
 .dropDown {
