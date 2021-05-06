@@ -32,7 +32,6 @@ class App extends React.Component {
         <Router>
 
           <div>
-
             <TopBarComp/>
 
             <div className={AppStyle.mainSection}>
@@ -47,6 +46,7 @@ class App extends React.Component {
                     <Route exact path="/signUp" component={SignUp} />
                     <Route exact path="/passwordReset" component={PasswordReset} />
                     <Route exact path="/profile" component={ProfilePage} />
+                    <Route exact path="/account" component={AccountPage} />
                     <Route path="*">
                       <p>404: Page not Found</p>
                     </Route>

@@ -24,7 +24,13 @@ const AccountPage = () => {
   const avatar = photoURL || 'https://res.cloudinary.com/dqcsk8rsc/image/upload/v1577268053/avatar-1-bitmoji_upgwhc.png';
 
   return (
-    <Container>
+    <Container
+      style={{
+        marginTop: 'calc(2em + 70px)',
+        width: '100%',
+        minHeight: 'calc(100vh - 70px - 2em)',
+      }}
+    >
       <h1>Account Settings</h1>
       <Media>
         <img
