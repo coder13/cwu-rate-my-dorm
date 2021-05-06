@@ -28,35 +28,34 @@ class App extends React.Component {
 
   render() {
     return (
+      <Router>
 
-      <div>
+        <div>
 
-        <TopBarComp/>
+          <TopBarComp/>
 
-        <div className={AppStyle.mainSection}>
+          <div className={AppStyle.mainSection}>
 
-          <UserProvider>
-            <Router>
-              <Switch>
-                <Route exact path="/" component={WelcomePage} />
-                <Route exact path="/MapPage" component={MapPage} />
-                <Route exact path="/ExampleHallPage" component={ExampleHallPage} />
-                <Route exact path="/ReviewPage" component={ReviewPage} />
-                <Route exact path="/signin" component={SignInPage} />
-                <Route exact path="/signUp" component={SignUp} />
-                <Route exact path="/passwordReset" component={PasswordReset} />
-                <Route exact path="/profile" component={ProfilePage} />
-                <Route path="*">
-                  <p>404: Page not Found</p>
-                </Route>
-              </Switch>
-            </Router>
-          </UserProvider>
+            <UserProvider>
+                <Switch>
+                  <Route exact path="/" component={WelcomePage} />
+                  <Route exact path="/MapPage" component={MapPage} />
+                  <Route exact path="/ExampleHallPage" component={ExampleHallPage} />
+                  <Route exact path="/ReviewPage" component={ReviewPage} />
+                  <Route exact path="/signin" component={SignInPage} />
+                  <Route exact path="/signUp" component={SignUp} />
+                  <Route exact path="/passwordReset" component={PasswordReset} />
+                  <Route exact path="/profile" component={ProfilePage} />
+                  <Route path="*">
+                    <p>404: Page not Found</p>
+                  </Route>
+                </Switch>
+            </UserProvider>
+
+          </div>
 
         </div>
-
-      </div>
-
+      </Router>
     )
   }
 }
