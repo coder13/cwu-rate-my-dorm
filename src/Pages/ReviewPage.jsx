@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import {Form} from 'react-bootstrap'
+import newReview from '../firestore';
 import ReviewStyles from '../Styles/ReviewPage.module.css';
 
 class ReviewPage extends Component {
@@ -16,6 +17,14 @@ class ReviewPage extends Component {
 
   submitReview() 
   {
+    //fetch all info:
+    
+
+
+    //Add to firebase:
+    newReview(dormID, author, date, dormName, email, floor, images, rating, review, roomType, likes);
+
+    //prompt user that review was submitted:
 
   }
 
@@ -42,7 +51,7 @@ class ReviewPage extends Component {
               custom
             >
               <option value="0">Choose...</option>
-              <option value="1">One</option>
+              <option value="1">Kamola Hall</option>
               <option value="2">Two</option>
               <option value="3">Three</option>
             </Form.Control>
