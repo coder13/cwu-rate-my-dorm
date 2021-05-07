@@ -1,12 +1,14 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link } from 'react-router-dom';
-import { Container, Form, Media } from 'react-bootstrap';
+import { Alert, Button, Container, Form, Media } from 'react-bootstrap';
 import LoaderComponent from '../Components/LoaderComponent';
 import { UserContext } from "../providers/UserProvider";
 import { auth } from "../firebase";
 
 const AccountPage = () => {
   const user = useContext(UserContext);
+  const [error, setError] = useState(null);
+  const [emailHasBeenSent, setEmailHasBeenSent] = useState(false);
   
   if (user === undefined) {
     return (
@@ -19,6 +21,17 @@ const AccountPage = () => {
       </Link>
     )
   }
+  const sendResetEmail = event => {
+    event.preventDefault();
+    auth
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        setEmailHasBeenSent(true);
+      })
+      .catch((e) => {
+        setError(e);
+      });
+  };
 
   const { photoURL, displayName, email } = user;
   const avatar = photoURL || 'https://res.cloudinary.com/dqcsk8rsc/image/upload/v1577268053/avatar-1-bitmoji_upgwhc.png';
@@ -31,6 +44,18 @@ const AccountPage = () => {
         minHeight: 'calc(100vh - 70px - 2em)',
       }}
     >
+      {error && (
+        <Alert variant="danger" dismissible onClose={() => setError(null)}>
+          <Alert.Heading>{error.code}</Alert.Heading>
+          <p>{error.message}</p>
+        </Alert>
+      )}
+
+      {emailHasBeenSent && (
+        <Alert variant="success" dismissible onClick={() => setEmailHasBeenSent(false)}>
+          An email has been sent to your address!
+        </Alert>
+      )}
       <h1>Account Settings</h1>
       <Media>
         <img
@@ -57,10 +82,12 @@ const AccountPage = () => {
           defaultValue={email}
         />
       </Form.Group>
-      <Link>
+      <Button onClick={sendResetEmail}>
         Reset Password
-      </Link>
+      </Button>
     </Container>
   ) 
 };
 export default AccountPage;
+
+
