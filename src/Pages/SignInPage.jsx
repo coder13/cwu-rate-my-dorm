@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useHistory, useLocation } from "react-router-dom";
-import { Form, Button } from 'react-bootstrap';
+import { Alert, Form, Button } from 'react-bootstrap';
 import { auth, signInWithGoogle } from '../firebase';
 import Styles from '../Styles/SignInPage.module.css';
 
@@ -39,8 +39,13 @@ const SignInPage = () => {
   return (
   <div className={Styles.loginContainer}>
     <h1 className="">Sign In</h1>
-    {error && (<p className={Styles.error}>{error.code}<br />{error.message}</p>)}
       <Form className={Styles.form} onSubmit={signInWithEmailAndPasswordHandler}>
+        {error && (
+          <Alert variant="danger" dismissible onClose={() => setError(null)}>
+            <Alert.Heading>{error.code}</Alert.Heading>
+            <p>{error.message}</p>
+          </Alert>
+        )}
         <Form.Group controlId="email">
           <Form.Label>Email: </Form.Label>
           <Form.Control

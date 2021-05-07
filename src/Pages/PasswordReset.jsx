@@ -29,7 +29,7 @@ const PasswordReset = () => {
       </h1>
       <Form className={Styles.form} onSubmit={sendResetEmail}>
         {emailHasBeenSent && (
-          <Alert variant="success">
+          <Alert variant="success" dismissible onClose={() => setEmailHasBeenSent(false)}>
             An email has been sent to you!
           </Alert>
         )}
