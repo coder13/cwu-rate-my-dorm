@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Link } from 'react-router-dom';
-import { Container, Form, Media } from 'react-bootstrap';
+import { Alert, Container, Form, Media } from 'react-bootstrap';
 import LoaderComponent from '../Components/LoaderComponent';
 import { UserContext } from "../providers/UserProvider";
 import { auth } from "../firebase";
@@ -19,7 +19,21 @@ const AccountPage = () => {
       </Link>
     )
   }
+  const sendResetEmail = event => {
+    event.preventDefault();
+    auth
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        setEmailHasBeenSent(true);
+        setTimeout(() => { setEmailHasBeenSent(false) }, 3000);
+      })
+      .catch((e) => {
+        setError(e);
+      });
+  };
+  
 
+  const [emailHasBeenSent, setEmailHasBeenSent] = useState(false);
   const { photoURL, displayName, email } = user;
   const avatar = photoURL || 'https://res.cloudinary.com/dqcsk8rsc/image/upload/v1577268053/avatar-1-bitmoji_upgwhc.png';
 
@@ -60,7 +74,14 @@ const AccountPage = () => {
       <Link>
         Reset Password
       </Link>
+      {emailHasBeenSent && (
+        <Alert variant="success">
+          An email has been sent to your address!
+        </Alert>
+      )}
     </Container>
   ) 
 };
 export default AccountPage;
+
+
