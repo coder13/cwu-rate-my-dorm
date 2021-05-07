@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { Container, Form, Media } from 'react-bootstrap';
 import LoaderComponent from '../Components/LoaderComponent';
 import { UserContext } from "../providers/UserProvider";
-import { auth } from "../firebase";
 
 const AccountPage = () => {
   const user = useContext(UserContext);
