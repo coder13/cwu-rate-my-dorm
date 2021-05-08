@@ -56,7 +56,7 @@ class WelcomePage extends Component {
                     </Card.Text>
                     <Button
                       variant="primary"
-                      onClick={() => { this.navigateToPage("MapPage") }}
+                      onClick={() => { this.navigateToPage("ReviewPage") }}
                     >
                       Write a Review
                     </Button>
@@ -70,7 +70,7 @@ class WelcomePage extends Component {
                   <Card.Body>
                     <Card.Title>Read Reviews</Card.Title>
                     <Card.Text>
-                      Read reviews, see ratings, and get information about the CWU dorms.
+                      Read reviews, see ratings, and get information about the dorms.
                     </Card.Text>
                     <Button 
                       variant="primary"
