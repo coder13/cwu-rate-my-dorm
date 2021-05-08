@@ -50,24 +50,22 @@
 }
 
 .reviewTitleBlock {
-    flex: 1;
-    border-radius: 10px;
+    flex: .7;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .reviewDropDown {
-    flex: 3;
-    border-radius: 10px;
+    flex: 2;
     display: flex;
     justify-content: center;
     align-items: center;
+    
 }
 
 .reviewText {
-    flex: 2;
-    border-radius: 10px;
+    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -75,7 +73,6 @@
 
 .reviewImages {
     flex: 1;
-    border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -100,7 +97,7 @@
     height: 550px;
     width: 700px;
     display: flex;
-    border: black solid 1px;
+    
     border-radius: 5px;
     justify-content: center;
     align-items: center;
@@ -129,25 +126,10 @@
     margin-left: 4px;
 }
 
-.dropDownForm {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
+.form {
+    width: 90%;
 }
 
-.formItem {
-    display: flex;
-    width: 100%;
-    margin-left: 5px;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.label {
-    flex: 1.2;
-    font-weight: bold;
-}
-
-.dropDown {
-    flex: 3
+.borderAdd {
+    border: solid black 1px;
 }
