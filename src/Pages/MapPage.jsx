@@ -6,7 +6,6 @@
 import React, { Component } from "react";
 import { firestore } from '../firebase';
 import { withRouter } from "react-router-dom";
-import {Container, Row, Col} from 'react-bootstrap'
 import {MapContainer, TileLayer, Marker, Popup} from 'react-leaflet'
 import MapPageStyles from '../Styles/MapPage.module.css';
 import LoaderComponent from '../Components/LoaderComponent'
@@ -19,12 +18,18 @@ class MapPage extends Component {
     //Set up state:
     this.state = {
       hallNames: [],
-      loaded: false
+      loaded: false,
+      center: [47.003152, -120.539769]
     };
+
+    this.mapRef = React.createRef();
 
     //Bind function to class instance.
     this.navigateToPage = this.navigateToPage.bind(this);
     this.buttonList = this.buttonList.bind(this);
+    this.mapComponent= this.mapComponent.bind(this);
+    this.changeCenterHover= this.changeCenterHover.bind(this);
+    this.reCenter = this.reCenter.bind(this);
   }
 
   //===navigateToPage===
@@ -40,17 +45,18 @@ class MapPage extends Component {
     //Store listButtons:
     const hallNames = props.hallNames;
     const listButtonItems = hallNames.map((hallName) =>
-      <div className={MapPageStyles.listItemWrapper}>
-        <div className={MapPageStyles.listItem} key={hallName.toString()} onClick={() =>{this.navigateToPage(hallName.toString())}}>
-          <h1>{hallName}</h1>
-        </div>
-      </div>
+      <div
+        className={MapPageStyles.hallButton}
+        onMouseOver={() => { this.changeCenterHover(47.00035836920583, -120.54091814980733) }}
+        onMouseLeave={this.reCenter}
+        onClick={() => { this.navigateToPage(hallName.toString()) }}
+      >{hallName}</div>
     );
 
     return(
-      <Col className={MapPageStyles.listSection}>
-        <div id='listContainerScroll' className={MapPageStyles.listContainer}>{listButtonItems}</div>
-      </Col>
+      <div className={MapPageStyles.listColumn}>
+        {listButtonItems}
+      </div>
     );
   }
 
@@ -71,6 +77,46 @@ class MapPage extends Component {
     this.setState({loaded: true});
   }
 
+  //===mapComponent===
+  //Desc: Creates and initilizes the map.
+  mapComponent() 
+  {
+    return(
+      <MapContainer
+        className={MapPageStyles.leafletMap}
+        center={this.state.center}
+        zoom={16}
+        scrollWheelZoom={true}
+        whenCreated={ mapInstance => { this.mapRef.current = mapInstance}}
+        zoomControl={false}
+      >
+        <TileLayer
+          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <Marker position={[47.00035836920583, -120.54091814980733]}>
+          <Popup>
+            Kamola Hall
+          </Popup>
+        </Marker>
+      </MapContainer>
+    );
+  }
+
+  //===changeCenterHover===
+  //Desc: Uses map ref to re center on specific halls.
+  changeCenterHover(long, lat)
+  {
+    this.mapRef.current.setView([long, lat], 20);
+  }
+
+  //===reCenter===
+  //Desc: Re centers the map to original position.
+  reCenter() 
+  {
+    this.mapRef.current.setView(this.state.center, 16);
+  }
+
   //===render===
   //Desc: Renders the html.
   render() {
@@ -79,11 +125,13 @@ class MapPage extends Component {
     if(this.state.loaded && this.state.hallNames.length)
     {
       return (
-        <Container fluid className={MapPageStyles.mainContainer}>
-          <Row className={MapPageStyles.mainRow}>
-            R1
-          </Row>
-        </Container>
+        <div className={MapPageStyles.mainContent}>
+
+          <this.buttonList hallNames={this.state.hallNames}/>
+
+          <this.mapComponent/>
+
+        </div>
       )
     }
     else //List is still loading. 
