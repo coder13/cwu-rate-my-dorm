@@ -7,7 +7,7 @@ import React, { Component } from "react";
 import { firestore } from '../firebase';
 import { withRouter } from "react-router-dom";
 import {Container, Row, Col} from 'react-bootstrap'
-import CWUMap from '../Assets/CWU_Campus_Map.jpg'
+import {MapContainer, TileLayer, Marker, Popup} from 'react-leaflet'
 import MapPageStyles from '../Styles/MapPage.module.css';
 import LoaderComponent from '../Components/LoaderComponent'
 
@@ -79,34 +79,11 @@ class MapPage extends Component {
     if(this.state.loaded && this.state.hallNames.length)
     {
       return (
-        <div>
-
-          <Container fluid='true' className={MapPageStyles.mainDivSection}>
-
-              <Container fluid='true' className={MapPageStyles.mainSection}>
-
-                <Container fluid='true' className={MapPageStyles.listAndMapSection}>
-  
-                  <this.buttonList hallNames={this.state.hallNames} />
-  
-                  <Col className={MapPageStyles.mapSection}>
-  
-                    <Row className={MapPageStyles.mapContainer}>
-  
-                      {/*Could be loaded from database*/}
-                      <img src={CWUMap} className={MapPageStyles.mapImage} alt='' />
-  
-                    </Row>
-  
-                  </Col>
-  
-                </Container>
-  
-              </Container>
-  
-          </Container>
-  
-        </div>
+        <Container fluid className={MapPageStyles.mainContainer}>
+          <Row className={MapPageStyles.mainRow}>
+            R1
+          </Row>
+        </Container>
       )
     }
     else //List is still loading. 
