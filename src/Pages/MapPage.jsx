@@ -8,7 +8,8 @@ import { firestore } from '../firebase';
 import { withRouter } from "react-router-dom";
 import {MapContainer, TileLayer, Marker, Popup} from 'react-leaflet'
 import MapPageStyles from '../Styles/MapPage.module.css';
-import LoaderComponent from '../Components/LoaderComponent'
+import LoaderComponent from '../Components/LoaderComponent';
+import {Button} from 'react-bootstrap';
 
 class MapPage extends Component {
 
@@ -22,6 +23,7 @@ class MapPage extends Component {
       center: [47.003152, -120.539769]
     };
 
+    this.markers = null;
     this.mapRef = React.createRef();
 
     //Bind function to class instance.
@@ -44,17 +46,65 @@ class MapPage extends Component {
     
     //Store listButtons:
     const hallNames = props.hallNames;
-    const listButtonItems = hallNames.map((hallName) =>
-      <div
+    const hallLocations = [
+      [47.004095985910155, -120.53869486380123],// Stephens-Whitney
+      [47.00034057034109, -120.54092609509254],//Kamola
+      [47.003231074990765, -120.53845450612997],//Wilson
+      [47.00337710571372, -120.53519377851852],//Meisner
+      [47.00340150777366, -120.53587810320316],//Hitchcock 
+      [47.00354430485515, -120.53463264296298],//Davies
+      [47.00829929598839, -120.54056252272323],//Wahle Apts.
+      [47.00423697523205, -120.5348276552052],//Quigley
+      [47.00462428077892, -120.5356719620624],//Barto
+      [47.00505182994369, -120.53805472147555],//Moore
+      [46.999517110745465, -120.54413889003669],//Gets/Short
+      [47.00394518396833, -120.53552200796703],//Sparks
+      [47.00868294317813, -120.53411899138466],//Green
+      [47.00838985075794, -120.53437044848084],//Kennedy
+      [47.007901223093775, -120.53418438219116],//Carmondy-Munro
+      [47.00339710016015, -120.53918824721997],//North
+      [47.006607892279675, -120.54216529445776],//Dugmore
+      [47.007565524066166, -120.534385277893],//Alford-Montgomery
+      [47.00021752042942, -120.53992078304556],//Sue Lombard
+      [47.01220717917708, -120.52304759574601],//Booklane 
+      [47.003587155254564, -120.53655266072745],//Beck
+      [47.00828965167414, -120.53331597854493],//Student Village
+      [47.00504538570742, -120.53747076502218],//Anderson Apartments
+      [47.00657042164514, -120.53416640947272],//Wendell Hill A
+      [47.00645503721928, -120.53292556250004]//Wendell Hill B
+    ];
+
+    //zip the two arrays together:
+    var hallNamesAndLocations = hallNames.map((x, i) => [x, hallLocations[i]]); 
+
+    //Gemerate hall buttons.
+    const listButtonItems = hallNamesAndLocations.map((hallInfo) =>
+      <Button
+        variant="success"
+        size="lg"
         className={MapPageStyles.hallButton}
-        onMouseOver={() => { this.changeCenterHover(47.00035836920583, -120.54091814980733) }}
-        onMouseLeave={this.reCenter}
-        onClick={() => { this.navigateToPage(hallName.toString()) }}
-      >{hallName}</div>
+        onMouseOver={() => { this.changeCenterHover(hallInfo[1]) }}
+        onClick={() => { this.navigateToPage(hallInfo[0].toString()) }}
+      >{hallInfo[0]}
+      </Button>
     );
 
+    //Generate markers for buttons.
+    this.markers = hallNamesAndLocations.map((hallInfo) =>
+      <Marker 
+        position={hallInfo[1]}
+      >
+        <Popup>
+          {hallInfo[0]}
+        </Popup>
+      </Marker>
+    );
+    
     return(
-      <div className={MapPageStyles.listColumn}>
+      <div 
+        className={MapPageStyles.listColumn}
+        onMouseLeave={this.reCenter}
+      >
         {listButtonItems}
       </div>
     );
@@ -94,20 +144,16 @@ class MapPage extends Component {
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Marker position={[47.00035836920583, -120.54091814980733]}>
-          <Popup>
-            Kamola Hall
-          </Popup>
-        </Marker>
+        {this.markers}
       </MapContainer>
     );
   }
 
   //===changeCenterHover===
   //Desc: Uses map ref to re center on specific halls.
-  changeCenterHover(long, lat)
+  changeCenterHover(arr)
   {
-    this.mapRef.current.setView([long, lat], 20);
+    this.mapRef.current.setView([arr[0], arr[1]], 25);
   }
 
   //===reCenter===
