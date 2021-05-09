@@ -8,6 +8,7 @@ import UserProvider from './providers/UserProvider';
 import SignInPage from'./Pages/SignInPage'
 import SignUp from "./Pages/SignUp";
 import ProfilePage from "./Pages/ProfilePage";
+import AccountPage from './Pages/AccountPage'
 import PasswordReset from "./Pages/PasswordReset";
 import MapPage from'./Pages/MapPage'
 import ExampleHallPage from'./Pages/ExampleHallPage'
@@ -27,35 +28,36 @@ class App extends React.Component {
 
   render() {
     return (
+      <UserProvider>
+        <Router>
 
-      <div>
+          <div>
+            <TopBarComp/>
 
-        <TopBarComp/>
+            <div className={AppStyle.mainSection}>
 
-        <div className={AppStyle.mainSection}>
+              <UserProvider>
+                  <Switch>
+                    <Route exact path="/" component={WelcomePage} />
+                    <Route exact path="/MapPage" component={MapPage} />
+                    <Route exact path="/ExampleHallPage" component={ExampleHallPage} />
+                    <Route exact path="/ReviewPage" component={ReviewPage} />
+                    <Route exact path="/signin" component={SignInPage} />
+                    <Route exact path="/signUp" component={SignUp} />
+                    <Route exact path="/passwordReset" component={PasswordReset} />
+                    <Route exact path="/profile" component={ProfilePage} />
+                    <Route exact path="/account" component={AccountPage} />
+                    <Route path="*">
+                      <p>404: Page not Found</p>
+                    </Route>
+                  </Switch>
+              </UserProvider>
 
-          <UserProvider>
-            <Router>
-              <Switch>
-                <Route exact path="/" component={WelcomePage} />
-                <Route exact path="/MapPage" component={MapPage} />
-                <Route exact path="/ExampleHallPage" component={ExampleHallPage} />
-                <Route exact path="/ReviewPage" component={ReviewPage} />
-                <Route exact path="/signin" component={SignInPage} />
-                <Route exact path="/signUp" component={SignUp} />
-                <Route exact path="/passwordReset" component={PasswordReset} />
-                <Route exact path="/profile" component={ProfilePage} />
-                <Route path="*">
-                  <p>404: Page not Found</p>
-                </Route>
-              </Switch>
-            </Router>
-          </UserProvider>
+            </div>
 
-        </div>
-
-      </div>
-
+          </div>
+        </Router>
+      </UserProvider>
     )
   }
 }

@@ -84,14 +84,14 @@ const SignUp = () => {
           className="btn btn-primary"
           disabled={!displayName || !email || !password} 
         >
-          Sign In
+          Sign Up
         </Button>
       </Form>
       <br />
       <p className="h5 text-muted">OR</p>
       <br />
       <button className="btn btn-primary" onClick={() => signInWithGoogleHandler()}>
-        Sign In with Google
+        Sign Up with Google
       </button>
       <hr className="w-50 border" />
       <p>
