@@ -1,9 +1,13 @@
+import firebase from 'firebase/app';
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import {Form, Col} from 'react-bootstrap'
 import ReviewStyles from '../Styles/ReviewPage.module.css';
+import * as firestore from '../firestore.js';
+
 
 class ReviewPage extends Component {
+  
 
   constructor(props)
   {
@@ -17,22 +21,42 @@ class ReviewPage extends Component {
       roomType: "Default",
       floorNum: "Default",
       reviewText:"Default",
-      image: null,
+      image: [], //files selected only, no url
+      urls: [],
       overallRating: 50,
       locationRating: 50,
       roomSizeRating: 50,
       furnitureRating: 50,
       commonAreasRating: 50,
       cleanlinessRating: 50,
-      bathroomRating: 50
+      bathroomRating: 50,
+      author: "Default",
+      email: "Default",
+      likes:0
     }
-
+    
     this.submitReview = this.submitReview.bind(this);
+
 
   }
 
-  submitReview() 
+ async submitReview() 
   {
+  
+    //Get user info and set states
+    var user = firebase.auth().currentUser;
+    this.setState({author: user.displayName});
+    this.setState({email: user.email});
+ 
+    //add images selected by user to the storage and dorm documents and get an array of urls
+
+    var i;
+    for(i=0; i<this.state.image.length; i++){
+      var imgUrl = await firestore.uploadImage(this.state.hallName, this.state.image[i]); //add to storage and dorm document, returns url
+      this.setState(prevState =>({ //add url to urls
+        urls:[...prevState.urls, imgUrl]
+      })) 
+    }
 
     //Alert Example:
     alert("Hall Name: " + this.state.hallName + "\n" +
@@ -48,8 +72,17 @@ class ReviewPage extends Component {
           "Furniture Rating: " + this.state.furnitureRating + "\n" +
           "Common Area Rating: " + this.state.commonAreasRating + "\n" +
           "Cleanliness Rating: " + this.state.cleanlinessRating + "\n" +
-          "Bathroom Rating: " + this.state.bathroomRating + "\n");
+          "Bathroom Rating: " + this.state.bathroomRating + "\n" +
+          "Author: " + this.state.author + "\n" +
+          "Email: " + this.state.email + "\n")
+
     //Add review to firebase:
+
+    //create a new review and return its id
+    var rev = await firestore.newReview(this.state.hallName, this.state.author, this.state.email,this.state.firstQuarter, 
+      this.state.lastQuarter, this.state.roomType, this.state.floorNum,this.state.reviewText, this.state.urls, this.state.overallRating, 
+      this.state.locationRating, this.state.roomSizeRating, this.state.furnitureRating, this.state.commonAreasRating, 
+      this.state.cleanlinessRating, this.state.bathroomRating, this.state.likes);
     
 
     //prompt user that review was submitted:
@@ -211,7 +244,12 @@ class ReviewPage extends Component {
                     <Form.File 
                       id="exampleFormControlFile1" 
                       label="Example file input"
-                      onChange={e => this.setState({image: e.target.value})}
+                      onChange={e => 
+                        this.setState(prevState =>({
+                          image:[...prevState.image, e.target.files[0]]
+                        }))
+    
+                      }
                     />
                   </Form.Group>
                 </Form>
