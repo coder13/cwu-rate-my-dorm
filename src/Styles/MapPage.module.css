@@ -1,139 +1,62 @@
-.mainDivSection {
+.mainContent {
   /* To adjust for the top bar component. */
   margin-top: 70px;
   min-height: calc(100vh - 70px);
-  min-width: 100vh;
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
   background-color: #E6E6E6;
 }
 
-.mainSection {
-  flex: 1;
-  min-height: 100%;
-  max-width: 1250px;
-  min-width: 1250px;
-  display: flex;
-  flex-direction: column;
-}
-
-.sideSection {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-}
-
-.listAndMapSection{
-  flex: 1;
-  min-height: 880px;
-  max-height: 880px;
-  display: flex;
-  flex-direction: row;
-}
-
-.listSection {
-  flex: 1;
-  flex-direction: column;
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-}
-
-.listContainer {
-  height: 880px;
-  width: 370px;
+.listColumn {
+  position: absolute;
   background-color: white;
-  flex-direction: column;
-  overflow-y: scroll;
-  border: 1px solid grey;
   border-radius: 5px;
+  border: solid 2px grey;
+  width: 350px;
+  height: 870px;
+  top: 70;
+  left: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: scroll;
 }
 
-#listContainerScroll::-webkit-scrollbar-track
+.listColumn::-webkit-scrollbar-track
 {
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 	border-radius: 2px;
 	background-color: #F5F5F5;
 }
 
-#listContainerScroll::-webkit-scrollbar
+.listColumn::-webkit-scrollbar
 {
 	width: 12px;
 	background-color: #F5F5F5;
 }
 
-#listContainerScroll::-webkit-scrollbar-thumb
+.listColumn::-webkit-scrollbar-thumb
 {
 	border-radius: 5px;
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
 	background-color: #555;
 }
 
-.listItemWrapper 
-{
-  width: 330px;
-  height: 114px;
-  padding-left: 10px;
-  padding-top:10px;
-  margin-bottom: 10px;
-}
-
-.listItem {
-  width: 330px;
-  height: 110px;
-  background-color: #A30F32;
-  border-radius: 5px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 4px 4px #838383;
-  color: white;
-  text-align: center;
-  cursor: pointer;
-}
-
-.listItem:hover {
-  background-color: #820d28;
-  box-shadow: 0px 0px;
-  margin-top: 4px;
-  margin-left: 4px;
-}
-
-.mapSection {
-  flex: 5;
-  display: flex;
-  margin-top: 10px;
-  align-items: center;
-  justify-content: center;
-}
-
-.mapContainer 
-{
-  flex: 6;
+.leafletMap {
   height: 100%;
   width: 100%;
-  border-radius: 5px;
-  display: flex;
-  background-color: white;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  border: 1px solid grey;
 }
 
-.mapImage {
-  height: 670px;
-  width: 820px;
+.hallButton {
+  border-radius: 10px;
+  margin-top: 15px;
+  min-height: 80px;
+  width:320px;
 }
 
-.hallHighlight {
-  position: absolute;
-  height: 100px;
-  width: 100px;
-  background-color: rgba(255, 0, 0, 0.501);
-  left: 560px;
-  top: 520px;
+.hallButton:hover {
+  background-color: rgb(132, 164, 175);
 }
