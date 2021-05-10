@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import {Form, Col} from 'react-bootstrap'
 import ReviewStyles from '../Styles/ReviewPage.module.css';
+import LoaderComponent from '../Components/LoaderComponent.jsx';
 import * as firestore from '../firestore.js';
 
 
@@ -15,6 +16,7 @@ class ReviewPage extends Component {
 
     //Set the states:
     this.state = {
+      hallNames: [],
       hallName: "Default",
       firstQuarter: "Default",
       lastQuarter: "Defualt",
@@ -89,13 +91,20 @@ class ReviewPage extends Component {
     alert("Your review has been submitted!");
   }
 
-  componentDidMount()
-  {}
+  componentDidMount() {
+    this.setState(firestore.getDormNames().then((names) => {
+      this.state.hallNames= names;
+      this.setState({ loaded: true });
+    }));
+
+    //console.log(auth.currentUser);
+  }
 
   render()
   {
-    return (
+    if (this.state.loaded) {
 
+    return (
       <div className={ReviewStyles.mainDivSection}> 
         <div className={ReviewStyles.mainContainerSection}>
           
@@ -125,9 +134,8 @@ class ReviewPage extends Component {
                           onChange={e => this.setState({hallName: e.target.value})}  
                         >
                           <option>Choose...</option>
-                          <option>Kamola Hall</option>
-                          <option>Sparks Hall</option>
-                          <option>Beck Hall</option>
+                          {this.state.hallNames.map(dorm => (<option>{dorm}</option>))}
+
                         </Form.Control>
                       </Col>
                     </Form.Row>
@@ -404,7 +412,11 @@ class ReviewPage extends Component {
         </div>
       </div>
     )
-
+                    }
+    else //List is still loading. 
+    {
+      return (<LoaderComponent />);
+    }
   }
 
 }
