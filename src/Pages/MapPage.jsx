@@ -131,14 +131,18 @@ class MapPage extends Component {
   //Desc: Uses map ref to re center on specific halls.
   changeCenterHover(arr)
   {
-    this.mapRef.current.setView([arr[0], arr[1]], 25);
+    if (this.mapRef.current) {
+      this.mapRef.current.setView([arr[0], arr[1]], 25);
+    }
   }
 
   //===reCenter===
   //Desc: Re centers the map to original position.
   reCenter() 
   {
-    this.mapRef.current.setView(this.state.center, 16);
+    if (this.mapRef.current) {
+      this.mapRef.current.setView(this.state.center, 16);
+    }
   }
 
   //===render===
