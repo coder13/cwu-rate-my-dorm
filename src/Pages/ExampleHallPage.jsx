@@ -150,7 +150,8 @@ class ExampleHallPage extends Component {
                     <Card.Body>
 
                     <Card.Text>
-                      Some quick Hall info.
+                      Some quick Hall info.<br/>
+                      Button to hall info page.
                     </Card.Text>
                     </Card.Body>
                   </Card>
