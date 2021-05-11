@@ -1,4 +1,4 @@
-.windowDivSection {
+.mainContainer {
   /* To adjust for the top bar component. */
   margin-top: 70px;
   min-height: calc(100vh - 70px);
@@ -10,116 +10,156 @@
 }
 
 .middleSection {
-  flex: 1;
-  background-color: #E6E6E6;
+  background-color: white;
   min-height: 100%;
   max-width: 1250px;
   min-width: 1250px;
+  height: auto;
   display: flex;
   flex-direction: column;
 }
 
 .infoAndTopReviewSection {
   min-height: 860px;
+  display: flex;
 }
 
 .titleAndInformationSection {
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-left: 0px;
 }
 
 .titleBlock {
   flex: .5;
   width: 100%;
-  margin-top: 15px;
-  border-radius: 5px;
-  background-color: white;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  border: gray 1px solid;
+  justify-content: center;
+  font-size: 40px;
+  font-weight: bold;
 }
 
 .infoBlock {
-  flex: 2.5;
+  flex: 2;
   width: 100%;
-  margin-bottom: 15px;
-  border-radius: 5px;
-  background-color: white;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: gray 1px solid;
+}
+
+.infoCard {
+  width: 95%;
+  height: 95%;
 }
 
 .imageGalleryBlock {
-  flex: 2;
+  flex: 2.1;
   width: 100%;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  border-radius: 5px;
-  background-color: white;
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: center;
-  border: gray 1px solid;
 }
 
 .imageCarousel {
-  height:300px;
-  width: 570px;
+  height: 390px;
+  width: 595px;
 }
 
 .carouselImageExample {
-  height: 300px;
-  width: 570px;
+  height: 390px;
+  width: 595px;
 }
 
 .topReviewSection {
-  display: flex;
-}
-
-.topReviewBlock 
-{
   flex: 1;
   display: flex;
-  margin-top: 15px;
-  margin-left: 15px;
-  margin-bottom: 15px;
   align-items: center;
-  justify-content: center;
-  border-radius: 5px;
-  background-color: white;
-  border: gray 1px solid;
+}
+
+.topReviewCard {
+  height: 98%;
+  width: 98%
 }
 
 .reviewsSection {
   height: 700px;
-}
-
-.reviewsBlock 
-{
-  width: 100%;
-  margin-bottom: 15px;
-  border-radius: 5px;
-  background-color: white;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: gray 1px solid;
-  margin-left: 15px;
 }
 
-.spacer {
-  max-width: 15px;
-  min-width: 15px;
+.reviewsTitle {
+  height: 60px;
+  padding-left: 15px;
+  padding-top: 10px;
+}
+
+.reviewsBlock {
+  width: 98%;
+  height: 100%;
+  border-radius: 5px;
+  border: 1px solid lightgray;
+  overflow-y: scroll;
+}
+
+.reviewsCard
+{
+  height: 100%;
+  width: 100%
+}
+
+.reviewTemplate {
+  height: 300px;
+  width: calc(100% - 30px);
+  background-color: rgb(246, 246, 246);
+  border-radius: 5px;
+  border: 1px solid lightgray;
+  margin-left: 15px;
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.reviewTemplateTitle {
+  flex: .5;
+  font-size: large;
+  font-weight: bold;
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid lightgray;
+}
+
+.reviewTemplateTitleCol {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding-left: 15px;
+  border-left: 1px solid lightgray;
+}
+
+.reviewTemplateBody {
+  flex: 3;
+  display: flex;
+  flex-direction: row;
+}
+
+.reviewTemplateLeft {
+  flex: 3.12;
+  padding-left: 15px;
+  padding-top: 15px;
+}
+
+.reviewTemplateRight {
+  flex: 1;
+  padding-left: 15px;
+  padding-top: 15px;
+  border-left: 1px solid lightgrey;
+}
+
+.footer {
+  height: 30px;
 }
 
 /*Getting rid of bootstrap padding / margins*/
