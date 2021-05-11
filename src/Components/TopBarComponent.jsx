@@ -19,8 +19,8 @@ class TopBarComponent extends Component {
           </form>
 
           <div className={TopBarCompStyles.MenuItemBox}>
-              <div className={TopBarCompStyles.MenuItem}>Home</div>
-              <div className={TopBarCompStyles.MenuItem}>Other Sections</div>
+              <Link className={TopBarCompStyles.MenuItem} to="">Home</Link>
+              <Link className={TopBarCompStyles.MenuItem} to="/MapPage">Map Page</Link>
           </div>
 
       </div>
@@ -64,7 +64,7 @@ class TopBarComponent extends Component {
                 )
               )}
           </UserContext.Consumer>
-          <div className={TopBarCompStyles.LeaveAReviwButton}>Leave a Review</div>
+          <Link className={TopBarCompStyles.LeaveAReviwButton} to="/ReviewPage">Write a Review</Link>
         </div>
 
       </div>
