@@ -87,7 +87,7 @@ class ReviewPage extends Component {
     alert("Your review has been submitted!");
   }
 
-  async componentDidMount() {
+  componentDidMount() {
 
     this.setState(firestore.getDormNames().then((names) => {
       this.state.hallNames= names;
@@ -96,7 +96,7 @@ class ReviewPage extends Component {
 
     //console.log(auth.currentUser);
   }
-  async dormChanged(e) { 
+  dormChanged(e) { 
     // Updates roomTypes and floors when the dorm is changed
     var numFloors = 0;
     firestore.getDormByName(e.target.value).then((doc) => {
