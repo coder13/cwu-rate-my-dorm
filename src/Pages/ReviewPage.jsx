@@ -28,13 +28,13 @@ class ReviewPage extends Component {
       reviewText:"Default",
       image: [], //files selected only, no url
       urls: [],
-      overallRating: 50,
-      locationRating: 50,
-      roomSizeRating: 50,
-      furnitureRating: 50,
-      commonAreasRating: 50,
-      cleanlinessRating: 50,
-      bathroomRating: 50,
+      overallRating: 5,
+      locationRating: 5,
+      roomSizeRating: 5,
+      furnitureRating: 5,
+      commonAreasRating: 5,
+      cleanlinessRating: 5,
+      bathroomRating: 5,
       user: "Default",
       likes:0
     }
@@ -328,6 +328,7 @@ class ReviewPage extends Component {
                           <Col>
                             <Form.Control 
                               type="range"
+                              max="10"
                               onChange={e => this.setState({overallRating: e.target.value})} 
                             />
                           </Col>
@@ -345,6 +346,7 @@ class ReviewPage extends Component {
                           <Col>
                             <Form.Control 
                               type="range"
+                              max="10"
                               onChange={e => this.setState({locationRating: e.target.value})} 
                             />
                           </Col>
@@ -362,6 +364,7 @@ class ReviewPage extends Component {
                           <Col>
                             <Form.Control 
                               type="range"
+                              max="10"
                               onChange={e => this.setState({roomSizeRating: e.target.value})} 
                             />
                           </Col>
@@ -379,6 +382,7 @@ class ReviewPage extends Component {
                           <Col>
                             <Form.Control 
                               type="range"
+                              max="10"
                               onChange={e => this.setState({furnitureRating: e.target.value})} 
                             />
                           </Col>
@@ -396,6 +400,7 @@ class ReviewPage extends Component {
                           <Col>
                             <Form.Control 
                               type="range"
+                              max="10"
                               onChange={e => this.setState({commonAreasRating: e.target.value})} 
                             />
                           </Col>
@@ -413,6 +418,7 @@ class ReviewPage extends Component {
                           <Col>
                             <Form.Control 
                               type="range"
+                              max="10"
                               onChange={e => this.setState({cleanlinessRating: e.target.value})} 
                             />
                           </Col>
@@ -430,6 +436,7 @@ class ReviewPage extends Component {
                           <Col>
                             <Form.Control 
                               type="range"
+                              max="10"
                               onChange={e => this.setState({bathroomRating: e.target.value})} 
                             />
                           </Col>
