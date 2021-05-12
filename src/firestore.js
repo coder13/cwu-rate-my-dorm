@@ -224,7 +224,7 @@ export async function addImage(dormID, image) {
 }
 
 // Add a new Review to firestore and return the document created
-export async function newReview(dormName, author, email, fQuarter, lQuarter,roomType, floor, review, images, overallRating, 
+export async function newReview(dormName, author, authorID, email, fQuarter, lQuarter,roomType, floor, review, images, overallRating, 
     locationRating, roomSizeRating, furnitureRating, commonAreasRating, cleanlinessRating, bathroomRating, likes) {
 
     var reviewDoc; //review document once it's created
@@ -235,12 +235,11 @@ export async function newReview(dormName, author, email, fQuarter, lQuarter,room
     await dormRef.add({ // add returns a document reference in promise
         author: author,
         firstQuarter: fQuarter,
-        lastQuarter:lQuarter,
+        lastQuarter: lQuarter,
         dormName: dormName,
         email: email,
         floor: floor,
         images: images,
-        likes: likes,
         overallRating: overallRating,
         review: review,
         roomType: roomType,
@@ -250,7 +249,8 @@ export async function newReview(dormName, author, email, fQuarter, lQuarter,room
         commonAreasRating: commonAreasRating,
         cleanlinessRating: cleanlinessRating,
         bathroomRating: bathroomRating,
-        likes: likes
+        likes: likes,
+        authorID: authorID
     })
     .then(async documentReference =>{
         await documentReference.get().then(documentSnapshot =>{ //gets the document from the reference that add returns

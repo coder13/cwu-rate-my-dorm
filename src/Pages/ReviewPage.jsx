@@ -35,8 +35,7 @@ class ReviewPage extends Component {
       commonAreasRating: 50,
       cleanlinessRating: 50,
       bathroomRating: 50,
-      author: "Default",
-      email: "Default",
+      user: "Default",
       likes:0
     }
     
@@ -47,21 +46,6 @@ class ReviewPage extends Component {
 
  async submitReview() 
   {
-  
-    //Get user info and set states
-    var user = firebase.auth().currentUser;
-    this.setState({author: user.displayName});
-    this.setState({email: user.email});
- 
-    //add images selected by user to the storage and dorm documents and get an array of urls
-
-    var i;
-    for(i=0; i<this.state.image.length; i++){
-      var imgUrl = await firestore.uploadImage(this.state.hallName, this.state.image[i]); //add to storage and dorm document, returns url
-      this.setState(prevState =>({ //add url to urls
-        urls:[...prevState.urls, imgUrl]
-      })) 
-    }
 
     //Alert Example:
     alert("Hall Name: " + this.state.hallName + "\n" +
@@ -78,13 +62,22 @@ class ReviewPage extends Component {
           "Common Area Rating: " + this.state.commonAreasRating + "\n" +
           "Cleanliness Rating: " + this.state.cleanlinessRating + "\n" +
           "Bathroom Rating: " + this.state.bathroomRating + "\n" +
-          "Author: " + this.state.author + "\n" +
-          "Email: " + this.state.email + "\n")
+          "Author: " + this.state.user.displayName + "\n" +
+          "Email: " + this.state.user.email + "\n")
 
     //Add review to firebase:
 
+    //get url array
+    var i;
+    for(i=0; i<this.state.image.length; i++){
+      var imgUrl = await firestore.uploadImage(this.state.hallName, this.state.image[i]); //add to storage and dorm document, returns url
+      this.setState(prevState =>({ //add url to urls
+        urls:[...prevState.urls, imgUrl]
+      })) 
+    }
+
     //create a new review and return its id
-    var rev = await firestore.newReview(this.state.hallName, this.state.author, this.state.email,[this.state.firstQuarterYear, this.state.firstQuarterSeason], 
+    var rev = await firestore.newReview(this.state.hallName, this.state.user.displayName, this.state.user.uid, this.state.user.email,[this.state.firstQuarterYear, this.state.firstQuarterSeason], 
     [this.state.lastQuarterYear, this.state.lastQuarterSeason], this.state.roomType, this.state.floorNum,this.state.reviewText, this.state.urls, this.state.overallRating, 
       this.state.locationRating, this.state.roomSizeRating, this.state.furnitureRating, this.state.commonAreasRating, 
       this.state.cleanlinessRating, this.state.bathroomRating, this.state.likes);
@@ -94,7 +87,7 @@ class ReviewPage extends Component {
     alert("Your review has been submitted!");
   }
 
-  componentDidMount() {
+  async componentDidMount() {
 
     this.setState(firestore.getDormNames().then((names) => {
       this.state.hallNames= names;
@@ -103,10 +96,11 @@ class ReviewPage extends Component {
 
     //console.log(auth.currentUser);
   }
-  dormChanged(e) { 
+  async dormChanged(e) { 
     // Updates roomTypes and floors when the dorm is changed
     var numFloors = 0;
     firestore.getDormByName(e.target.value).then((doc) => {
+      this.setState({hallName: doc.get('name')});
       console.log('floors:' + doc.get('floors'));
       numFloors = doc.get('floors');
       var x = 1;
@@ -453,7 +447,7 @@ class ReviewPage extends Component {
               <div className={ReviewStyles.buttonSection}>
                 <div 
                   className={ReviewStyles.submitButton}
-                  onClick={this.submitReview}
+                  onClick={e => this.setState({user: firebase.auth().currentUser},this.submitReview)}
                 >
                   <h1>Submit</h1>
                 </div>
