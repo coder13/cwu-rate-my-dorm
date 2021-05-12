@@ -35,11 +35,11 @@ class ExampleHallPage extends Component {
       .then((result)=>
         { 
           this.setState({hallDocs: result});
+          console.log(result);
           this.setState({loaded: true});
         }
       );
     });
-
   }
 
   generateReviews(props) 
