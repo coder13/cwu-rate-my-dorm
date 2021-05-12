@@ -6,7 +6,6 @@ import ReviewStyles from '../Styles/ReviewPage.module.css';
 import LoaderComponent from '../Components/LoaderComponent.jsx';
 import * as firestore from '../firestore.js';
 
-
 class ReviewPage extends Component {
   
 
@@ -17,11 +16,15 @@ class ReviewPage extends Component {
     //Set the states:
     this.state = {
       hallNames: [],
-      hallName: "Default",
-      firstQuarter: "Default",
-      lastQuarter: "Defualt",
+      hallName: "Stephens-Whitney Hall",
+      firstQuarterYear: -1,
+      firstQuarterSeason: "Default",
+      lastQuarterYear: -1,
+      lastQuarterSeason: "Default",
       roomType: "Default",
+      roomTypes: [],
       floorNum: "Default",
+      floors: [],
       reviewText:"Default",
       image: [], //files selected only, no url
       urls: [],
@@ -62,8 +65,8 @@ class ReviewPage extends Component {
 
     //Alert Example:
     alert("Hall Name: " + this.state.hallName + "\n" +
-          "First Quarter: " + this.state.firstQuarter + "\n" +
-          "Last Quarter: " + this.state.lastQuarter + "\n" +
+          "First Quarter: " + this.state.firstQuarterSeason + " " + this.state.firstQuarterYear + "\n" +
+          "Last Quarter: " + this.state.lastQuarterSeason + " " + this.state.lastQuarterYear + "\n" +
           "Room Type: " + this.state.roomType + "\n" +
           "Floor Num: " + this.state.floorNum + "\n" +
           "Review Text: " + this.state.reviewText + "\n" +
@@ -81,8 +84,8 @@ class ReviewPage extends Component {
     //Add review to firebase:
 
     //create a new review and return its id
-    var rev = await firestore.newReview(this.state.hallName, this.state.author, this.state.email,this.state.firstQuarter, 
-      this.state.lastQuarter, this.state.roomType, this.state.floorNum,this.state.reviewText, this.state.urls, this.state.overallRating, 
+    var rev = await firestore.newReview(this.state.hallName, this.state.author, this.state.email,[this.state.firstQuarterYear, this.state.firstQuarterSeason], 
+    [this.state.lastQuarterYear, this.state.lastQuarterSeason], this.state.roomType, this.state.floorNum,this.state.reviewText, this.state.urls, this.state.overallRating, 
       this.state.locationRating, this.state.roomSizeRating, this.state.furnitureRating, this.state.commonAreasRating, 
       this.state.cleanlinessRating, this.state.bathroomRating, this.state.likes);
     
@@ -92,6 +95,7 @@ class ReviewPage extends Component {
   }
 
   componentDidMount() {
+
     this.setState(firestore.getDormNames().then((names) => {
       this.state.hallNames= names;
       this.setState({ loaded: true });
@@ -99,7 +103,25 @@ class ReviewPage extends Component {
 
     //console.log(auth.currentUser);
   }
+  dormChanged(e) { 
+    // Updates roomTypes and floors when the dorm is changed
+    var numFloors = 0;
+    firestore.getDormByName(e.target.value).then((doc) => {
+      console.log('floors:' + doc.get('floors'));
+      numFloors = doc.get('floors');
+      var x = 1;
+      this.state.floors = [];
+      while (x <= numFloors)
+      {
+        this.setState({ floors: [...this.state.floors, x] });
+        x++;
+      }
+      this.setState({roomTypes: doc.get('roomTypes')});
 
+    });
+
+
+  }
   render()
   {
     if (this.state.loaded) {
@@ -131,7 +153,7 @@ class ReviewPage extends Component {
                         <Form.Control 
                           as="select" 
                           defaultValue="Choose..."
-                          onChange={e => this.setState({hallName: e.target.value})}  
+                          onChange={e => this.dormChanged(e)}  
                         >
                           <option>Choose...</option>
                           {this.state.hallNames.map(dorm => (<option>{dorm}</option>))}
@@ -147,16 +169,36 @@ class ReviewPage extends Component {
                         First Quarter: 
                       </Form.Label>
                       <Col>
-                        <Form.Control 
-                          as="select" 
-                          defaultValue="Choose..."
-                          onChange={e => this.setState({firstQuarter: e.target.value})}
-                        >
-                          <option>Choose...</option>
-                          <option>Test 1</option>
-                          <option>Test 2</option>
-                          <option>Test 3</option>
-                        </Form.Control>
+                          <Form.Control 
+                            as="select" 
+                            defaultValue="Choose..."
+                            onChange={e => this.setState({firstQuarterSeason: e.target.value})}
+                          >
+                            <option>Choose...</option>
+                            <option>Spring</option>
+                            <option>Summer</option>
+                            <option>Fall</option>
+                            <option>Winter</option>
+
+                          </Form.Control>
+                          <Form.Control 
+                            as="select" 
+                            defaultValue="Choose..."
+                            onChange={e => this.setState({firstQuarterYear: e.target.value})}
+                          >
+                            <option>Choose...</option>
+                            {(()=>{
+                              var years = [new Date().getFullYear()];
+                              var dif = 0;
+                              while (dif < 20) {
+                                dif++;
+                                years.push(years[years.length-1] - 1);
+                              }
+                              return years.map(year => (<option>{year}</option>));
+
+                            })()}
+
+                          </Form.Control>
                       </Col>
                     </Form.Row>
 
@@ -167,16 +209,36 @@ class ReviewPage extends Component {
                         Last Quarter: 
                       </Form.Label>
                       <Col>
-                        <Form.Control 
-                          as="select" 
-                          defaultValue="Choose..."
-                          onChange={e => this.setState({lastQuarter: e.target.value})}
-                        >
-                          <option>Choose...</option>
-                          <option>Test 1</option>
-                          <option>Test 2</option>
-                          <option>Test 3</option>
-                        </Form.Control>
+                      <Form.Control 
+                            as="select" 
+                            defaultValue="Choose..."
+                            onChange={e => this.setState({lastQuarterSeason: e.target.value})}
+                          >
+                            <option>Choose...</option>
+                            <option>Spring</option>
+                            <option>Summer</option>
+                            <option>Fall</option>
+                            <option>Winter</option>
+
+                          </Form.Control>
+                          <Form.Control 
+                            as="select" 
+                            defaultValue="Choose..."
+                            onChange={e => this.setState({lastQuarterYear: e.target.value})}
+                          >
+                            <option>Choose...</option>
+                            {(()=>{
+                              var years = [new Date().getFullYear()];
+                              var dif = 0;
+                              while (dif < 20) {
+                                dif++;
+                                years.push(years[years.length-1] - 1);
+                              }
+                              return years.map(year => (<option>{year}</option>));
+
+                            })()}
+
+                          </Form.Control>
                       </Col>
                     </Form.Row>
 
@@ -193,11 +255,8 @@ class ReviewPage extends Component {
                           onChange={e => this.setState({roomType: e.target.value})}
                         >
                           <option>Choose...</option>
-                          <option>Single Room</option>
-                          <option>Double Room</option>
-                          <option>Triple Room</option>
-                          <option>Single Suite</option>
-                          <option>Double Suite</option>
+                          {this.state.roomTypes.map(type => (<option>{type}</option>))}
+
                         </Form.Control>
                       </Col>
                     </Form.Row>
@@ -215,10 +274,7 @@ class ReviewPage extends Component {
                           onChange={e => this.setState({floorNum: e.target.value})}
                         >
                           <option>Choose...</option>
-                          <option>1</option>
-                          <option>2</option>
-                          <option>3</option>
-                          <option>4</option>
+                          {this.state.floors.map(floor => (<option value={floor}>Floor {floor}</option>))}
                         </Form.Control>
                       </Col>
                     </Form.Row>

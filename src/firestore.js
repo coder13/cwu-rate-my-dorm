@@ -146,6 +146,21 @@ export async function getDormId(dormName){
     return dormId;
 }
 
+// Geta dorm document using its name
+export async function getDormByName(dormName){
+    var dormId;
+    await firestore.collection("Dorms").where("name", "==", dormName).get().then((querySnapshot) => { //finds documents with dorm name (only 1 in our database)
+        querySnapshot.forEach((doc) => { //goes through documents (again, only 1 in our database), and gets its ID
+            dormId = doc; //sets the dorm id
+            return dormId
+        });
+    })
+    .catch((error) => {
+        console.log("Error getting document: ", error);
+    });
+    return dormId;
+}
+
 //add image to storage, dorm document images, and review document images. w/example of user file input
 export async function uploadImage(dormName, file){
     var newId = uuid(); //creates uuid for image
@@ -244,6 +259,7 @@ export async function newReview(dormName, author, email, fQuarter, lQuarter,room
     });
     return reviewDoc;
 }
+
 
 // Add a new user to firestore
 export function newUser(username, email, graduationYear) {
