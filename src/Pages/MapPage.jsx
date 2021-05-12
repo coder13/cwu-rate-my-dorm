@@ -3,13 +3,13 @@
  * Desc: Home page component.
  */
 
-import React, { Component } from "react";
-import { firestore } from '../firebase';
-import { withRouter } from "react-router-dom";
-import {Container, Row, Col} from 'react-bootstrap'
-import CWUMap from '../Assets/CWU_Campus_Map.jpg'
+import React, {Component} from "react";
+import {firestore} from '../firebase';
+import {withRouter} from "react-router-dom";
+import {MapContainer, TileLayer, Marker, Popup} from 'react-leaflet'
 import MapPageStyles from '../Styles/MapPage.module.css';
-import LoaderComponent from '../Components/LoaderComponent'
+import LoaderComponent from '../Components/LoaderComponent';
+import {Button} from 'react-bootstrap';
 
 class MapPage extends Component {
 
@@ -19,12 +19,20 @@ class MapPage extends Component {
     //Set up state:
     this.state = {
       hallNames: [],
-      loaded: false
+      hallCoordinates: [],
+      loaded: false,
+      center: [47.003152, -120.539769]
     };
+
+    this.markers = null;
+    this.mapRef = React.createRef();
 
     //Bind function to class instance.
     this.navigateToPage = this.navigateToPage.bind(this);
     this.buttonList = this.buttonList.bind(this);
+    this.mapComponent= this.mapComponent.bind(this);
+    this.changeCenterHover= this.changeCenterHover.bind(this);
+    this.reCenter = this.reCenter.bind(this);
   }
 
   //===navigateToPage===
@@ -39,18 +47,44 @@ class MapPage extends Component {
     
     //Store listButtons:
     const hallNames = props.hallNames;
-    const listButtonItems = hallNames.map((hallName) =>
-      <div className={MapPageStyles.listItemWrapper}>
-        <div className={MapPageStyles.listItem} key={hallName.toString()} onClick={() =>{this.navigateToPage(hallName.toString())}}>
-          <h1>{hallName}</h1>
-        </div>
-      </div>
+    const hallLocations = props.hallCoordinates;
+
+    //zip the two arrays together:
+    var hallNamesAndLocations = hallNames.map((x, i) => [x, hallLocations[i]]); 
+
+    console.log(hallNamesAndLocations);
+    console.log(hallNames.length);
+
+    //Gemerate hall buttons.
+    const listButtonItems = hallNamesAndLocations.map((hallInfo) =>
+      <Button
+        variant="success"
+        size="lg"
+        className={MapPageStyles.hallButton}
+        onMouseOver={() => { this.changeCenterHover(hallInfo[1]) }}
+        onClick={() => { this.navigateToPage(hallInfo[0].toString()) }}
+      >{hallInfo[0]}
+      </Button>
     );
 
+    //Generate markers for buttons.
+    this.markers = hallNamesAndLocations.map((hallInfo) =>
+      <Marker 
+        position={hallInfo[1]}
+      >
+        <Popup>
+          {hallInfo[0]}
+        </Popup>
+      </Marker>
+    );
+    
     return(
-      <Col className={MapPageStyles.listSection}>
-        <div id='listContainerScroll' className={MapPageStyles.listContainer}>{listButtonItems}</div>
-      </Col>
+      <div 
+        className={MapPageStyles.listColumn}
+        onMouseLeave={this.reCenter}
+      >
+        {listButtonItems}
+      </div>
     );
   }
 
@@ -63,12 +97,52 @@ class MapPage extends Component {
     db.collection('Dorms').get().then((snapshot) => {
       snapshot.docs.forEach(doc => {
         // name, description, rating, amenities[], images[]
-        this.setState({ hallNames: [...this.state.hallNames, doc.get('name')] });
+        this.setState({ hallNames: [...this.state.hallNames, doc.get('name')] }); //Get Names.
+        this.setState({ hallCoordinates: [...this.state.hallCoordinates, doc.get('coordinates')] }); //Get Cords.
       });
+    }).then(()=>{
+      this.setState({loaded: true}); //Set loaded to true.
     });
+  }
 
-    //SetState:
-    this.setState({loaded: true});
+  //===mapComponent===
+  //Desc: Creates and initilizes the map.
+  mapComponent() 
+  {
+    return(
+      <MapContainer
+        className={MapPageStyles.leafletMap}
+        center={this.state.center}
+        zoom={16}
+        scrollWheelZoom={true}
+        whenCreated={ mapInstance => { this.mapRef.current = mapInstance}}
+        zoomControl={false}
+      >
+        <TileLayer
+          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        {this.markers}
+      </MapContainer>
+    );
+  }
+
+  //===changeCenterHover===
+  //Desc: Uses map ref to re center on specific halls.
+  changeCenterHover(arr)
+  {
+    if (this.mapRef.current) {
+      this.mapRef.current.setView([arr[0], arr[1]], 25);
+    }
+  }
+
+  //===reCenter===
+  //Desc: Re centers the map to original position.
+  reCenter() 
+  {
+    if (this.mapRef.current) {
+      this.mapRef.current.setView(this.state.center, 16);
+    }
   }
 
   //===render===
@@ -76,36 +150,15 @@ class MapPage extends Component {
   render() {
 
     //Checks if list is < 1 and if list is loaded.
-    if(this.state.loaded && this.state.hallNames.length)
+    if(this.state.loaded && this.state.hallNames.length && this.state.hallCoordinates.length)
     {
       return (
-        <div>
+        <div className={MapPageStyles.mainContent}>
 
-          <Container fluid='true' className={MapPageStyles.mainDivSection}>
+          <this.buttonList hallNames={this.state.hallNames} hallCoordinates={this.state.hallCoordinates}/>
 
-              <Container fluid='true' className={MapPageStyles.mainSection}>
+          <this.mapComponent/>
 
-                <Container fluid='true' className={MapPageStyles.listAndMapSection}>
-  
-                  <this.buttonList hallNames={this.state.hallNames} />
-  
-                  <Col className={MapPageStyles.mapSection}>
-  
-                    <Row className={MapPageStyles.mapContainer}>
-  
-                      {/*Could be loaded from database*/}
-                      <img src={CWUMap} className={MapPageStyles.mapImage} alt='' />
-  
-                    </Row>
-  
-                  </Col>
-  
-                </Container>
-  
-              </Container>
-  
-          </Container>
-  
         </div>
       )
     }
