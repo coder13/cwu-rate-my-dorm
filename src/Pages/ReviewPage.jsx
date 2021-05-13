@@ -35,12 +35,10 @@ class ReviewPage extends Component {
       commonAreasRating: 5,
       cleanlinessRating: 5,
       bathroomRating: 5,
-      user: "Default",
       likes:0
     }
     
     this.submitReview = this.submitReview.bind(this);
-
 
   }
 
@@ -62,8 +60,8 @@ class ReviewPage extends Component {
           "Common Area Rating: " + this.state.commonAreasRating + "\n" +
           "Cleanliness Rating: " + this.state.cleanlinessRating + "\n" +
           "Bathroom Rating: " + this.state.bathroomRating + "\n" +
-          "Author: " + this.state.user.displayName + "\n" +
-          "Email: " + this.state.user.email + "\n")
+          "Author: " + firebase.auth().currentUser.displayName + "\n" +
+          "Email: " + firebase.auth().currentUser.email + "\n")
 
     //Add review to firebase:
 
@@ -77,10 +75,10 @@ class ReviewPage extends Component {
     }
 
     //create a new review and return its id
-    var rev = await firestore.newReview(this.state.hallName, this.state.user.displayName, this.state.user.uid, this.state.user.email,[this.state.firstQuarterYear, this.state.firstQuarterSeason], 
-    [this.state.lastQuarterYear, this.state.lastQuarterSeason], this.state.roomType, this.state.floorNum,this.state.reviewText, this.state.urls, this.state.overallRating, 
-      this.state.locationRating, this.state.roomSizeRating, this.state.furnitureRating, this.state.commonAreasRating, 
-      this.state.cleanlinessRating, this.state.bathroomRating, this.state.likes);
+    var rev = await firestore.newReview(this.state.hallName, firebase.auth().currentUser.displayName, firebase.auth().currentUser.uid, firebase.auth().currentUser.email,
+    [this.state.firstQuarterYear, this.state.firstQuarterSeason], [this.state.lastQuarterYear, this.state.lastQuarterSeason], this.state.roomType, this.state.floorNum,this.state.reviewText, 
+    this.state.urls, this.state.overallRating, this.state.locationRating, this.state.roomSizeRating, this.state.furnitureRating, this.state.commonAreasRating, 
+    this.state.cleanlinessRating, this.state.bathroomRating, this.state.likes);
     
 
     //prompt user that review was submitted:
@@ -113,7 +111,6 @@ class ReviewPage extends Component {
       this.setState({roomTypes: doc.get('roomTypes')});
 
     });
-
 
   }
   render()
@@ -454,7 +451,7 @@ class ReviewPage extends Component {
               <div className={ReviewStyles.buttonSection}>
                 <div 
                   className={ReviewStyles.submitButton}
-                  onClick={e => this.setState({user: firebase.auth().currentUser},this.submitReview)}
+                  onClick={this.submitReview}
                 >
                   <h1>Submit</h1>
                 </div>
