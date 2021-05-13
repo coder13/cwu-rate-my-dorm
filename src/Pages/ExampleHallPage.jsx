@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import { getReviewsByDormName, getDormDocs } from '../firestore'
-import {Container, Row, Col, Carousel, Card} from 'react-bootstrap'
+import {getReviewsByDormName, getDormByName} from '../firestore'
+import {firestore} from '../firebase';
+import {Container, Row, Carousel, Card} from 'react-bootstrap'
 import LoaderComponent from '../Components/LoaderComponent';
 import ExampleStyles from '../Styles/ExampleHallPage.module.css';
 
@@ -21,25 +22,18 @@ class ExampleHallPage extends Component {
     this.generateReviews = this.generateReviews.bind(this);
   }
 
+
   componentDidMount()
   {
     //Loading Hall reviews and information from database.
     getReviewsByDormName(this.state.hallName)
-    .then((result)=>
-      { 
+    .then((result)=>{ 
         this.setState({hallReviews: result});
       }
-    ).then(()=>
-    {
-      getDormDocs()
-      .then((result)=>
-        { 
-          this.setState({hallDocs: result});
-          console.log(result);
-          this.setState({loaded: true});
-        }
-      );
-    });
+    ).then(()=>{
+        this.setState({loaded: true})
+      }
+    );
   }
 
   generateReviews(props) 
@@ -166,7 +160,7 @@ class ExampleHallPage extends Component {
                 >
                   <Card.Header><b>Top Reviews:</b></Card.Header>
                   <Card.Body>
-                    Determine how to choose top reviews.
+                    Top Reviews Here.
                   </Card.Body>
                 </Card>
               </div>
