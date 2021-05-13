@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import {Container, Row, Col, Carousel} from 'react-bootstrap'
+import {getReviewsByDormName, getDormByName} from '../firestore'
+import {firestore} from '../firebase';
+import {Container, Row, Carousel, Card} from 'react-bootstrap'
+import LoaderComponent from '../Components/LoaderComponent';
 import ExampleStyles from '../Styles/ExampleHallPage.module.css';
 
 class ExampleHallPage extends Component {
@@ -8,101 +11,183 @@ class ExampleHallPage extends Component {
   constructor(props)
   {
     super(props);
-    this.state = this.props.location.state;
+    this.state = 
+    {
+      hallName: this.props.location.state.hallName,
+      hallReviews: null,
+      hallDocs: null,
+      loaded: false
+    }
 
-    //Get hall name:
-    this.hallName = this.props.location.state.hallName;
+    this.generateReviews = this.generateReviews.bind(this);
   }
+
 
   componentDidMount()
   {
+    //Loading Hall reviews and information from database.
+    getReviewsByDormName(this.state.hallName)
+    .then((result)=>{ 
+        this.setState({hallReviews: result});
+      }
+    ).then(()=>{
+        this.setState({loaded: true})
+      }
+    );
+  }
 
+  generateReviews(props) 
+  {
+    const reviewsToAdd = props.reviews;
+
+    const toReturn = reviewsToAdd.map((curReview) =>
+
+      <div className={ExampleStyles.reviewTemplate}>
+        <div className={ExampleStyles.reviewTemplateTitle}>
+
+          <div className={ExampleStyles.reviewTemplateTitleCol}>
+            Author: {curReview.get("author")}
+          </div>
+          <div className={ExampleStyles.reviewTemplateTitleCol}>
+            Room Type: {curReview.get("roomType")}
+          </div>
+          <div className={ExampleStyles.reviewTemplateTitleCol}>
+            Floor: {curReview.get("floor")}
+          </div>
+          <div className={ExampleStyles.reviewTemplateTitleCol}>
+            Overall Rating: {curReview.get("overallRating")}
+          </div>
+
+        </div>
+
+        <div className={ExampleStyles.reviewTemplateBody}>
+          
+          <div className={ExampleStyles.reviewTemplateLeft}>
+            {curReview.get("review")}
+          </div>
+          
+          <div className={ExampleStyles.reviewTemplateRight}>
+            <p><b>First Quarter: </b>{curReview.get("firstQuarter")}</p>
+            <p><b>Last Quarter: </b>{curReview.get("lastQuarter")}</p>
+            <p><b>Cleanliness Rating: </b>{curReview.get("cleanlinessRating")}</p>
+            <p><b>Furniture Rating: </b>{curReview.get("furnitureRating")}</p>
+            <p><b>Location Rating: </b>{curReview.get("locationRating")}</p>
+            <p><b>Room Size Rating: </b>{curReview.get("roomSizeRating")}</p>
+          </div>
+         
+        </div>
+
+      </div>
+    );
+
+    console.log(toReturn);
+
+    return(
+      <div className={ExampleStyles.reviewsBlock}>
+        {toReturn}
+      </div>
+    );
   }
 
   render()
   {
+    
+    if(this.state.loaded)
+    {
+      return (
+        <Container fluid className={ExampleStyles.mainContainer}>
 
-    return(
+          <Container className={ExampleStyles.middleSection}>
 
-      <div>
+            <Row className={ExampleStyles.infoAndTopReviewSection}>
 
-        <Container fluid='true' className={ExampleStyles.windowDivSection}>
-          
-          <Row>
+              <div className={ExampleStyles.titleAndInformationSection}>
 
-            <Col className={ExampleStyles.middleSection}>
+                <div className={ExampleStyles.titleBlock}>
+                  {this.state.hallName}
+                </div>
 
-             <Row className={ExampleStyles.infoAndTopReviewSection}>
+                <div className={ExampleStyles.imageGalleryBlock}>
+                  <Carousel className={ExampleStyles.imageCarousel}>
+                    <Carousel.Item>
+                      <img
+                        className={ExampleStyles.carouselImageExample}
+                        src="https://www.kpq.com/wp-content/uploads/2018/07/CWU.jpg"
+                        alt="First slide"
+                      />
+                    </Carousel.Item>
 
-              <Col className={ExampleStyles.titleAndInformationSection}>
-                  
-                <Row className={ExampleStyles.titleBlock}>
-                  <h1>{this.hallName}</h1>
-                </Row>
+                    <Carousel.Item>
+                      <img
+                        className={ExampleStyles.carouselImageExample}
+                        src="https://katu.com/resources/media/b2bd1ced-1737-478c-92d9-fa0fc374d6a2-large16x9_190419_pio_central_washington_university_cwu.jpg?1555702482536"
+                        alt="First slide"
+                      />
+                    </Carousel.Item>
 
-                  <Row className={ExampleStyles.imageGalleryBlock}>
+                    <Carousel.Item>
+                      <img
+                        className={ExampleStyles.carouselImageExample}
+                        src="https://www.kpq.com/wp-content/uploads/2018/07/CWU.jpg"
+                        alt="First slide"
+                      />
+                    </Carousel.Item>
+                  </Carousel>
+                </div>
 
-                    <Carousel className={ExampleStyles.imageCarousel}>
-                      <Carousel.Item>
-                        <img
-                          className={ExampleStyles.carouselImageExample}
-                          src="https://www.kpq.com/wp-content/uploads/2018/07/CWU.jpg"
-                          alt="First slide"
-                        />
-                      </Carousel.Item>
+                <div className={ExampleStyles.infoBlock}>
+                  <Card
+                    bg={'light'}
+                    className={ExampleStyles.infoCard}
+                  >
+                    <Card.Header><b>Hall Information:</b></Card.Header>
+                    <Card.Body>
 
-                      <Carousel.Item>
-                        <img
-                          className={ExampleStyles.carouselImageExample}
-                          src="https://katu.com/resources/media/b2bd1ced-1737-478c-92d9-fa0fc374d6a2-large16x9_190419_pio_central_washington_university_cwu.jpg?1555702482536"
-                          alt="First slide"
-                        />
-                      </Carousel.Item>
+                    <Card.Text>
+                      Some quick Hall info.<br/>
+                      Button to hall info page.
+                    </Card.Text>
+                    </Card.Body>
+                  </Card>
+                </div>
 
-                      <Carousel.Item>
-                        <img
-                          className={ExampleStyles.carouselImageExample}
-                          src="https://www.kpq.com/wp-content/uploads/2018/07/CWU.jpg"
-                          alt="First slide"
-                        />
-                      </Carousel.Item>
-                    </Carousel>
+              </div>
 
-                  </Row>
+              <div className={ExampleStyles.topReviewSection}>
+                <Card
+                    bg={'light'}
+                    className={ExampleStyles.topReviewCard}
+                >
+                  <Card.Header><b>Top Reviews:</b></Card.Header>
+                  <Card.Body>
+                    Top Reviews Here.
+                  </Card.Body>
+                </Card>
+              </div>
 
-                <Row className={ExampleStyles.infoBlock}>
-                  <h1>Info</h1>
-                </Row>
+            </Row>
 
-              </Col>
+            <Row className={ExampleStyles.reviewsTitle}>
+              <h1>Reviews:</h1>
+            </Row>
 
-              <Col className={ExampleStyles.topReviewSection}>
+            <Row className={ExampleStyles.reviewsSection}>
+              <this.generateReviews reviews={this.state.hallReviews} />
+            </Row>
 
-                <Row className={ExampleStyles.topReviewBlock}>
-                  <h1>Top Reviews Here</h1>
-                </Row>
+            <Row className={ExampleStyles.footer}></Row>
 
-              </Col>
+          </Container>
 
-             </Row>
-
-             <Row className={ExampleStyles.reviewsSection}>
-               
-               <div className={ExampleStyles.reviewsBlock}>
-                  <h1>Reviews</h1>
-               </div>
-
-             </Row>
-
-            </Col>
-
-          </Row>
 
         </Container>
-
-      </div>
-    )
-
+      )
+    }
+    else //List is still loading. 
+    {
+      return(<LoaderComponent />);
+    }
+    
   }
 
 }
