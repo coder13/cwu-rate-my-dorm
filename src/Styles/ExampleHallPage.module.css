@@ -1,12 +1,9 @@
-.mainContainer {
-    /* To adjust for the top bar component. */
-    margin-top: 70px;
-    min-height: calc(100vh - 70px);
-    min-width: 100vh;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    background-color: #E6E6E6;
+.windowDivSection {
+  min-width: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: #E6E6E6;
 }
 
 .middleSection {
