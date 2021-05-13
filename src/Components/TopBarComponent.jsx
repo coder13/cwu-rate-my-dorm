@@ -1,75 +1,68 @@
-import React, { Component } from "react";
+import React, { useContext } from "react";
 import { Link } from 'react-router-dom';
-import TopBarCompStyles from '../Styles/TopBarComponent.module.css';
+import { Navbar, Nav, Form, FormControl } from 'react-bootstrap';
+import Styles from '../Styles/TopBarComponent.module.css';
 import CWULogo from '../Assets/CWU_Logo.png'
 import { UserContext } from '../providers/UserProvider';
 import { auth } from "../firebase";
 
-class TopBarComponent extends Component {
-  static contextType = UserContext;
+function SignedInNav() {
+  return (
+    <Nav className="justify-content-end">
+      <Nav.Link as={Link} to="/account">Account Settings</Nav.Link>
+      <Nav.Link as={Link} onClick={() => auth.signOut()}>Sign-out</Nav.Link>
+    </Nav>
+  );
+}
 
-  render() {
-    return (
-      <div className={TopBarCompStyles.topbar}>
-        <div className={TopBarCompStyles.SearchBox}>
-          <img className={TopBarCompStyles.CwuLogo} src={CWULogo} alt="logo" />
-            
-          <form>
-              <input className={TopBarCompStyles.searchInput} type="Text" name="search" placeholder="Search Rate My Dorm"/>
-          </form>
+function SignedOutNav() {
+  return (
+    <Nav className="justify-content-end">
+      <Nav.Link as={Link}
+        to={{
+          pathname: '/signin',
+          state: {
+            from: document.location.pathname
+          }
+        }}
+      >
+        Sign-in
+      </Nav.Link>
+      <Nav.Link as={Link}
+        to={{
+          pathname: '/signup',
+          state: {
+            from: document.location.pathname
+          }
+        }}
+      >
+        Sign-up
+      </Nav.Link>
+    </Nav>
+  );
+}
 
-          <div className={TopBarCompStyles.MenuItemBox}>
-              <div className={TopBarCompStyles.MenuItem}>Home</div>
-              <div className={TopBarCompStyles.MenuItem}>Other Sections</div>
-          </div>
+function TopBarComponent() {
+  const user = useContext(UserContext);
 
-      </div>
-    
-      <div className={TopBarCompStyles.signInSection}>
-          <UserContext.Consumer>
-              {(user) => (
-                user
-                ? (
-                  <>
-                    <div>{`logged in as ${user.displayName}`}</div>
-                    <div className={TopBarCompStyles.LogInSignUpButtons} onClick={() => auth.signOut()}>Sign-out</div>
-                    <Link className={TopBarCompStyles.LogInSignUpButtons} to="/account">Account Settings</Link>
-                  </>
-                )
-                : (
-                  <>
-                    <Link
-                      className={TopBarCompStyles.LogInSignUpButtons}
-                      to={{
-                        pathname: '/signin',
-                        state: {
-                          from: document.location.pathname
-                        }
-                      }}
-                    >
-                      Sign-in
-                    </Link>
-                    <Link
-                      className={TopBarCompStyles.LogInSignUpButtons}
-                      to={{
-                        pathname: '/signup',
-                        state: {
-                          from: document.location.pathname
-                        }
-                      }}
-                    >
-                      Sign-up
-                    </Link>
-                  </>
-                )
-              )}
-          </UserContext.Consumer>
-          <div className={TopBarCompStyles.LeaveAReviwButton}>Leave a Review</div>
-        </div>
+  return (
+    <Navbar sticky="top" role="navigation">
+      <Navbar.Brand as={Link} to="/">
+        <img width={44} height={44} className={Styles.CwuLogo} src={CWULogo} alt="Wildcat" />
+      </Navbar.Brand>
+          
+      <Form inline>
+        <FormControl type="text" name="search" placeholder="Search Rate My Dorm"/>
+      </Form>
 
-      </div>
-    )
-  }
+      <Nav className="ml-auto mr-auto justify-content-center">
+        <Nav.Link as={Link} to="/">Home</Nav.Link>
+        <Nav.Link as={Link} to="/ReviewPage">Leave A Review</Nav.Link>
+      </Nav>
+
+      {user ? <SignedInNav /> : <SignedOutNav />}
+    </Navbar>
+  );
 }
 
 export default TopBarComponent;

@@ -56,13 +56,7 @@ const AccountPage = () => {
   const avatar = photoURL || 'https://res.cloudinary.com/dqcsk8rsc/image/upload/v1577268053/avatar-1-bitmoji_upgwhc.png';
 
   return (
-    <Container
-      style={{
-        marginTop: 'calc(2em + 70px)',
-        width: '100%',
-        minHeight: 'calc(100vh - 70px - 2em)',
-      }}
-    >
+    <Container>
       {error && (
         <Alert variant="danger" dismissible onClose={() => setError(null)}>
           <Alert.Heading>{error.code}</Alert.Heading>

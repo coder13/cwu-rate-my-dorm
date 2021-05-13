@@ -1,7 +1,4 @@
 .mainDivSection {
-    /* To adjust for the top bar component. */
-    margin-top: 70px;
-    min-height: calc(100vh - 70px);
     min-width: 100vh;
     display: flex;
     flex-direction: row;
@@ -13,7 +10,7 @@
 .mainContainerSection {
     display: flex;
     flex-direction: row;
-    width: 1800px;
+    width: 100%;
     max-width: 1800px;
     min-width: 1800px;
 }
@@ -25,7 +22,6 @@
 .content {
     flex: 8;
     margin-top: 15px;
-    height: 875px;
     display: flex;
     flex-direction: row;
     background-color: white;
