@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import {getReviewsByDormName, getDormByName} from '../firestore'
-import {firestore} from '../firebase';
-import {Container, Row, Carousel, Card} from 'react-bootstrap'
+import {Container, Row, Carousel, Card, Button} from 'react-bootstrap'
 import LoaderComponent from '../Components/LoaderComponent';
 import ExampleStyles from '../Styles/ExampleHallPage.module.css';
 
@@ -16,26 +15,48 @@ class ExampleHallPage extends Component {
       hallName: this.props.location.state.hallName,
       hallReviews: null,
       hallDocs: null,
+      hallImages: null,
+      hallDescription: null,
       loaded: false
     }
 
+    //bind the class functions with this.
     this.generateReviews = this.generateReviews.bind(this);
+    this.generateImages = this.generateImages.bind(this);
   }
 
+  //===navigateToPage===
+  //Desc: Handles navigation to next page.
+  navigateToPage(toPass) {
+    this.props.history.push({pathname: "/", state:{hallName: toPass}});
+  }
 
+  //===componentDidMount===
+  //Desc: JS for once the render method is mounted.
   componentDidMount()
   {
     //Loading Hall reviews and information from database.
     getReviewsByDormName(this.state.hallName)
-    .then((result)=>{ 
-        this.setState({hallReviews: result});
-      }
+    .then((result)=>{
+       
+      this.setState({hallReviews: result});
+
+    }
     ).then(()=>{
-        this.setState({loaded: true})
-      }
-    );
+
+      getDormByName(this.state.hallName)
+      .then((dormNameResult) => {
+        this.setState({hallDocs: dormNameResult});
+        this.setState({hallImages: dormNameResult.get("images")});
+        this.setState({hallDescription: dormNameResult.get("description")});
+        this.setState({loaded: true});
+      });
+
+    });
   }
 
+  //===generateReviews===
+  //Desc: Genereates reviews from database values.
   generateReviews(props) 
   {
     const reviewsToAdd = props.reviews;
@@ -80,8 +101,6 @@ class ExampleHallPage extends Component {
       </div>
     );
 
-    console.log(toReturn);
-
     return(
       <div className={ExampleStyles.reviewsBlock}>
         {toReturn}
@@ -89,6 +108,33 @@ class ExampleHallPage extends Component {
     );
   }
 
+  //===generateImages===
+  //Desc: Genereates images from database values.
+  generateImages(props) 
+  {
+    const imagesToAdd = props.images;
+
+    const toReturn = imagesToAdd.map((curImage) => 
+    
+      <Carousel.Item>
+        <img
+          className={ExampleStyles.carouselImageExample}
+          src={curImage}
+          alt=""
+        />
+      </Carousel.Item>
+    
+    );
+
+    return(
+      <Carousel className={ExampleStyles.imageCarousel}>
+        {toReturn}
+      </Carousel>
+    );
+  }
+
+  //===render===
+  //Desc: Renders the html.
   render()
   {
     
@@ -108,61 +154,35 @@ class ExampleHallPage extends Component {
                 </div>
 
                 <div className={ExampleStyles.imageGalleryBlock}>
-                  <Carousel className={ExampleStyles.imageCarousel}>
-                    <Carousel.Item>
-                      <img
-                        className={ExampleStyles.carouselImageExample}
-                        src="https://www.kpq.com/wp-content/uploads/2018/07/CWU.jpg"
-                        alt="First slide"
-                      />
-                    </Carousel.Item>
-
-                    <Carousel.Item>
-                      <img
-                        className={ExampleStyles.carouselImageExample}
-                        src="https://katu.com/resources/media/b2bd1ced-1737-478c-92d9-fa0fc374d6a2-large16x9_190419_pio_central_washington_university_cwu.jpg?1555702482536"
-                        alt="First slide"
-                      />
-                    </Carousel.Item>
-
-                    <Carousel.Item>
-                      <img
-                        className={ExampleStyles.carouselImageExample}
-                        src="https://www.kpq.com/wp-content/uploads/2018/07/CWU.jpg"
-                        alt="First slide"
-                      />
-                    </Carousel.Item>
-                  </Carousel>
+                  <this.generateImages images={this.state.hallImages} />
                 </div>
 
                 <div className={ExampleStyles.infoBlock}>
-                  <Card
-                    bg={'light'}
-                    className={ExampleStyles.infoCard}
-                  >
+
+                  <Card bg={'light'} className={ExampleStyles.infoCard}>
                     <Card.Header><b>Hall Information:</b></Card.Header>
                     <Card.Body>
-
-                    <Card.Text>
-                      Some quick Hall info.<br/>
-                      Button to hall info page.
-                    </Card.Text>
+                      <Card.Text>
+                        {this.state.hallDescription}
+                        <br />
+                        <Button variant="primary">More Info</Button>
+                      </Card.Text>
                     </Card.Body>
                   </Card>
+
                 </div>
 
               </div>
 
               <div className={ExampleStyles.topReviewSection}>
-                <Card
-                    bg={'light'}
-                    className={ExampleStyles.topReviewCard}
-                >
+
+                <Card bg={'light'} className={ExampleStyles.topReviewCard}>
                   <Card.Header><b>Top Reviews:</b></Card.Header>
                   <Card.Body>
                     Top Reviews Here.
                   </Card.Body>
                 </Card>
+
               </div>
 
             </Row>
@@ -178,7 +198,6 @@ class ExampleHallPage extends Component {
             <Row className={ExampleStyles.footer}></Row>
 
           </Container>
-
 
         </Container>
       )
