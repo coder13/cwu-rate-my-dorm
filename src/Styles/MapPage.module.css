@@ -19,23 +19,39 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.buttonListBlock {
+  flex: 9;
+  height: 100%;
+  width: 100%;
   overflow-y: scroll;
 }
 
-.listColumn::-webkit-scrollbar-track
+.optionsBlock {
+  flex: 1;
+  border-bottom: solid 2px grey;
+  height: 100%;
+  width: 100%;
+  padding: 5px;
+  background-color: #d4d4d4;
+  font-weight: bold;
+}
+
+.buttonListBlock::-webkit-scrollbar-track
 {
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 	border-radius: 2px;
 	background-color: #F5F5F5;
 }
 
-.listColumn::-webkit-scrollbar
+.buttonListBlock::-webkit-scrollbar
 {
 	width: 12px;
 	background-color: #F5F5F5;
 }
 
-.listColumn::-webkit-scrollbar-thumb
+.buttonListBlock::-webkit-scrollbar-thumb
 {
 	border-radius: 5px;
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);

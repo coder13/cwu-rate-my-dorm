@@ -9,7 +9,7 @@ import {withRouter} from "react-router-dom";
 import {MapContainer, TileLayer, Marker, Popup} from 'react-leaflet'
 import MapPageStyles from '../Styles/MapPage.module.css';
 import LoaderComponent from '../Components/LoaderComponent';
-import {Button} from 'react-bootstrap';
+import {Button, Form} from 'react-bootstrap';
 
 class MapPage extends Component {
 
@@ -30,6 +30,7 @@ class MapPage extends Component {
     //Bind function to class instance.
     this.navigateToPage = this.navigateToPage.bind(this);
     this.buttonList = this.buttonList.bind(this);
+    this.hallOptions = this.hallOptions.bind(this);
     this.mapComponent= this.mapComponent.bind(this);
     this.changeCenterHover= this.changeCenterHover.bind(this);
     this.reCenter = this.reCenter.bind(this);
@@ -79,14 +80,40 @@ class MapPage extends Component {
     );
     
     return(
-      <div 
-        className={MapPageStyles.listColumn}
-        onMouseLeave={this.reCenter}
-      >
-        {listButtonItems}
+      <div className={MapPageStyles.listColumn} onMouseLeave={this.reCenter}>
+
+        <div className={MapPageStyles.optionsBlock}>
+          <this.hallOptions/>
+        </div>
+
+        <div className={MapPageStyles.buttonListBlock}>
+          {listButtonItems}
+        </div>
+
       </div>
     );
   }
+
+  //===hallOptions===
+  //Desc: Get hall option inputs.
+  hallOptions() {
+
+    return (
+     <Form>
+        <Form.Group>
+          <h5>Filter:</h5>
+          <Form.Control as="select" defaultValue="Choose...">
+            <option>Choose</option>
+            <option>First Year</option>
+            <option>First Year</option>
+            <option>Returning / Transfer</option>
+          </Form.Control>
+        </Form.Group>
+      </Form>
+    );
+
+  }
+
 
   //===componentDidMount===
   //Desc: JS for once the render method is mounted.
