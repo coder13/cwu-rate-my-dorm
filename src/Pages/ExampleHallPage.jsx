@@ -17,6 +17,7 @@ class ExampleHallPage extends Component {
       hallDocs: null,
       hallImages: null,
       hallDescription: null,
+      hallRating: null,
       loaded: false
     }
 
@@ -49,6 +50,7 @@ class ExampleHallPage extends Component {
         this.setState({hallDocs: dormNameResult});
         this.setState({hallImages: dormNameResult.get("images")});
         this.setState({hallDescription: dormNameResult.get("description")});
+        this.setState({hallRating: dormNameResult.get("rating")});
         this.setState({loaded: true});
       });
 
@@ -154,41 +156,34 @@ class ExampleHallPage extends Component {
                 </div>
 
                 <div className={ExampleStyles.imageGalleryBlock}>
-                  <this.generateImages images={this.state.hallImages} />
+
+                  <div className={ExampleStyles.imageCarouselSection}>
+                     {<this.generateImages images={this.state.hallImages} />}
+                  </div>  
+
+                  <div className={ExampleStyles.infoBlock}>
+                    <Card bg={'light'} className={ExampleStyles.infoCard}>
+                      <Card.Header><b>Hall Information:</b></Card.Header>
+                      <Card.Body>
+                        <Card.Text>
+                          <h4>Average Hall Rating: {this.state.hallRating}</h4>
+                          {this.state.hallDescription}
+                          <br/>
+                          <br/>
+                          <Button variant="primary" onClick={()=>{this.navigateToPage("InfoPage")}}>More Info</Button>
+                        </Card.Text>
+                      </Card.Body>
+                    </Card>
+                  </div>
+
                 </div>
-
-                <div className={ExampleStyles.infoBlock}>
-
-                  <Card bg={'light'} className={ExampleStyles.infoCard}>
-                    <Card.Header><b>Hall Information:</b></Card.Header>
-                    <Card.Body>
-                      <Card.Text>
-                        {this.state.hallDescription}
-                        <br />
-                        <Button variant="primary">More Info</Button>
-                      </Card.Text>
-                    </Card.Body>
-                  </Card>
-
-                </div>
-
-              </div>
-
-              <div className={ExampleStyles.topReviewSection}>
-
-                <Card bg={'light'} className={ExampleStyles.topReviewCard}>
-                  <Card.Header><b>Top Reviews:</b></Card.Header>
-                  <Card.Body>
-                    Top Reviews Here.
-                  </Card.Body>
-                </Card>
 
               </div>
 
             </Row>
 
             <Row className={ExampleStyles.reviewsTitle}>
-              <h1>Reviews:</h1>
+              <h1>User Reviews:</h1>
             </Row>
 
             <Row className={ExampleStyles.reviewsSection}>
