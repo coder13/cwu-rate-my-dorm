@@ -58,6 +58,7 @@ class MapPage extends Component {
     //Gemerate hall buttons.
     const listButtonItems = hallNamesAndLocations.map((hallInfo) =>
       <Button
+        key={hallInfo[0]}
         variant="success"
         size="lg"
         className={MapPageStyles.hallButton}
@@ -70,6 +71,7 @@ class MapPage extends Component {
     //Generate markers for buttons.
     this.markers = hallNamesAndLocations.map((hallInfo) =>
       <Marker 
+        key={hallInfo[0]}
         position={hallInfo[1]}
       >
         <Popup>
