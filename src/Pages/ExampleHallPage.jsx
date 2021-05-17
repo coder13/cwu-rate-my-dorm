@@ -63,7 +63,7 @@ class ExampleHallPage extends Component {
 
     const toReturn = reviewsToAdd.map((curReview) =>
 
-      <div className={ExampleStyles.reviewTemplate}>
+      <div key={curReview.id} className={ExampleStyles.reviewTemplate}>
         <div className={ExampleStyles.reviewTemplateTitle}>
 
           <div className={ExampleStyles.reviewTemplateTitleCol}>
@@ -116,7 +116,7 @@ class ExampleHallPage extends Component {
 
     const toReturn = imagesToAdd.map((curImage) => 
     
-      <Carousel.Item>
+      <Carousel.Item key={curImage}>
         <img
           className={ExampleStyles.carouselImageExample}
           src={curImage}

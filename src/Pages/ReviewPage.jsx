@@ -69,13 +69,13 @@ class ReviewPage extends Component {
     var i;
     for(i=0; i<this.state.image.length; i++){
       var imgUrl = await firestore.uploadImage(this.state.hallName, this.state.image[i]); //add to storage and dorm document, returns url
-      this.setState(prevState =>({ //add url to urls
-        urls:[...prevState.urls, imgUrl]
+      this.setState(({ //add url to urls
+        urls: [...this.state.urls, imgUrl]
       })) 
     }
 
-    //create a new review and return its id
-    var rev = await firestore.newReview(this.state.hallName, firebase.auth().currentUser.displayName, firebase.auth().currentUser.uid, firebase.auth().currentUser.email,
+    //create a new review
+    firestore.newReview(this.state.hallName, firebase.auth().currentUser.displayName, firebase.auth().currentUser.uid, firebase.auth().currentUser.email,
     [this.state.firstQuarterYear, this.state.firstQuarterSeason], [this.state.lastQuarterYear, this.state.lastQuarterSeason], this.state.roomType, this.state.floorNum,this.state.reviewText, 
     this.state.urls, this.state.overallRating, this.state.locationRating, this.state.roomSizeRating, this.state.furnitureRating, this.state.commonAreasRating, 
     this.state.cleanlinessRating, this.state.bathroomRating, this.state.likes);
@@ -88,7 +88,7 @@ class ReviewPage extends Component {
   componentDidMount() {
 
     this.setState(firestore.getDormNames().then((names) => {
-      this.state.hallNames= names;
+      this.setState({ hallNames: names });
       this.setState({ loaded: true });
     }));
 
@@ -102,12 +102,17 @@ class ReviewPage extends Component {
       console.log('floors:' + doc.get('floors'));
       numFloors = doc.get('floors');
       var x = 1;
-      this.state.floors = [];
+      let floors = [];
+
       while (x <= numFloors)
       {
-        this.setState({ floors: [...this.state.floors, x] });
+        floors.push(x);
         x++;
       }
+
+      this.setState({ floors });
+
+      console.log(this.state.floors);
       this.setState({roomTypes: doc.get('roomTypes')});
 
     });
@@ -147,7 +152,7 @@ class ReviewPage extends Component {
                           onChange={e => this.dormChanged(e)}  
                         >
                           <option>Choose...</option>
-                          {this.state.hallNames.map(dorm => (<option>{dorm}</option>))}
+                          {this.state.hallNames.map(dorm => (<option key={dorm}>{dorm}</option>))}
 
                         </Form.Control>
                       </Col>
@@ -185,7 +190,7 @@ class ReviewPage extends Component {
                                 dif++;
                                 years.push(years[years.length-1] - 1);
                               }
-                              return years.map(year => (<option>{year}</option>));
+                              return years.map(year => (<option key={year}>{year}</option>));
 
                             })()}
 
@@ -225,7 +230,7 @@ class ReviewPage extends Component {
                                 dif++;
                                 years.push(years[years.length-1] - 1);
                               }
-                              return years.map(year => (<option>{year}</option>));
+                              return years.map(year => (<option key={year}>{year}</option>));
 
                             })()}
 
@@ -246,7 +251,7 @@ class ReviewPage extends Component {
                           onChange={e => this.setState({roomType: e.target.value})}
                         >
                           <option>Choose...</option>
-                          {this.state.roomTypes.map(type => (<option>{type}</option>))}
+                          {this.state.roomTypes.map(type => (<option key={type}>{type}</option>))}
 
                         </Form.Control>
                       </Col>
@@ -265,7 +270,7 @@ class ReviewPage extends Component {
                           onChange={e => this.setState({floorNum: e.target.value})}
                         >
                           <option>Choose...</option>
-                          {this.state.floors.map(floor => (<option value={floor}>Floor {floor}</option>))}
+                          {this.state.floors.map(floor => (<option key={floor} value={floor}>Floor {floor}</option>))}
                         </Form.Control>
                       </Col>
                     </Form.Row>

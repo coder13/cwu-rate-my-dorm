@@ -1,6 +1,5 @@
 import firebase from 'firebase/app';
-import React from "react";
-import { auth, firestore, storage, generateUserDocument } from './firebase';
+import { firestore, storage } from './firebase';
 import uuid from 'react-uuid';
 
 

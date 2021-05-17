@@ -10,7 +10,7 @@ function SignedInNav() {
   return (
     <Nav className="justify-content-end">
       <Nav.Link as={Link} to="/account">Account Settings</Nav.Link>
-      <Nav.Link as={Link} onClick={() => auth.signOut()}>Sign-out</Nav.Link>
+      <Nav.Link as={Link} onClick={() => auth.signOut()} to="#">Sign-out</Nav.Link>
     </Nav>
   );
 }
@@ -48,7 +48,7 @@ function TopBarComponent() {
   return (
     <Navbar sticky="top" role="navigation">
       <Navbar.Brand as={Link} to="/">
-        <img width={44} height={44} className={Styles.CwuLogo} src={CWULogo} alt="Wildcat" />
+        <img width={44} height={44} className={Styles.CWULogo} src={CWULogo} alt="Wildcat" />
       </Navbar.Brand>
           
       <Form inline>
