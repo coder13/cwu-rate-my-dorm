@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import {getReviewsByDormName, getDormByName} from '../firestore'
 import {Container, Row, Carousel, Card, Button} from 'react-bootstrap'
 import LoaderComponent from '../Components/LoaderComponent';
+import XButton from '../Assets/xButton.png'
 import ExampleStyles from '../Styles/ExampleHallPage.module.css';
 
 class ExampleHallPage extends Component {
@@ -18,12 +19,15 @@ class ExampleHallPage extends Component {
       hallImages: null,
       hallDescription: null,
       hallRating: null,
+      currentUserImage: null,
+      displayCurUserImage: false,
       loaded: false
     }
 
     //bind the class functions with this.
     this.generateReviews = this.generateReviews.bind(this);
     this.generateImages = this.generateImages.bind(this);
+    this.userImagePopup = this.userImagePopup.bind(this);
   }
 
   //===navigateToPage===
@@ -57,6 +61,18 @@ class ExampleHallPage extends Component {
     });
   }
 
+  //===userImagePopup===
+  //Desc: Displays a pop up image for the user.
+  userImagePopup() 
+  {
+    return (
+      <div className={ExampleStyles.userImagePopUp}>
+        <img className={ExampleStyles.userImage} src={this.state.currentUserImage}/>
+        <img className={ExampleStyles.topcorner} src={XButton} onClick={()=>{this.setState({displayCurUserImage: false})}}/>
+      </div>
+    );
+  }
+
   //===generateReviews===
   //Desc: Genereates reviews from database values.
   generateReviews(props) 
@@ -71,31 +87,38 @@ class ExampleHallPage extends Component {
           <div className={ExampleStyles.reviewTemplateTitleCol}>
             Author: {curReview.get("author")}
           </div>
-          <div className={ExampleStyles.reviewTemplateTitleCol}>
-            Room Type: {curReview.get("roomType")}
-          </div>
-          <div className={ExampleStyles.reviewTemplateTitleCol}>
-            Floor: {curReview.get("floor")}
-          </div>
-          <div className={ExampleStyles.reviewTemplateTitleCol}>
-            Overall Rating: {curReview.get("overallRating")}
-          </div>
 
         </div>
 
         <div className={ExampleStyles.reviewTemplateBody}>
           
-          <div className={ExampleStyles.reviewTemplateLeft}>
+          <div className={ExampleStyles.reviewTemplateDesc}>
             {curReview.get("review")}
+          </div>
+
+          <div className={ExampleStyles.reviewTemplateImages}>
+            <h5>User Images:</h5>
+            <img className={ExampleStyles.reviewTemplateImageBorder} 
+                 src={curReview.get("images")} 
+                alt=""
+                onClick={ ()=>{
+                                this.setState({displayCurUserImage: true});
+                                this.setState({currentUserImage: curReview.get("images")});
+                               }
+              }
+            />
           </div>
           
           <div className={ExampleStyles.reviewTemplateRight}>
+            <h3>Overall Rating: {curReview.get("overallRating")}</h3>
             <p><b>First Quarter: </b>{curReview.get("firstQuarter")}</p>
             <p><b>Last Quarter: </b>{curReview.get("lastQuarter")}</p>
             <p><b>Cleanliness Rating: </b>{curReview.get("cleanlinessRating")}</p>
             <p><b>Furniture Rating: </b>{curReview.get("furnitureRating")}</p>
             <p><b>Location Rating: </b>{curReview.get("locationRating")}</p>
             <p><b>Room Size Rating: </b>{curReview.get("roomSizeRating")}</p>
+            <p><b>Room Type:</b> {curReview.get("roomType")}</p>
+            <p><b>Floor: </b>{curReview.get("floor")}</p>
           </div>
          
         </div>
@@ -143,58 +166,65 @@ class ExampleHallPage extends Component {
     if(this.state.loaded)
     {
       return (
-        <Container fluid className={ExampleStyles.mainContainer}>
+        <div>
 
-          <Container className={ExampleStyles.middleSection}>
+          {this.state.displayCurUserImage ? <this.userImagePopup/>: null}
 
-            <Row className={ExampleStyles.infoAndTopReviewSection}>
+          <Container fluid className={ExampleStyles.mainContainer}>
 
-              <div className={ExampleStyles.titleAndInformationSection}>
+            <Container className={ExampleStyles.middleSection}>
 
-                <div className={ExampleStyles.titleBlock}>
-                  {this.state.hallName}
-                </div>
+              <Row className={ExampleStyles.infoAndTopReviewSection}>
 
-                <div className={ExampleStyles.imageGalleryBlock}>
+                <div className={ExampleStyles.titleAndInformationSection}>
 
-                  <div className={ExampleStyles.imageCarouselSection}>
-                     {<this.generateImages images={this.state.hallImages} />}
-                  </div>  
+                  <div className={ExampleStyles.titleBlock}>
+                    {this.state.hallName}
+                  </div>
 
-                  <div className={ExampleStyles.infoBlock}>
-                    <Card bg={'light'} className={ExampleStyles.infoCard}>
-                      <Card.Header><b>Hall Information:</b></Card.Header>
-                      <Card.Body>
-                        <Card.Text>
-                          <h4>Average Hall Rating: {this.state.hallRating}</h4>
-                          {this.state.hallDescription}
-                          <br/>
-                          <br/>
-                          <Button variant="primary" onClick={()=>{this.navigateToPage("InfoPage")}}>More Info</Button>
-                        </Card.Text>
-                      </Card.Body>
-                    </Card>
+                  <div className={ExampleStyles.imageGalleryBlock}>
+
+                    <div className={ExampleStyles.imageCarouselSection}>
+                      {<this.generateImages images={this.state.hallImages} />}
+                    </div>
+
+                    <div className={ExampleStyles.infoBlock}>
+                      <Card bg={'light'} className={ExampleStyles.infoCard}>
+                        <Card.Header><b>Hall Information:</b></Card.Header>
+                        <Card.Body>
+                          <Card.Text>
+                            <h3>Average Hall Rating: {this.state.hallRating}</h3>
+                            <br />
+                            <h5>Description:</h5>
+                            {this.state.hallDescription}
+                            <br />
+                            <br />
+                            <Button variant="primary" onClick={() => { this.navigateToPage("InfoPage") }}>More Info</Button>
+                          </Card.Text>
+                        </Card.Body>
+                      </Card>
+                    </div>
+
                   </div>
 
                 </div>
 
-              </div>
+              </Row>
 
-            </Row>
+              <Row className={ExampleStyles.reviewsTitle}>
+                <h1>User Reviews:</h1>
+              </Row>
 
-            <Row className={ExampleStyles.reviewsTitle}>
-              <h1>User Reviews:</h1>
-            </Row>
+              <Row className={ExampleStyles.reviewsSection}>
+                <this.generateReviews reviews={this.state.hallReviews} />
+              </Row>
 
-            <Row className={ExampleStyles.reviewsSection}>
-              <this.generateReviews reviews={this.state.hallReviews} />
-            </Row>
+              <Row className={ExampleStyles.footer}></Row>
 
-            <Row className={ExampleStyles.footer}></Row>
+            </Container>
 
           </Container>
-
-        </Container>
+        </div>
       )
     }
     else //List is still loading. 

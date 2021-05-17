@@ -95,7 +95,7 @@
 }
 
 .reviewsSection {
-    height: 1400px;
+    height: 2000px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -121,7 +121,7 @@
 }
 
 .reviewTemplate {
-    height: 300px;
+    height: 450px;
     width: calc(100% - 30px);
     background-color: rgb(246, 246, 246);
     border-radius: 5px;
@@ -146,7 +146,6 @@
     display: flex;
     align-items: center;
     padding-left: 15px;
-    border-right: 1px solid lightgray;
 }
 
 .reviewTemplateBody {
@@ -155,7 +154,7 @@
     flex-direction: row;
 }
 
-.reviewTemplateLeft {
+.reviewTemplateDesc {
     flex: 3.06;
     width: 280px;
     padding-left: 15px;
@@ -166,6 +165,30 @@
     border-radius: 5px;
 }
 
+.reviewTemplateImages 
+{
+    flex: 1.2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-left: 1px solid lightgrey;
+}
+
+.reviewTemplateImageBorder 
+{
+    height: 300px;
+    width: 300px;
+}
+
+.reviewTemplateImageBorder:hover 
+{
+    height: 300px;
+    width: 300px;
+    filter: brightness(50%);
+    cursor: pointer;
+}
+
 .reviewTemplateRight {
     flex: 1;
     padding-left: 15px;
@@ -173,10 +196,38 @@
     border-left: 1px solid lightgrey;
 }
 
+.userImagePopUp
+{
+    top:0;
+    left:0;
+    height: 100%;
+    width: 100%;
+    z-index: 10000;
+    background-color:rgba(255,255,255,0.5);
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.userImage{
+    opacity: 2;
+}
+
+.topcorner{
+    height: 65px;
+    width: 65px;
+    margin-top: 3px;
+    margin-right: 5px;
+    position:absolute;
+    top:0;
+    right:0;
+    cursor: pointer;
+}
+
 .footer {
     height: 30px;
 }
-
 
 /*Getting rid of bootstrap padding / margins*/
 
