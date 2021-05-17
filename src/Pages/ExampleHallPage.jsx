@@ -104,7 +104,7 @@ class ExampleHallPage extends Component {
                 onClick={ ()=>{
                                 this.setState({displayCurUserImage: true});
                                 this.setState({currentUserImage: curReview.get("images")});
-                               }
+                              }
               }
             />
           </div>
