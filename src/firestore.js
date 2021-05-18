@@ -106,11 +106,11 @@ export async function updateOverallRating(dormName, revRating ){
             //update overall rating
             var oldRatingTotal = 0;
 
-            if(doc.data().rating != null){
+            if(doc.data().rating != null){ //if this is not the first review
                 oldRatingTotal = doc.data().rating * doc.data().numReviews; 
             }
 
-            //console.log("old total " + oldRatingTotal);
+            //calculate new rating
             var newAvgRating = ((oldRatingTotal + parseInt(revRating) )/ newNumReviews).toFixed(1);
 
             //commit to Firestore
@@ -127,7 +127,7 @@ export async function getReviewsByUser() {
     var reviews = []; 
     var user = firebase.auth().currentUser;
     //console.log(user.email);
-    await firestore.collectionGroup('Reviews').where('authorID', '==', user.uid).get().then((querySnapshot) => {
+    await firestore.collectionGroup('Reviews').where('authorID', '==', user.uid).orderBy("lastQuarterYear", "desc").orderBy("lastQuarterSeasonNum", "desc").get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
             reviews.push(doc);
         });
@@ -172,14 +172,14 @@ export async function getTopReviews(dormName){
             topId.push(doc.id);
         });
     });
-    return topRev, topId;
+    return [topRev, topId];
 } */
 
 
 //Get top 3 MOST RECENT reviews
 export async function getTopReviews(dormName){
-    var topRev = [];
-    var topId = [];
+    var topRev = []; //these will be the actual review documents
+    var topId = []; //this will just be the ids of the top reviews
     var dormId = await getDormId(dormName);
     console.log("top");
     await firestore.collection("Dorms").doc(dormId).collection("Reviews").orderBy("lastQuarterYear", "desc").orderBy("lastQuarterSeasonNum", "desc").limit(3).get().then((querySnapshot) => {
@@ -192,7 +192,7 @@ export async function getTopReviews(dormName){
     return [topRev, topId];
 }
 
-//Get reviews sorted by most recent. Uncomment commented parts to use top reviews
+//Get reviews sorted by most recent. ***Uncomment commented parts to use top reviews***
 export async function getSortedReviews(dormName){
     var reviews = [];
     var dormId = await getDormId(dormName);
