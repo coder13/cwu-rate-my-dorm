@@ -86,12 +86,10 @@ class ExampleHallPage extends Component {
           <h5>No Reviws Yet...</h5>
         </div>
       );
-    }
-
+    
     const toReturn = reviewsToAdd.map((curReview) =>
-
       curReview.get("images").length > 0 ? 
-        <div className={ExampleStyles.reviewTemplate}>
+        <div key={curReview.id} className={ExampleStyles.reviewTemplate}>
           <div className={ExampleStyles.reviewTemplateTitle}>
             <b>Author: </b> {curReview.get("author")}
           </div>
@@ -153,7 +151,7 @@ class ExampleHallPage extends Component {
     const imagesToAdd = props.images;
     const toReturn = imagesToAdd.map((curImage) => 
     
-      <Carousel.Item>
+      <Carousel.Item key={curImage}>
         <img
           className={ExampleStyles.carouselImageExample}
           src={curImage}

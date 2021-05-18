@@ -6,8 +6,8 @@ class LoaderComponent extends Component
     render() 
     {
        return(
-       <div class={LoaderStyles.wrapper}>
-           <div class={LoaderStyles.loader}></div>
+       <div className={LoaderStyles.wrapper}>
+           <div className={LoaderStyles.loader}></div>
        </div>)
     }
 }
