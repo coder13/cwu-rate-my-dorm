@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import {getReviewsByDormName, getDormByName} from '../firestore'
 import {Container, Row, Carousel, Card, Button} from 'react-bootstrap'
 import LoaderComponent from '../Components/LoaderComponent';
+import XButton from '../Assets/xButton.png'
 import ExampleStyles from '../Styles/ExampleHallPage.module.css';
 
 class ExampleHallPage extends Component {
@@ -17,12 +18,16 @@ class ExampleHallPage extends Component {
       hallDocs: null,
       hallImages: null,
       hallDescription: null,
+      hallRating: null,
+      currentUserImage: null,
+      displayCurUserImage: false,
       loaded: false
     }
 
     //bind the class functions with this.
     this.generateReviews = this.generateReviews.bind(this);
     this.generateImages = this.generateImages.bind(this);
+    this.userImagePopup = this.userImagePopup.bind(this);
   }
 
   //===navigateToPage===
@@ -49,10 +54,23 @@ class ExampleHallPage extends Component {
         this.setState({hallDocs: dormNameResult});
         this.setState({hallImages: dormNameResult.get("images")});
         this.setState({hallDescription: dormNameResult.get("description")});
+        this.setState({hallRating: dormNameResult.get("rating")});
         this.setState({loaded: true});
       });
 
     });
+  }
+
+  //===userImagePopup===
+  //Desc: Displays a pop up image for the user.
+  userImagePopup() 
+  {
+    return (
+      <div className={ExampleStyles.userImagePopUp} onClick={()=>{this.setState({displayCurUserImage: false})}}>
+        <img className={ExampleStyles.userImage} src={this.state.currentUserImage} alt=""/>
+        <img className={ExampleStyles.topcorner} src={XButton} onClick={()=>{this.setState({displayCurUserImage: false})}} alt=""/>
+      </div>
+    );
   }
 
   //===generateReviews===
@@ -61,44 +79,63 @@ class ExampleHallPage extends Component {
   {
     const reviewsToAdd = props.reviews;
 
+    if(reviewsToAdd <= 0)
+    {
+      return(
+        <div className={ExampleStyles.reviewsBlock}>
+          <h5>No Reviws Yet...</h5>
+        </div>
+      );
+    }
+
     const toReturn = reviewsToAdd.map((curReview) =>
+      curReview.get("images").length > 0 ? 
+        <div key={curReview.id} className={ExampleStyles.reviewTemplate}>
+          <div className={ExampleStyles.reviewTemplateTitle}>
+            <b>Author: </b> {curReview.get("author")}
+          </div>
 
-      <div key={curReview.id} className={ExampleStyles.reviewTemplate}>
-        <div className={ExampleStyles.reviewTemplateTitle}>
+          <div className={ExampleStyles.reviewTemplateRating}>
+            <b>Overall Rating: </b> {curReview.get("overallRating")}
+          </div>
 
-          <div className={ExampleStyles.reviewTemplateTitleCol}>
-            Author: {curReview.get("author")}
-          </div>
-          <div className={ExampleStyles.reviewTemplateTitleCol}>
-            Room Type: {curReview.get("roomType")}
-          </div>
-          <div className={ExampleStyles.reviewTemplateTitleCol}>
-            Floor: {curReview.get("floor")}
-          </div>
-          <div className={ExampleStyles.reviewTemplateTitleCol}>
-            Overall Rating: {curReview.get("overallRating")}
+          <div className={ExampleStyles.reviewTemplateBody}>
+
+            <div className={ExampleStyles.reviewTemplateDesc}>
+              {curReview.get("review")}
+            </div>
+
+            <div className={ExampleStyles.reviewTemplateImages}>
+
+              <img className={ExampleStyles.reviewTemplateImageBorder}
+                src={curReview.get("images")}
+                alt=""
+                onClick={() => { this.setState({ displayCurUserImage: true }); this.setState({ currentUserImage: curReview.get("images") }); }}
+              />
+
+            </div>
+
           </div>
 
         </div>
+       : 
+        <div key={curReview.id} className={ExampleStyles.reviewTemplate}>
+          
+          <div className={ExampleStyles.reviewTemplateTitle}>
+            <b>Author:</b> {curReview.get("author")}
+          </div>
 
-        <div className={ExampleStyles.reviewTemplateBody}>
-          
-          <div className={ExampleStyles.reviewTemplateLeft}>
-            {curReview.get("review")}
+          <div className={ExampleStyles.reviewTemplateRating}>
+            <b>Overall Rating:</b> {curReview.get("overallRating")}
           </div>
-          
-          <div className={ExampleStyles.reviewTemplateRight}>
-            <p><b>First Quarter: </b>{curReview.get("firstQuarter")}</p>
-            <p><b>Last Quarter: </b>{curReview.get("lastQuarter")}</p>
-            <p><b>Cleanliness Rating: </b>{curReview.get("cleanlinessRating")}</p>
-            <p><b>Furniture Rating: </b>{curReview.get("furnitureRating")}</p>
-            <p><b>Location Rating: </b>{curReview.get("locationRating")}</p>
-            <p><b>Room Size Rating: </b>{curReview.get("roomSizeRating")}</p>
+
+          <div className={ExampleStyles.reviewTemplateBody}>
+            <div className={ExampleStyles.reviewTemplateDesc}>
+              {curReview.get("review")}
+            </div>
           </div>
-         
+
         </div>
-
-      </div>
     );
 
     return(
@@ -113,7 +150,6 @@ class ExampleHallPage extends Component {
   generateImages(props) 
   {
     const imagesToAdd = props.images;
-
     const toReturn = imagesToAdd.map((curImage) => 
     
       <Carousel.Item key={curImage}>
@@ -141,65 +177,65 @@ class ExampleHallPage extends Component {
     if(this.state.loaded)
     {
       return (
-        <Container fluid className={ExampleStyles.mainContainer}>
+        <div>
 
-          <Container className={ExampleStyles.middleSection}>
+          {this.state.displayCurUserImage ? <this.userImagePopup/>: null}
 
-            <Row className={ExampleStyles.infoAndTopReviewSection}>
+          <Container fluid className={ExampleStyles.mainContainer}>
 
-              <div className={ExampleStyles.titleAndInformationSection}>
+            <Container className={ExampleStyles.middleSection}>
 
-                <div className={ExampleStyles.titleBlock}>
-                  {this.state.hallName}
+              <Row className={ExampleStyles.infoAndTopReviewSection}>
+
+                <div className={ExampleStyles.titleAndInformationSection}>
+
+                  <div className={ExampleStyles.titleBlock}>
+                    {this.state.hallName}
+                  </div>
+
+                  <div className={ExampleStyles.imageGalleryBlock}>
+
+                    <div className={ExampleStyles.imageCarouselSection}>
+                      {<this.generateImages images={this.state.hallImages} />}
+                    </div>
+
+                    <div className={ExampleStyles.infoBlock}>
+                      <Card bg={'light'} className={ExampleStyles.infoCard}>
+                        <Card.Header><b>Hall Information:</b></Card.Header>
+                        <Card.Body>
+                          <Card.Text>
+                            <h3>Average Hall Rating: {this.state.hallRating}</h3>
+                            <br />
+                            <h5>Description:</h5>
+                            {this.state.hallDescription}
+                            <br />
+                            <br />
+                            <Button variant="primary" onClick={() => { this.navigateToPage("InfoPage") }}>More Info</Button>
+                          </Card.Text>
+                        </Card.Body>
+                      </Card>
+                    </div>
+
+                  </div>
+
                 </div>
 
-                <div className={ExampleStyles.imageGalleryBlock}>
-                  <this.generateImages images={this.state.hallImages} />
-                </div>
+              </Row>
 
-                <div className={ExampleStyles.infoBlock}>
+              <Row className={ExampleStyles.reviewsTitle}>
+                <h2>User Reviews({this.state.hallReviews.length}):</h2>
+              </Row>
 
-                  <Card bg={'light'} className={ExampleStyles.infoCard}>
-                    <Card.Header><b>Hall Information:</b></Card.Header>
-                    <Card.Body>
-                      <Card.Text>
-                        {this.state.hallDescription}
-                        <br />
-                        <Button variant="primary">More Info</Button>
-                      </Card.Text>
-                    </Card.Body>
-                  </Card>
+              <Row className={ExampleStyles.reviewsSection}>
+                <this.generateReviews reviews={this.state.hallReviews} />
+              </Row>
 
-                </div>
+              <Row className={ExampleStyles.footer}></Row>
 
-              </div>
-
-              <div className={ExampleStyles.topReviewSection}>
-
-                <Card bg={'light'} className={ExampleStyles.topReviewCard}>
-                  <Card.Header><b>Top Reviews:</b></Card.Header>
-                  <Card.Body>
-                    Top Reviews Here.
-                  </Card.Body>
-                </Card>
-
-              </div>
-
-            </Row>
-
-            <Row className={ExampleStyles.reviewsTitle}>
-              <h1>Reviews:</h1>
-            </Row>
-
-            <Row className={ExampleStyles.reviewsSection}>
-              <this.generateReviews reviews={this.state.hallReviews} />
-            </Row>
-
-            <Row className={ExampleStyles.footer}></Row>
+            </Container>
 
           </Container>
-
-        </Container>
+        </div>
       )
     }
     else //List is still loading. 
