@@ -119,7 +119,7 @@ class MapPage extends Component {
   //Desc: function to chnage the map with the filers.
   mapChangeOptions(option) {
     
-    if(option == "Alphabetical")
+    if(option === "Alphabetical")
     {
       var alphabetical = this.state.hallKVPair
         .sort((a, b) => {
@@ -138,7 +138,7 @@ class MapPage extends Component {
       this.setState({hallsToDisplay: alphabetical});
       
     }
-    else if(option == "Residents Halls")
+    else if(option === "Residents Halls")
     {
       var resHalls = this.state.hallKVPair
         .filter(item => (item.key !== "Wahle Apartments" 
@@ -149,7 +149,7 @@ class MapPage extends Component {
       );
       this.setState({hallsToDisplay: resHalls});
     }
-    else if(option == "Apartments")
+    else if(option === "Apartments")
     {
       var apartments =this.state.hallKVPair
       .filter(item => (item.key === "Wahle Apartments" 
@@ -160,7 +160,7 @@ class MapPage extends Component {
       );
       this.setState({hallsToDisplay: apartments});
     }
-    else if(option == "Bassettis")
+    else if(option === "Bassettis")
     {
       var bassettis =this.state.hallKVPair
       .filter(item => (item.key === "Meisner Hall" 
@@ -173,7 +173,7 @@ class MapPage extends Component {
       );
       this.setState({hallsToDisplay: bassettis});
     }
-    else if(option == "Central")
+    else if(option === "Central")
     {
       var central =this.state.hallKVPair
       .filter(item => (item.key === "Wilson Hall" 
@@ -183,7 +183,7 @@ class MapPage extends Component {
       );
       this.setState({hallsToDisplay: central});
     }
-    else if(option == "North")
+    else if(option === "North")
     {
       var north =this.state.hallKVPair
       .filter(item => (item.key === "Alford-Montgomery Hall" 
@@ -196,7 +196,7 @@ class MapPage extends Component {
       );
       this.setState({hallsToDisplay: north});
     }
-    else if(option == "South")
+    else if(option === "South")
     {
       var south =this.state.hallKVPair
       .filter(item => (item.key === "Kamola Hall" 
@@ -204,7 +204,7 @@ class MapPage extends Component {
       );
       this.setState({hallsToDisplay: south});
     }
-    else if(option == "Reset")
+    else if(option === "Reset")
     {
       this.setState({hallsToDisplay: this.state.hallKVPair});
     }
