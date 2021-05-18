@@ -23,23 +23,68 @@ const ProfilePage = () => {
   const { photoURL, displayName, email } = user;
   
   return (
-    <div>
-      <div>
-        <div
-          style={{
-            background: `url(${photoURL || 'https://res.cloudinary.com/dqcsk8rsc/image/upload/v1577268053/avatar-1-bitmoji_upgwhc.png'})  no-repeat center center`,
-            backgroundSize: "cover",
-            height: "200px",
-            width: "200px"
-          }}
-        />
-        <div>
-          <h2>{displayName}</h2>
-          <h3>{email}</h3>
+    <div className={ProfileStyles.windowDivSection}>
+      
+      <div className={ProfileStyles.mainSection}>
+        
+        <div className={ProfileStyles.userColumnSection}>
+
+            <div className={ProfileStyles.userInfo}>
+              
+              <div className={ProfileStyles.userImageBox}>
+              <div
+                  style={{
+                    background: `url(${photoURL || 'https://res.cloudinary.com/dqcsk8rsc/image/upload/v1577268053/avatar-1-bitmoji_upgwhc.png'})  no-repeat center center`,
+                    backgroundSize: "cover",
+                    height: "250px",
+                    width: "250px"
+                  }}
+                />
+              </div>
+
+              <div className={ProfileStyles.userNameBox}>
+                {displayName}
+              </div>
+
+              <div className={ProfileStyles.userGradYearBox}>
+                {email}
+              </div>
+
+            </div>
+
+            <div className={ProfileStyles.userColumnSpacer}>
+              User Column Spacer
+            </div>
+
         </div>
+
+        <div className={ProfileStyles.userReviewSection}>
+          Reviews Section
+        </div>
+
       </div>
-      <button onClick={() => {auth.signOut()}}>Sign out</button>
+
     </div>
+
+
+
+    // <div>
+    //   <div>
+    //     <div
+    //       style={{
+    //         background: `url(${photoURL || 'https://res.cloudinary.com/dqcsk8rsc/image/upload/v1577268053/avatar-1-bitmoji_upgwhc.png'})  no-repeat center center`,
+    //         backgroundSize: "cover",
+    //         height: "200px",
+    //         width: "200px"
+    //       }}
+    //     />
+    //     <div>
+    //       <h2>{displayName}</h2>
+    //       <h3>{email}</h3>
+    //     </div>
+    //   </div>
+    //   <button onClick={() => {auth.signOut()}}>Sign out</button>
+    // </div>
   ) 
 };
 
