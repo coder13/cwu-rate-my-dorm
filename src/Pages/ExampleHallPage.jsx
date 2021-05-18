@@ -92,11 +92,13 @@ class ExampleHallPage extends Component {
       curReview.get("images").length > 0 ? 
         <div key={curReview.id} className={ExampleStyles.reviewTemplate}>
           <div className={ExampleStyles.reviewTemplateTitle}>
-            <b>Author: </b> {curReview.get("author")}
+            <div className={ExampleStyles.reviewAuthor}>Author</div>
+            {": " + curReview.get("author")}
           </div>
 
           <div className={ExampleStyles.reviewTemplateRating}>
-            <b>Overall Rating: </b> {curReview.get("overallRating")}
+            <div className={ExampleStyles.reviewRating}>Overall Rating</div>
+            {": " +curReview.get("overallRating")}
           </div>
 
           <div className={ExampleStyles.reviewTemplateBody}>
@@ -122,11 +124,13 @@ class ExampleHallPage extends Component {
         <div key={curReview.id} className={ExampleStyles.reviewTemplate}>
           
           <div className={ExampleStyles.reviewTemplateTitle}>
-            <b>Author:</b> {curReview.get("author")}
+            <div className={ExampleStyles.reviewAuthor}>Author</div>
+            {": " + curReview.get("author")}
           </div>
 
           <div className={ExampleStyles.reviewTemplateRating}>
-            <b>Overall Rating:</b> {curReview.get("overallRating")}
+            <div className={ExampleStyles.reviewRating}>Overall Rating</div>
+            {": " +curReview.get("overallRating")}
           </div>
 
           <div className={ExampleStyles.reviewTemplateBody}>
@@ -222,11 +226,10 @@ class ExampleHallPage extends Component {
 
               </Row>
 
-              <Row className={ExampleStyles.reviewsTitle}>
-                <h2>User Reviews({this.state.hallReviews.length}):</h2>
-              </Row>
-
               <Row className={ExampleStyles.reviewsSection}>
+                <Row className={ExampleStyles.reviewsTitle}>
+                  <h2>User Reviews({this.state.hallReviews.length}):</h2>
+                </Row>
                 <this.generateReviews reviews={this.state.hallReviews} />
               </Row>
 
