@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { Alert, Form, Button } from 'react-bootstrap';
 import { auth, generateUserDocument, signInWithGoogle } from '../firebase';
+import PasswordStrengthBar from 'react-password-strength-bar';
 import Styles from '../Styles/SignInPage.module.css';
 
 const SignUp = () => {
@@ -11,6 +12,7 @@ const SignUp = () => {
   const [password, setPassword] = useState('');
   const [displayName, setDisplayName] = useState('');
   const [error, setError] = useState(null);
+  const [passwordLongEnough, setPasswordLongEnough] = useState(false);
 
   const redirect = location.state && location.state.from ? location.state.from : '/';
 
@@ -78,11 +80,15 @@ const SignUp = () => {
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
           />
+          <PasswordStrengthBar
+            password={password}
+            onChangeScore={(score) => setPasswordLongEnough(score > 0)}
+          />
         </Form.Group>
         <Button
           type="submit"
           className="btn btn-primary"
-          disabled={!displayName || !email || !password} 
+          disabled={!displayName || !email || !password || !passwordLongEnough} 
         >
           Sign Up
         </Button>
