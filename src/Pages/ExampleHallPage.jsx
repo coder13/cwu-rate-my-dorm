@@ -86,7 +86,8 @@ class ExampleHallPage extends Component {
           <h5>No Reviws Yet...</h5>
         </div>
       );
-    
+    }
+
     const toReturn = reviewsToAdd.map((curReview) =>
       curReview.get("images").length > 0 ? 
         <div key={curReview.id} className={ExampleStyles.reviewTemplate}>
