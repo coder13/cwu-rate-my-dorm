@@ -67,8 +67,8 @@ class ExampleHallPage extends Component {
   {
     return (
       <div className={ExampleStyles.userImagePopUp} onClick={()=>{this.setState({displayCurUserImage: false})}}>
-        <img className={ExampleStyles.userImage} src={this.state.currentUserImage}/>
-        <img className={ExampleStyles.topcorner} src={XButton} onClick={()=>{this.setState({displayCurUserImage: false})}}/>
+        <img className={ExampleStyles.userImage} src={this.state.currentUserImage} alt=""/>
+        <img className={ExampleStyles.topcorner} src={XButton} onClick={()=>{this.setState({displayCurUserImage: false})}} alt=""/>
       </div>
     );
   }
@@ -119,7 +119,7 @@ class ExampleHallPage extends Component {
 
         </div>
        : 
-        <div className={ExampleStyles.reviewTemplate}>
+        <div key={curReview.id} className={ExampleStyles.reviewTemplate}>
           
           <div className={ExampleStyles.reviewTemplateTitle}>
             <b>Author:</b> {curReview.get("author")}
