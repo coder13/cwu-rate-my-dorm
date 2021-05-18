@@ -3,7 +3,11 @@ import { Link } from 'react-router-dom';
 import LoaderComponent from '../Components/LoaderComponent';
 import { UserContext } from "../providers/UserProvider";
 import { auth } from "../firebase";
+<<<<<<< HEAD
 import ReviewsBlockComponent from '../Components/ReviewsBlockComponent'
+=======
+import ProfileStyles from "../Styles/ProfilePage.module.css"
+>>>>>>> Added profile style file
 
 const ProfilePage = () => {
 
@@ -45,4 +49,5 @@ const ProfilePage = () => {
     </div>
   ) 
 };
+
 export default ProfilePage;
