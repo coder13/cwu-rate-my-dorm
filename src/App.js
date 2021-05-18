@@ -12,6 +12,7 @@ import AccountPage from './Pages/AccountPage'
 import PasswordReset from "./Pages/PasswordReset";
 import MapPage from'./Pages/MapPage'
 import ExampleHallPage from'./Pages/ExampleHallPage'
+import HallInfoPage from'./Pages/HallInfoPage'
 import WelcomePage from './Pages/WelcomePage'
 import AppStyle from './App.module.css';
 import ReviewPage from './Pages/ReviewPage';
@@ -41,6 +42,7 @@ class App extends React.Component {
                     <Route exact path="/" component={WelcomePage} />
                     <Route exact path="/MapPage" component={MapPage} />
                     <Route exact path="/ExampleHallPage" component={ExampleHallPage} />
+                    <Route exact path="/HallInfoPage" component={HallInfoPage} />
                     <Route exact path="/ReviewPage" component={ReviewPage} />
                     <Route exact path="/signin" component={SignInPage} />
                     <Route exact path="/signUp" component={SignUp} />
