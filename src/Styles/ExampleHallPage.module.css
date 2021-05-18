@@ -95,7 +95,7 @@
 }
 
 .reviewsSection {
-    height: 2000px;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -111,8 +111,8 @@
     width: 98%;
     height: 100%;
     border-radius: 5px;
+    padding-bottom: 15px;
     border: 1px solid lightgray;
-    overflow-y: scroll;
 }
 
 .reviewsCard {
@@ -121,79 +121,64 @@
 }
 
 .reviewTemplate {
-    height: 450px;
+    height: fit-content;
     width: calc(100% - 30px);
-    background-color: rgb(246, 246, 246);
-    border-radius: 5px;
-    border: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+    border-top: 1px solid lightgray;
     margin-left: 15px;
-    margin-top: 15px;
+    margin-top: 20px;
     display: flex;
     flex-direction: column;
 }
 
 .reviewTemplateTitle {
-    flex: .5;
+    height: 30px;
     font-size: large;
-    font-weight: bold;
     display: flex;
     flex-direction: row;
-    border-bottom: 1px solid lightgray;
 }
 
-.reviewTemplateTitleCol {
-    flex: 1;
+.reviewTemplateRating {
+    height: 25px;
+    font-size: medium;
     display: flex;
-    align-items: center;
-    padding-left: 15px;
+    flex-direction: row;
 }
 
 .reviewTemplateBody {
     flex: 3;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 }
 
 .reviewTemplateDesc {
-    flex: 3.06;
-    width: 280px;
-    padding-left: 15px;
-    padding-top: 15px;
+    height: auto;
+    padding-top: 2px;
     padding-right: 15px;
     word-wrap: break-word;
     background-color: white;
-    border-radius: 5px;
 }
 
 .reviewTemplateImages 
 {
-    flex: 1.2;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    height: auto;
+    padding-bottom: 5px;
     flex-direction: column;
-    border-left: 1px solid lightgrey;
 }
 
 .reviewTemplateImageBorder 
 {
-    height: 300px;
-    width: 300px;
+    height: 90px;
+    width: 90px;
 }
 
 .reviewTemplateImageBorder:hover 
 {
-    height: 300px;
-    width: 300px;
+    height: 90px;
+    width: 90px;
     filter: brightness(50%);
     cursor: pointer;
-}
-
-.reviewTemplateRight {
-    flex: 1;
-    padding-left: 15px;
-    padding-top: 15px;
-    border-left: 1px solid lightgrey;
 }
 
 .userImagePopUp
@@ -215,8 +200,8 @@
 }
 
 .topcorner{
-    height: 65px;
-    width: 65px;
+    height: 45px;
+    width: 45px;
     margin-top: 3px;
     margin-right: 5px;
     position:absolute;

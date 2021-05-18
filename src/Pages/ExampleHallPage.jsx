@@ -66,7 +66,7 @@ class ExampleHallPage extends Component {
   userImagePopup() 
   {
     return (
-      <div className={ExampleStyles.userImagePopUp}>
+      <div className={ExampleStyles.userImagePopUp} onClick={()=>{this.setState({displayCurUserImage: false})}}>
         <img className={ExampleStyles.userImage} src={this.state.currentUserImage}/>
         <img className={ExampleStyles.topcorner} src={XButton} onClick={()=>{this.setState({displayCurUserImage: false})}}/>
       </div>
@@ -79,51 +79,64 @@ class ExampleHallPage extends Component {
   {
     const reviewsToAdd = props.reviews;
 
+    if(reviewsToAdd <= 0)
+    {
+      return(
+        <div className={ExampleStyles.reviewsBlock}>
+          <h5>No Reviws Yet...</h5>
+        </div>
+      );
+    }
+
     const toReturn = reviewsToAdd.map((curReview) =>
 
-      <div className={ExampleStyles.reviewTemplate}>
-        <div className={ExampleStyles.reviewTemplateTitle}>
-
-          <div className={ExampleStyles.reviewTemplateTitleCol}>
-            Author: {curReview.get("author")}
+      curReview.get("images").length > 0 ? 
+        <div className={ExampleStyles.reviewTemplate}>
+          <div className={ExampleStyles.reviewTemplateTitle}>
+            <b>Author: </b> {curReview.get("author")}
           </div>
 
-        </div>
-
-        <div className={ExampleStyles.reviewTemplateBody}>
-          
-          <div className={ExampleStyles.reviewTemplateDesc}>
-            {curReview.get("review")}
+          <div className={ExampleStyles.reviewTemplateRating}>
+            <b>Overall Rating: </b> {curReview.get("overallRating")}
           </div>
 
-          <div className={ExampleStyles.reviewTemplateImages}>
-            <h5>User Images:</h5>
-            <img className={ExampleStyles.reviewTemplateImageBorder} 
-                 src={curReview.get("images")} 
+          <div className={ExampleStyles.reviewTemplateBody}>
+
+            <div className={ExampleStyles.reviewTemplateDesc}>
+              {curReview.get("review")}
+            </div>
+
+            <div className={ExampleStyles.reviewTemplateImages}>
+
+              <img className={ExampleStyles.reviewTemplateImageBorder}
+                src={curReview.get("images")}
                 alt=""
-                onClick={ ()=>{
-                                this.setState({displayCurUserImage: true});
-                                this.setState({currentUserImage: curReview.get("images")});
-                              }
-              }
-            />
-          </div>
-          
-          <div className={ExampleStyles.reviewTemplateRight}>
-            <h3>Overall Rating: {curReview.get("overallRating")}</h3>
-            <p><b>First Quarter: </b>{curReview.get("firstQuarter")}</p>
-            <p><b>Last Quarter: </b>{curReview.get("lastQuarter")}</p>
-            <p><b>Cleanliness Rating: </b>{curReview.get("cleanlinessRating")}</p>
-            <p><b>Furniture Rating: </b>{curReview.get("furnitureRating")}</p>
-            <p><b>Location Rating: </b>{curReview.get("locationRating")}</p>
-            <p><b>Room Size Rating: </b>{curReview.get("roomSizeRating")}</p>
-            <p><b>Room Type:</b> {curReview.get("roomType")}</p>
-            <p><b>Floor: </b>{curReview.get("floor")}</p>
-          </div>
-         
-        </div>
+                onClick={() => { this.setState({ displayCurUserImage: true }); this.setState({ currentUserImage: curReview.get("images") }); }}
+              />
 
-      </div>
+            </div>
+
+          </div>
+
+        </div>
+       : 
+        <div className={ExampleStyles.reviewTemplate}>
+          
+          <div className={ExampleStyles.reviewTemplateTitle}>
+            <b>Author:</b> {curReview.get("author")}
+          </div>
+
+          <div className={ExampleStyles.reviewTemplateRating}>
+            <b>Overall Rating:</b> {curReview.get("overallRating")}
+          </div>
+
+          <div className={ExampleStyles.reviewTemplateBody}>
+            <div className={ExampleStyles.reviewTemplateDesc}>
+              {curReview.get("review")}
+            </div>
+          </div>
+
+        </div>
     );
 
     return(
@@ -138,7 +151,6 @@ class ExampleHallPage extends Component {
   generateImages(props) 
   {
     const imagesToAdd = props.images;
-
     const toReturn = imagesToAdd.map((curImage) => 
     
       <Carousel.Item>
@@ -212,7 +224,7 @@ class ExampleHallPage extends Component {
               </Row>
 
               <Row className={ExampleStyles.reviewsTitle}>
-                <h1>User Reviews:</h1>
+                <h2>User Reviews({this.state.hallReviews.length}):</h2>
               </Row>
 
               <Row className={ExampleStyles.reviewsSection}>
