@@ -53,6 +53,7 @@ class MapPage extends Component {
     //Gemerate hall buttons.
     const listButtonItems = hallKV.map((hallInfo) =>
       <Button
+        key={hallInfo.key}
         variant="success"
         size="lg"
         className={MapPageStyles.hallButton}
@@ -65,6 +66,7 @@ class MapPage extends Component {
     //Generate markers for buttons.
     this.markers = hallKV.map((hallInfo) =>
       <Marker 
+        key={hallInfo.key}
         position={hallInfo.value}
       >
         <Popup>
@@ -225,7 +227,6 @@ class MapPage extends Component {
       });
     }).then(()=>{
       this.setState({hallsToDisplay: this.state.hallKVPair});
-      console.log(this.state.hallsToDisplay);
       this.setState({loaded: true}); //Set loaded to true.
     });
   }
