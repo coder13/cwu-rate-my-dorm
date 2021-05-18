@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import LoaderComponent from '../Components/LoaderComponent';
 import { UserContext } from "../providers/UserProvider";
 import { auth } from "../firebase";
+import ProfileStyles from "../Styles/ProfilePage.module.css"
 
 const ProfilePage = () => {
   const user = useContext(UserContext);
@@ -41,4 +42,5 @@ const ProfilePage = () => {
     </div>
   ) 
 };
+
 export default ProfilePage;
