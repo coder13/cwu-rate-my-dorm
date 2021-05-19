@@ -85,7 +85,16 @@ class ReviewPage extends Component {
     alert("Your review has been submitted!");
   }
 
+  navigateToPage(Page) {
+    this.props.history.push({pathname: Page});
+  }
+
   componentDidMount() {
+    firebase.auth().onAuthStateChanged((user)=>{
+      if (user == null)
+        this.navigateToPage("signin");
+    });
+
 
     this.setState(firestore.getDormNames().then((names) => {
       this.setState({ hallNames: names });
