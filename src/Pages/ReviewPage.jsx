@@ -16,16 +16,16 @@ class ReviewPage extends Component {
     //Set the states:
     this.state = {
       hallNames: [],
-      hallName: "Stephens-Whitney Hall",
-      firstQuarterYear: -1,
-      firstQuarterSeason: "Default",
-      lastQuarterYear: -1,
-      lastQuarterSeason: "Default",
-      roomType: "Default",
+      hallName: "",
+      firstQuarterYear: 0,
+      firstQuarterSeason: "",
+      lastQuarterYear: 0,
+      lastQuarterSeason: "",
+      roomType: "",
       roomTypes: [],
-      floorNum: "Default",
+      floorNum: 0,
       floors: [],
-      reviewText:"Default",
+      reviewText:"",
       image: [], //files selected only, no url
       urls: [],
       overallRating: 5,
@@ -96,27 +96,27 @@ class ReviewPage extends Component {
   }
   dormChanged(e) { 
     // Updates roomTypes and floors when the dorm is changed
-    var numFloors = 0;
-    firestore.getDormByName(e.target.value).then((doc) => {
-      this.setState({hallName: doc.get('name')});
-      console.log('floors:' + doc.get('floors'));
-      numFloors = doc.get('floors');
-      var x = 1;
-      let floors = [];
+    if (e.target.value !== "") {
+      var numFloors = 0;
+      firestore.getDormByName(e.target.value).then((doc) => {
+        this.setState({hallName: doc.get('name')});
+        numFloors = doc.get('floors');
+        var x = 1;
+        let floors = [];
 
-      while (x <= numFloors)
-      {
-        floors.push(x);
-        x++;
-      }
+        while (x <= numFloors)
+        {
+          floors.push(x);
+          x++;
+        }
 
-      this.setState({ floors });
+        this.setState({ floors });
 
-      console.log(this.state.floors);
-      this.setState({roomTypes: doc.get('roomTypes')});
+        this.setState({roomTypes: doc.get('roomTypes')});
 
-    });
-
+      });
+    }
+    else this.setState({hallName: e.target.value});
   }
   render()
   {
@@ -149,9 +149,9 @@ class ReviewPage extends Component {
                         <Form.Control 
                           as="select" 
                           defaultValue="Choose..."
-                          onChange={e => this.dormChanged(e)}  
+                          onChange={e => this.dormChanged(e)}
                         >
-                          <option>Choose...</option>
+                          <option value="">Choose...</option>
                           {this.state.hallNames.map(dorm => (<option key={dorm}>{dorm}</option>))}
 
                         </Form.Control>
@@ -170,7 +170,7 @@ class ReviewPage extends Component {
                             defaultValue="Choose..."
                             onChange={e => this.setState({firstQuarterSeason: e.target.value})}
                           >
-                            <option>Choose...</option>
+                            <option value="">Choose...</option>
                             <option>Spring</option>
                             <option>Summer</option>
                             <option>Fall</option>
@@ -180,9 +180,9 @@ class ReviewPage extends Component {
                           <Form.Control 
                             as="select" 
                             defaultValue="Choose..."
-                            onChange={e => this.setState({firstQuarterYear: e.target.value})}
+                            onChange={e => this.setState({firstQuarterYear: parseInt(e.target.value)})}
                           >
-                            <option>Choose...</option>
+                            <option  value="0">Choose...</option>
                             {(()=>{
                               var years = [new Date().getFullYear()];
                               var dif = 0;
@@ -210,7 +210,7 @@ class ReviewPage extends Component {
                             defaultValue="Choose..."
                             onChange={e => this.setState({lastQuarterSeason: e.target.value})}
                           >
-                            <option>Choose...</option>
+                            <option  value="">Choose...</option>
                             <option>Spring</option>
                             <option>Summer</option>
                             <option>Fall</option>
@@ -220,9 +220,9 @@ class ReviewPage extends Component {
                           <Form.Control 
                             as="select" 
                             defaultValue="Choose..."
-                            onChange={e => this.setState({lastQuarterYear: e.target.value})}
+                            onChange={e => this.setState({lastQuarterYear: parseInt(e.target.value)})}
                           >
-                            <option>Choose...</option>
+                            <option value="0">Choose...</option>
                             {(()=>{
                               var years = [new Date().getFullYear()];
                               var dif = 0;
@@ -248,9 +248,10 @@ class ReviewPage extends Component {
                         <Form.Control 
                           as="select" 
                           defaultValue="Choose..."
+                          disabled={this.state.hallName === ""}
                           onChange={e => this.setState({roomType: e.target.value})}
                         >
-                          <option>Choose...</option>
+                          <option value="">Choose...</option>
                           {this.state.roomTypes.map(type => (<option key={type}>{type}</option>))}
 
                         </Form.Control>
@@ -267,9 +268,10 @@ class ReviewPage extends Component {
                         <Form.Control 
                           as="select" 
                           defaultValue="Choose..."
-                          onChange={e => this.setState({floorNum: e.target.value})}
+                          disabled={this.state.hallName === ""}
+                          onChange={e => this.setState({floorNum: parseInt(e.target.value)})}
                         >
-                          <option>Choose...</option>
+                          <option  value="0">Choose...</option>
                           {this.state.floors.map(floor => (<option key={floor} value={floor}>Floor {floor}</option>))}
                         </Form.Control>
                       </Col>
@@ -459,7 +461,7 @@ class ReviewPage extends Component {
                   onClick={this.submitReview}
                 >
                   <h1>Submit</h1>
-                </div>
+                </div>              
               </div>
 
             </div>
