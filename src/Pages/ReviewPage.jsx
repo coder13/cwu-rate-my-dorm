@@ -1,7 +1,7 @@
 import firebase from 'firebase/app';
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import {Form, Col} from 'react-bootstrap'
+import {Form, Col, Button} from 'react-bootstrap'
 import ReviewStyles from '../Styles/ReviewPage.module.css';
 import LoaderComponent from '../Components/LoaderComponent.jsx';
 import * as firestore from '../firestore.js';
@@ -462,24 +462,57 @@ class ReviewPage extends Component {
                   </Form>
                 </div>
 
-              </div>
+              </div><div>
+              <style type="text/css">
+                {`
+                .btn-submit {
+                  width: 330px;
+                  height: 110px;
+                  background-color: #A30F32;
+                  font-size: 1.5rem;
+                  border-radius: 5px;
+                  display: flex;
+                  flex-direction: row;
+                  align-items: center;
+                  justify-content: center;
+                  box-shadow: 4px 4px #838383;
+                  color: white;
+                  text-align: center;
+                  cursor: pointer;
+                  margin-bottom: 45px;
+                }
+                .btn-submit:hover{
+                  color: white;
+                  background-color: #820d28;
+                }
+                .btn-xxl {
+                  padding: 1rem 1.5rem;
+                  font-size: 2.3rem;
+                }
+                `}
+              </style>
 
+              </div>
+              
               <div className={ReviewStyles.buttonSection}>
-                <div 
-                  className={ReviewStyles.submitButton}
-                  onClick={this.submitReview}
+                <Button variant="submit" 
+                  disabled={this.state.hallName === "" || this.state.firstQuarterSeason === ""
+                    || this.state.firstQuarterYear === 0 || this.state.lastQuarterSeason === ""
+                    || this.state.lastQuarterYear === 0 || this.state.roomType === ""
+                    || this.state.floorNum === 0 || this.state.reviewText === ""} 
+                  onClick={this.submitReview} 
+                  size="xxl"
                 >
-                  <h1>Submit</h1>
-                </div>              
+                  Submit
+                </Button>
               </div>
-
+                
             </div>
 
           </div>
 
-          <div className={ReviewStyles.sideSection}></div>
-
         </div>
+
       </div>
     )
                     }
