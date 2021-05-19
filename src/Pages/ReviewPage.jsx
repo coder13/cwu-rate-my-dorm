@@ -176,22 +176,24 @@ class ReviewPage extends Component {
                       <Col>
                           <Form.Control 
                             as="select" 
-                            defaultValue="Choose..."
+                            defaultValue="Quarter..."
                             onChange={e => this.setState({firstQuarterSeason: e.target.value})}
                           >
-                            <option value="">Choose...</option>
+                            <option value="">Quarter...</option>
                             <option>Spring</option>
                             <option>Summer</option>
                             <option>Fall</option>
                             <option>Winter</option>
 
                           </Form.Control>
+                          </Col>
+                          <Col>
                           <Form.Control 
                             as="select" 
-                            defaultValue="Choose..."
+                            defaultValue="Year..."
                             onChange={e => this.setState({firstQuarterYear: parseInt(e.target.value)})}
                           >
-                            <option  value="0">Choose...</option>
+                            <option  value="0">Year...</option>
                             {(()=>{
                               var years = [new Date().getFullYear()];
                               var dif = 0;
@@ -216,22 +218,24 @@ class ReviewPage extends Component {
                       <Col>
                       <Form.Control 
                             as="select" 
-                            defaultValue="Choose..."
+                            defaultValue="Quarter..."
                             onChange={e => this.setState({lastQuarterSeason: e.target.value})}
                           >
-                            <option  value="">Choose...</option>
+                            <option  value="">Quarter...</option>
                             <option>Spring</option>
                             <option>Summer</option>
                             <option>Fall</option>
                             <option>Winter</option>
 
                           </Form.Control>
+                          </Col>
+                          <Col>
                           <Form.Control 
                             as="select" 
-                            defaultValue="Choose..."
+                            defaultValue="Year..."
                             onChange={e => this.setState({lastQuarterYear: parseInt(e.target.value)})}
                           >
-                            <option value="0">Choose...</option>
+                            <option value="0">Year...</option>
                             {(()=>{
                               var years = [new Date().getFullYear()];
                               var dif = 0;
