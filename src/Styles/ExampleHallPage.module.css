@@ -174,13 +174,14 @@
     display: flex;
     height: auto;
     padding-bottom: 5px;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 .reviewTemplateImageBorder 
 {
     height: 90px;
     width: 90px;
+    padding-right: 3px;
 }
 
 .reviewTemplateImageBorder:hover 

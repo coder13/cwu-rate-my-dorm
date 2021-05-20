@@ -28,6 +28,7 @@ class ExampleHallPage extends Component {
     this.generateReviews = this.generateReviews.bind(this);
     this.generateImages = this.generateImages.bind(this);
     this.userImagePopup = this.userImagePopup.bind(this);
+    this.generateUserImages = this.generateUserImages.bind(this);
   }
 
   //===navigateToPage===
@@ -73,11 +74,30 @@ class ExampleHallPage extends Component {
     );
   }
 
+  //===generateUserImages===
+  generateUserImages(imageArr)
+  {
+    const toReturn = imageArr.map((curImage) =>
+
+      <img className={ExampleStyles.reviewTemplateImageBorder}
+        src={curImage}
+        alt=""
+        key ={curImage}
+        onClick={() => { this.setState({ displayCurUserImage: true }); this.setState({ currentUserImage: curImage }); }}
+      />
+
+    );
+
+    return(toReturn);
+  }
+
   //===generateReviews===
   //Desc: Genereates reviews from database values.
   generateReviews(props) 
   {
     const reviewsToAdd = props.reviews;
+
+    console.log(reviewsToAdd);
 
     if(reviewsToAdd <= 0)
     {
@@ -109,11 +129,8 @@ class ExampleHallPage extends Component {
 
             <div className={ExampleStyles.reviewTemplateImages}>
 
-              <img className={ExampleStyles.reviewTemplateImageBorder}
-                src={curReview.get("images")}
-                alt=""
-                onClick={() => { this.setState({ displayCurUserImage: true }); this.setState({ currentUserImage: curReview.get("images") }); }}
-              />
+              {this.generateUserImages(curReview.get("images"))}
+              {console.log(curReview.get("images"))}
 
             </div>
 
