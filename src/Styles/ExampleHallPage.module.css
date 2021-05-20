@@ -1,7 +1,4 @@
 .windowDivSection {
-  /* To adjust for the top bar component. */
-  margin-top: 70px;
-  min-height: calc(100vh - 70px);
   min-width: 100vh;
   display: flex;
   flex-direction: row;
@@ -10,136 +7,242 @@
 }
 
 .middleSection {
-  flex: 1;
-  background-color: #E6E6E6;
-  min-height: 100%;
-  max-width: 1250px;
-  min-width: 1250px;
-  display: flex;
-  flex-direction: column;
+    background-color: white;
+    min-height: 100%;
+    max-width: 1550px;
+    min-width: 1550px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .infoAndTopReviewSection {
-  min-height: 860px;
+    min-height: 800px;
+    display: flex;
 }
 
 .titleAndInformationSection {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding-left: 0px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .titleBlock {
-  flex: .5;
-  width: 100%;
-  margin-top: 15px;
-  border-radius: 5px;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border: gray 1px solid;
+    width: 100%;
+    height: 100px;
+    padding-bottom: 20px;
+    padding-left: 40px;
+    font-size: 80px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 1px #919191,
+        1px 2px 1px #919191,
+        1px 3px 1px #919191,
+        1px 4px 1px #919191,
+        1px 5px 1px #919191,
+        1px 6px 1px #919191,
+        1px 7px 1px #919191,
+        1px 8px 1px #919191,
+        1px 9px 1px #919191,
+        1px 10px 1px #919191
 }
 
 .infoBlock {
-  flex: 2.5;
-  width: 100%;
-  margin-bottom: 15px;
-  border-radius: 5px;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border: gray 1px solid;
+    flex: 1;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.infoCard {
+    flex:1;
+    width: 100%;
+    height: 100%;
+    margin-right: 15px;
 }
 
 .imageGalleryBlock {
-  flex: 2;
-  width: 100%;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  border-radius: 5px;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border: gray 1px solid;
+    flex: 2;
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: flex;
+    background-color: rgb(246, 246, 246);
+}
+
+.imageCarouselSection {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
 }
 
 .imageCarousel {
-  height:300px;
-  width: 570px;
+    height: 700px;
+    width: 950px;
+    display: flex;
 }
 
 .carouselImageExample {
-  height: 300px;
-  width: 570px;
-}
-
-.topReviewSection {
-  display: flex;
-}
-
-.topReviewBlock 
-{
-  flex: 1;
-  display: flex;
-  margin-top: 15px;
-  margin-left: 15px;
-  margin-bottom: 15px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 5px;
-  background-color: white;
-  border: gray 1px solid;
+    height: 700px;
+    width: 950px;
 }
 
 .reviewsSection {
-  height: 700px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.reviewsBlock 
+.reviewsTitle {
+    height: 40px;
+    padding-left: 13px;
+    padding-top: 10px;
+    width: 50%
+}
+
+.reviewsBlock {
+    width: 50%;
+    height: 100%;
+    padding-bottom: 15px;
+}
+
+.reviewsCard {
+    height: 100%;
+    width: 100%
+}
+
+.reviewTemplate {
+    height: fit-content;
+    width: calc(100% - 30px);
+    border-bottom: 1px solid lightgray;
+    border-top: 1px solid lightgray;
+    margin-left: 15px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.reviewTemplateTitle {
+    height: 25px;
+    font-size: large;
+    display: flex;
+    flex-direction: row;
+}
+
+.reviewTemplateRating {
+    height: 25px;
+    font-size: medium;
+    display: flex;
+    flex-direction: row;
+}
+
+.reviewAuthor {
+    color: black;
+    font-weight: 500;
+}
+
+.reviewRating {
+    color: grey;
+}
+
+.reviewTemplateBody {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+}
+
+.reviewTemplateDesc {
+    height: auto;
+    padding-top: 2px;
+    padding-right: 15px;
+    padding-bottom: 2px;
+    word-wrap: break-word;
+    background-color: white;
+}
+
+.reviewTemplateImages 
 {
-  width: 100%;
-  margin-bottom: 15px;
-  border-radius: 5px;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border: gray 1px solid;
-  margin-left: 15px;
+    display: flex;
+    height: auto;
+    padding-bottom: 5px;
+    flex-direction: column;
 }
 
-.spacer {
-  max-width: 15px;
-  min-width: 15px;
+.reviewTemplateImageBorder 
+{
+    height: 90px;
+    width: 90px;
+}
+
+.reviewTemplateImageBorder:hover 
+{
+    height: 90px;
+    width: 90px;
+    filter: brightness(50%);
+    cursor: pointer;
+}
+
+.userImagePopUp
+{
+    top:0;
+    left:0;
+    height: 100%;
+    width: 100%;
+    z-index: 10000;
+    background-color:rgba(255,255,255,0.5);
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.userImage{
+    opacity: 2;
+}
+
+.topcorner{
+    height: 45px;
+    width: 45px;
+    margin-top: 3px;
+    margin-right: 5px;
+    position:absolute;
+    top:0;
+    right:0;
+    cursor: pointer;
+}
+
+.footer {
+    height: 30px;
 }
 
 /*Getting rid of bootstrap padding / margins*/
+
 .row {
-  margin-left: 0px !important;
-  margin-right: 0px !important;
-  padding-left: 0px !important;
-  padding-right: 0px !important;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
 }
 
 .col {
-  margin-left: 0px !important;
-  margin-right: 0px !important;
-  padding-left: 0px !important;
-  padding-right: 0px !important;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
 }
 
-.container{
-  margin-left: 0px !important;
-  margin-right: 0px !important;
-  padding-left: 0px !important;
-  padding-right: 0px !important;
- }
+.container {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}

@@ -1,6 +1,5 @@
 import firebase from 'firebase/app';
-import React from "react";
-import { auth, firestore, storage } from './firebase';
+import { firestore, storage } from './firebase';
 import uuid from 'react-uuid';
 
 
@@ -62,7 +61,7 @@ export async function getDormDocs(){
     await firestore.collection("Dorms").get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
             dorms.push(doc);
-            console.log(doc.id);
+            //console.log(doc.id);
         });
 
     });
@@ -75,7 +74,7 @@ export async function getDormNames() {
     await firestore.collection("Dorms").get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
             dormNames.push(doc.get('name'));
-            console.log(doc.get('name'));
+            //console.log(doc.get('name'));
         });
     });
     return dormNames;
@@ -87,7 +86,6 @@ export async function orderDorms(){
 
     await firestore.collection('Dorms').orderBy('name').get().then((snapshot) => {
         snapshot.docs.forEach(doc => {
-            //dorms.push(doc.data());
             dorms.push(doc);
         });
     });
@@ -101,7 +99,7 @@ export async function getReviewsByUser(userID) {
     await firestore.collection("Dorms").where('email', '==', userID).get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
             reviews.push(doc.data());
-            console.log(doc.data());
+            //console.log(doc.data());
         });
     });
     return reviews;
@@ -147,46 +145,50 @@ export async function getDormId(dormName){
     return dormId;
 }
 
+// Geta dorm document using its name
+export async function getDormByName(dormName){
+    var dormId;
+    await firestore.collection("Dorms").where("name", "==", dormName).get().then((querySnapshot) => { //finds documents with dorm name (only 1 in our database)
+        querySnapshot.forEach((doc) => { //goes through documents (again, only 1 in our database), and gets its ID
+            dormId = doc; //sets the dorm id
+            return dormId
+        });
+    })
+    .catch((error) => {
+        console.log("Error getting document: ", error);
+    });
+    return dormId;
+}
+
 //add image to storage, dorm document images, and review document images. w/example of user file input
-export async function uploadImage(dormName, dormId, revId){
+export async function uploadImage(dormName, file){
     var newId = uuid(); //creates uuid for image
+    var dormId = await getDormId(dormName);
+    var imgURL;
 
-    //creates button 
-    const btn = document.createElement('input'); 
-    btn.setAttribute('type', "file");
-    btn.setAttribute('id', "click");
-    btn.click(); //clicks button created above
-    
-    btn.addEventListener('change', async function(e){  //this happens when our invisible button is clicked
-        var file = e.target.files[0];
-        var storageRef = storage.ref();
-        var imagesRef = storageRef.child('dormImages');
-        var dormRef = imagesRef.child( dormName + "/" + newId); //this just creates a reference, just says where and how the image will be stored
-        
-            
-        await dormRef.put(file).then(() => { //putting image in db                  
-            dormRef.getDownloadURL().then(async(url) => {//get the url of image
-                //updating images in dorm images collection
-                var dorm = firestore.collection('Dorms').doc(dormId); //get the dorm where we want to update images
-                dorm.get().then(async(doc) => {
-                    dorm.update({  //update dorm images 
-                        images: firebase.firestore.FieldValue.arrayUnion(url)          
-                    });
-
-                    //Updating images in review document
-                    var rev = dorm.collection('Reviews').doc(revId);
-                    rev.get().then(async (doc) => { //gets review document
-                        rev.update({ //update review images
-                            images: firebase.firestore.FieldValue.arrayUnion(url)
-                        });
-                    });
-                });     
-            }) //error getting url
-                .catch((error) => { 
-                console.log("Error getting URL", error);
+    var storageRef = storage.ref();
+    var imagesRef = storageRef.child('dormImages');
+    var dormRef = imagesRef.child( dormName + "/" + newId); //this just creates a reference, just says where and how the image will be stored
+       
+    await dormRef.put(file).then(async() => { //putting image in db                  
+        await dormRef.getDownloadURL().then(async(url) => {//get the url of image    
+            //updating images in dorm images collection
+            var dorm = firestore.collection('Dorms').doc(dormId); //get the dorm where we want to update images
+            dorm.get().then(async(doc) => {
+                dorm.update({  //update dorm images 
+                    images: firebase.firestore.FieldValue.arrayUnion(url)          
+                });   
             });
-        });    
-    }); 
+            imgURL = url;  
+        }) //error getting url
+        .catch((error) => { 
+            console.log("Error getting URL", error);
+        });
+
+     
+    });    
+    
+    return imgURL;
 }
 
 
@@ -220,47 +222,34 @@ export async function addImage(dormID, image) {
     } else return null;
 }
 
-// Adds image to storage w/example of user file input
-export function addImageToStorage(dormName) {
-    var newUuid = uuid();
-
-    //creates an input file button
-    const btn = document.createElement('input');
-    btn.setAttribute('type', "file");
-    btn.setAttribute('id', "up");
-
-    btn.click(); //clicks on input file button
-
-    btn.addEventListener('change', function (e) {
-        var file = e.target.files[0];
-        var storageRef = storage.ref();
-        var imagesRef = storageRef.child('dormImages');
-        var dormRef = imagesRef.child( `${dormName}/${newUuid}`);
-        var task = dormRef.put(file).then(() => { //adds image to storage
-            console.log('successfully uploaded image');
-        });
-
-    });
-}
-
 // Add a new Review to firestore and return the document created
-export async function newReview(dormID, author, date, dormName, email, floor, images, rating, review, roomType, likes) {
+export async function newReview(dormName, author, authorID, email, fQuarter, lQuarter,roomType, floor, review, images, overallRating, 
+    locationRating, roomSizeRating, furnitureRating, commonAreasRating, cleanlinessRating, bathroomRating, likes) {
 
     var reviewDoc; //review document once it's created
+    var dormID = await getDormId(dormName);
 
     // Add review to firestore
     const dormRef = firestore.collection('Dorms').doc(dormID).collection('Reviews');
     await dormRef.add({ // add returns a document reference in promise
         author: author,
-        date: date,
+        firstQuarter: fQuarter,
+        lastQuarter: lQuarter,
         dormName: dormName,
         email: email,
         floor: floor,
         images: images,
-        likes: likes,
-        rating: rating,
+        overallRating: overallRating,
         review: review,
         roomType: roomType,
+        locationRating: locationRating,
+        roomSizeRating: roomSizeRating,
+        furnitureRating: furnitureRating,
+        commonAreasRating: commonAreasRating,
+        cleanlinessRating: cleanlinessRating,
+        bathroomRating: bathroomRating,
+        likes: likes,
+        authorID: authorID
     })
     .then(async documentReference =>{
         await documentReference.get().then(documentSnapshot =>{ //gets the document from the reference that add returns
@@ -269,7 +258,7 @@ export async function newReview(dormID, author, date, dormName, email, floor, im
     });
     return reviewDoc;
 }
-//newReview('', '', '', '', '', '', [], 0, 0, '', {});
+
 
 // Add a new user to firestore
 export function newUser(username, email, graduationYear) {
