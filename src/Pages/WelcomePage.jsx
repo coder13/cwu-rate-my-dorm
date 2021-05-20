@@ -15,6 +15,8 @@ import {Container,
       } from 'react-bootstrap'
 import SearchImage from '../Assets/SearchCardTop.png'
 import WriteImage from '../Assets/WriteCardTop.png'
+import Wellington from '../Assets/Wellington.jpg'
+
 
 class WelcomePage extends Component {
 
@@ -84,32 +86,14 @@ class WelcomePage extends Component {
 
             </Row>
 
-            <Row className={WelcomePageStyles.imageRow}>
-              <Carousel className={WelcomePageStyles.carouselSize}>
-                <Carousel.Item>
-                  <img
-                    className={WelcomePageStyles.imageSize}
-                    src="https://www.kpq.com/wp-content/uploads/2018/07/CWU.jpg"
-                    alt="First slide"
-                  />
-                </Carousel.Item>
+            <Row className={WelcomePageStyles.bottomRow}>
+              
+              <div className={WelcomePageStyles.wellingtonColumn}>
+                <img src={Wellington} className={WelcomePageStyles.wellingtonSize} alt=""/>
+              </div> 
 
-                <Carousel.Item>
-                  <img
-                    className={WelcomePageStyles.imageSize}
-                    src="https://katu.com/resources/media/b2bd1ced-1737-478c-92d9-fa0fc374d6a2-large16x9_190419_pio_central_washington_university_cwu.jpg?1555702482536"
-                    alt="First slide"
-                  />
-                </Carousel.Item>
-
-                <Carousel.Item>
-                  <img
-                    className={WelcomePageStyles.imageSize}
-                    src="https://www.kpq.com/wp-content/uploads/2018/07/CWU.jpg"
-                    alt="First slide"
-                  />
-                </Carousel.Item>
-              </Carousel>
+              <div className={WelcomePageStyles.speechBubbleColumn}>
+              </div>
 
             </Row>
 

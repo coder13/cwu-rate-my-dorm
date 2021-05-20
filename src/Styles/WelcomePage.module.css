@@ -69,22 +69,35 @@
   margin-left: 4px;
 }
 
-.imageRow {
+.bottomRow {
   flex: 2.5;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.imageSize {
-  height: 300px;
-  width: 600px;
+
+.wellingtonColumn {
+  height: 100%;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.carouselSize {
-  height: 300px;
-  width: 600px;
+.speechBubbleColumn {
+  background-image: url(../Assets/SpeechBubble.png);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  flex: 2.5;
+  height: 100%;
 }
+
+.wellingtonSize {
+  height: 300px;
+  width: 300px;
+}
+
 .container {
   height: 100%;
   display: flex;
