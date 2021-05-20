@@ -16,6 +16,7 @@ import WelcomePage from './Pages/WelcomePage'
 import AppStyle from './App.module.css';
 import ReviewPage from './Pages/ReviewPage';
 import TopBarComp from './Components/TopBarComponent'
+import withEmailVerification from './hooks/withEmailVerification';
 
 class App extends React.Component {
   
@@ -28,20 +29,19 @@ class App extends React.Component {
 
   render() {
     return (
-      <UserProvider>
-        <Router>
+      <Router>
+        <UserProvider>
 
           <div>
             <TopBarComp/>
 
             <div className={AppStyle.mainSection}>
 
-              <UserProvider>
                   <Switch>
                     <Route exact path="/" component={WelcomePage} />
                     <Route exact path="/MapPage" component={MapPage} />
                     <Route exact path="/ExampleHallPage" component={ExampleHallPage} />
-                    <Route exact path="/ReviewPage" component={ReviewPage} />
+                    <Route exact path="/ReviewPage" component={withEmailVerification(ReviewPage)} />
                     <Route exact path="/signin" component={SignInPage} />
                     <Route exact path="/signUp" component={SignUp} />
                     <Route exact path="/passwordReset" component={PasswordReset} />
@@ -51,13 +51,12 @@ class App extends React.Component {
                       <p>404: Page not Found</p>
                     </Route>
                   </Switch>
-              </UserProvider>
 
             </div>
 
           </div>
-        </Router>
-      </UserProvider>
+        </UserProvider>
+      </Router>
     )
   }
 }
