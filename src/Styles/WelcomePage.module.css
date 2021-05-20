@@ -92,6 +92,12 @@
   align-items: center;
 }
 
+.speechBubbleText{
+  font-size: 30px;
+  font-weight: bold;
+
+}
+
 .wellingtonSize {
   height: 300px;
   width: 300px;
