@@ -93,6 +93,9 @@ class WelcomePage extends Component {
               </div> 
 
               <div className={WelcomePageStyles.speechBubbleColumn}>
+                <div>
+                  Text here.
+                </div>
               </div>
 
             </Row>
