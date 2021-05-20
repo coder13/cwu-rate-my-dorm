@@ -11,7 +11,7 @@ const withEmailVerification = Component => {
   class WithEmailVerification extends React.Component {
     onSendEmailVerification = () => {
       firebase.auth().currentUser.sendEmailVerification({
-        url: `${process.env.REACT_APP_CONFIRMATION_EMAIL_REDIRECT}/signin?redirect=${document.location.pathname}`
+        url: `${document.location.origin}/signin?redirect=${document.location.pathname}`
       });
     }
  

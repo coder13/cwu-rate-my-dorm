@@ -24,7 +24,7 @@ const SignUp = () => {
 
       generateUserDocument(newUser.user, { displayName });
       await newUser.user.sendEmailVerification({
-        url: `${process.env.REACT_APP_CONFIRMATION_EMAIL_REDIRECT}/signin?redirect=${redirect}`,
+        url: `${document.location.origin}/signin?redirect=${redirect}`,
       });
       auth.signOut();
 
@@ -67,7 +67,7 @@ const SignUp = () => {
             {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
             <p>Didn't Receive an email? <a href='#' onClick={() => {
               user.sendEmailVerification({
-                url: `${process.env.REACT_APP_CONFIRMATION_EMAIL_REDIRECT}/signin?redirect=${redirect}`,
+                url: `${document.location.origin}/signin?redirect=${redirect}`,
               });
             }}>Resend Email</a></p>
           </Alert>
