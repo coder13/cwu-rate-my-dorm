@@ -12,9 +12,13 @@ const SignUp = () => {
   const [password, setPassword] = useState('');
   const [displayName, setDisplayName] = useState('');
   const [error, setError] = useState(null);
+<<<<<<< HEAD
   const [passwordLongEnough, setPasswordLongEnough] = useState(false);
   const [emailVerificationLinkHasBeenSent, setEmailVerificationLinkHasBeenSent] = useState(null);
   const [emailVerificationLinkHasBeenResent, setEmailVerificationLinkHasBeenResent] = useState(null);
+=======
+  const [emailVerificationLinkHasBeenSent, setEmailVerificationLinkHasBeenSent] = useState(null);
+>>>>>>> users should be required to verify their email
   const [user, setUser] = useState({});
 
   const redirect = location.state && location.state.from ? location.state.from : '/';
@@ -25,12 +29,19 @@ const SignUp = () => {
     try {
       const newUser = await auth.createUserWithEmailAndPassword(email, password);
 
+<<<<<<< HEAD
       await generateUserDocument(newUser.user, { displayName });
 
       await newUser.user.sendEmailVerification({
         url: `${document.location.origin}/signin?redirect=${redirect}`,
       });
 
+=======
+      generateUserDocument(newUser.user, { displayName });
+      await newUser.user.sendEmailVerification({
+        url: `${process.env.REACT_APP_CONFIRMATION_EMAIL_REDIRECT}/signin?redirect=${redirect}`,
+      });
+>>>>>>> users should be required to verify their email
       auth.signOut();
 
       setUser(newUser.user);
@@ -81,6 +92,7 @@ const SignUp = () => {
             <Alert.Heading>Verifiy your email address</Alert.Heading>
             <p>Check you E-Mails (Spam folder included) for a confirmation E-Mail</p>
             {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+<<<<<<< HEAD
             <p>Didn't Receive an email? <Alert.Link href='#' onClick={() => resendEmail()}>Resend Email</Alert.Link></p>
             { emailVerificationLinkHasBeenResent && (
               <>
@@ -88,6 +100,13 @@ const SignUp = () => {
                 <p>Email Sent!</p>
               </>
             )}
+=======
+            <p>Didn't Receive an email? <a href='#' onClick={() => {
+              user.sendEmailVerification({
+                url: `${process.env.REACT_APP_CONFIRMATION_EMAIL_REDIRECT}/signin?redirect=${redirect}`,
+              });
+            }}>Resend Email</a></p>
+>>>>>>> users should be required to verify their email
           </Alert>
         )}
         <Form.Group controlId="displayName">

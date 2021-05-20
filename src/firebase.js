@@ -44,7 +44,6 @@ export const generateUserDocument = async (user, additionalData) => {
 
   if (!snapshot.exists) {
     const { email, displayName, photoURL } = user;
-
     try {
       const u = {
         displayName,
