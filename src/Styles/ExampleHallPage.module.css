@@ -103,7 +103,8 @@
 }
 
 .reviewsTitle {
-    height: 60px;
+    height: 40px;
+    padding-left: 13px;
     padding-top: 10px;
     width: 50%
 }
@@ -111,9 +112,7 @@
 .reviewsBlock {
     width: 50%;
     height: 100%;
-    border-radius: 5px;
     padding-bottom: 15px;
-    border: 1px solid lightgray;
 }
 
 .reviewsCard {
@@ -133,7 +132,7 @@
 }
 
 .reviewTemplateTitle {
-    height: 30px;
+    height: 25px;
     font-size: large;
     display: flex;
     flex-direction: row;
@@ -165,6 +164,7 @@
     height: auto;
     padding-top: 2px;
     padding-right: 15px;
+    padding-bottom: 2px;
     word-wrap: break-word;
     background-color: white;
 }
