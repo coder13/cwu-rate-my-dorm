@@ -88,16 +88,42 @@ class WelcomePage extends Component {
 
             <Row className={WelcomePageStyles.bottomRow}>
               
-              <div className={WelcomePageStyles.wellingtonColumn}>
-                <img src={Wellington} className={WelcomePageStyles.wellingtonSize} alt=""/>
-              </div> 
+              <Carousel className={WelcomePageStyles.carouselSize}>
+                <Carousel.Item>
+                  <img
+                    className={WelcomePageStyles.imageSize}
+                    src="https://www.kpq.com/wp-content/uploads/2018/07/CWU.jpg"
+                    alt="First slide"
+                  />
+                </Carousel.Item>
 
-              <div className={WelcomePageStyles.speechBubbleColumn}>
-                <div className={WelcomePageStyles.speechBubbleText}>
-                  Text here.
-                </div>
+                <Carousel.Item>
+                  <img
+                    className={WelcomePageStyles.imageSize}
+                    src="https://katu.com/resources/media/b2bd1ced-1737-478c-92d9-fa0fc374d6a2-large16x9_190419_pio_central_washington_university_cwu.jpg?1555702482536"
+                    alt="First slide"
+                  />
+                </Carousel.Item>
+
+                <Carousel.Item>
+                  <img
+                    className={WelcomePageStyles.imageSize}
+                    src="https://www.kpq.com/wp-content/uploads/2018/07/CWU.jpg"
+                    alt="First slide"
+                  />
+                </Carousel.Item>
+              </Carousel>
+
+            </Row>
+
+            <Row className={WelcomePageStyles.suggestionRow}>
+              <div className={WelcomePageStyles.suggestionCard}>
+                <div className={WelcomePageStyles.suggestionText}>Have a suggestion for our site? Please let us know!</div>
+                <Button
+                      variant="primary"
+                      onClick={() => { this.navigateToPage("ReviewPage") }}
+                    >Leave a suggestion</Button>
               </div>
-
             </Row>
 
           </Container>
