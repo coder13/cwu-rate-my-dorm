@@ -103,7 +103,7 @@ class ExampleHallPage extends Component {
     {
       return(
         <div className={ExampleStyles.reviewsBlock}>
-          <h5>No Reviws Yet...</h5>
+          <div className={ExampleStyles.noReviews}>No Reviws Yet...</div>
         </div>
       );
     }
@@ -130,7 +130,6 @@ class ExampleHallPage extends Component {
             <div className={ExampleStyles.reviewTemplateImages}>
 
               {this.generateUserImages(curReview.get("images"))}
-              {console.log(curReview.get("images"))}
 
             </div>
 
