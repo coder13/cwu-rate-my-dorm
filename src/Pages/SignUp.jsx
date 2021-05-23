@@ -22,7 +22,8 @@ const SignUp = () => {
     try {
       const newUser = await auth.createUserWithEmailAndPassword(email, password);
 
-      generateUserDocument(newUser.user, { displayName });
+      await generateUserDocument(newUser.user, { displayName });
+
       await newUser.user.sendEmailVerification({
         url: `${document.location.origin}/signin?redirect=${redirect}`,
       });
