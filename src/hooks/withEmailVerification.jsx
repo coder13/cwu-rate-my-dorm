@@ -9,10 +9,21 @@ const needsEmailVerification = authUser =>
 
 const withEmailVerification = Component => {
   class WithEmailVerification extends React.Component {
-    onSendEmailVerification = () => {
-      firebase.auth().currentUser.sendEmailVerification({
+    state = {
+      emailSent: false,
+    }
+
+    onSendEmailVerification = async () => {
+      if (!firebase.auth().currentUser) {
+        console.error(new Error('User is not logged in'));
+        return;
+      }
+
+      await firebase.auth().currentUser.sendEmailVerification({
         url: `${document.location.origin}/signin?redirect=${document.location.pathname}`
       });
+
+      this.setState({ emailSent: true });
     }
  
     render() {
@@ -25,7 +36,13 @@ const withEmailVerification = Component => {
                   <Alert.Heading>Verifiy your email address</Alert.Heading>
                   Check you E-Mails (Spam folder included) for a confirmation E-Mail
                   {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                  <p>Didn't Receive an email? <a href='#' onClick={this.onSendEmailVerification}>Resend Email</a></p>
+                  <p>Didn't Receive an email? <Alert.Link href='#' onClick={this.onSendEmailVerification}>Resend Email</Alert.Link></p>
+                  {this.state.emailSent && (
+                    <>
+                      <hr />
+                      <p>Email Sent!</p>
+                    </>
+                  )}
                 </Alert>
               </div>
             ) : (
