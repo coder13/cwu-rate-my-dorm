@@ -12,6 +12,7 @@ const SignUp = () => {
   const [displayName, setDisplayName] = useState('');
   const [error, setError] = useState(null);
   const [emailVerificationLinkHasBeenSent, setEmailVerificationLinkHasBeenSent] = useState(null);
+  const [emailVerificationLinkHasBeenResent, setEmailVerificationLinkHasBeenResent] = useState(null);
   const [user, setUser] = useState({});
 
   const redirect = location.state && location.state.from ? location.state.from : '/';
@@ -27,6 +28,7 @@ const SignUp = () => {
       await newUser.user.sendEmailVerification({
         url: `${document.location.origin}/signin?redirect=${redirect}`,
       });
+
       auth.signOut();
 
       setUser(newUser.user);
@@ -40,6 +42,17 @@ const SignUp = () => {
     
     setPassword('');
   };
+
+  const resendEmail = async () => {
+    try {
+      await user.sendEmailVerification({
+        url: `${document.location.origin}/signin?redirect=${redirect}`,
+      });
+      setEmailVerificationLinkHasBeenResent(true);
+    } catch (error) {
+      setError(error);
+    }
+  }
 
   const signInWithGoogleHandler = () => {
     signInWithGoogle()
@@ -66,11 +79,13 @@ const SignUp = () => {
             <Alert.Heading>Verifiy your email address</Alert.Heading>
             <p>Check you E-Mails (Spam folder included) for a confirmation E-Mail</p>
             {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-            <p>Didn't Receive an email? <a href='#' onClick={() => {
-              user.sendEmailVerification({
-                url: `${document.location.origin}/signin?redirect=${redirect}`,
-              });
-            }}>Resend Email</a></p>
+            <p>Didn't Receive an email? <Alert.Link href='#' onClick={() => resendEmail()}>Resend Email</Alert.Link></p>
+            { emailVerificationLinkHasBeenResent && (
+              <>
+                <hr/>
+                <p>Email Sent!</p>
+              </>
+            )}
           </Alert>
         )}
         <Form.Group controlId="displayName">
