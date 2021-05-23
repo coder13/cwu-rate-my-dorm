@@ -21,14 +21,13 @@ const SignInPage = () => {
     auth.signInWithEmailAndPassword(email, password)
       .then(async ({ user }) => {
         const userRef = firestore.doc(`users/${user.uid}`);
-      
+
         try {
           // keep database updated everytime the user logs back in.
           await userRef.set({
             emailVerified: user.emailVerified,
-            displayName: user.displayName,
-            email: user.email,
-            photoURL: user.photoURL,
+          }, {
+            merge: true,
           });
           history.push(redirect);
         } catch (error) {
