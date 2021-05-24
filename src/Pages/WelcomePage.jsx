@@ -38,6 +38,10 @@ class WelcomePage extends Component {
       
       <Container fluid className={WelcomePageStyles.mainContaier}>
       
+        <div className={WelcomePageStyles.suggestionPopUpWindow}>
+          Test
+        </div>
+
         <Row className={WelcomePageStyles.mainRow}>
           
           <Container fluid className={WelcomePageStyles.container}>
