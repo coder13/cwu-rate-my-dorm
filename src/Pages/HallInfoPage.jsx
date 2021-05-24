@@ -7,6 +7,22 @@ import InfoStyles from '../Styles/HallInfoPage.module.css';
 
 class HallInfoPage extends Component {
 
+  constructor(props)
+  {
+    super(props);
+    this.state = 
+    {
+      hallName: this.props.location.state.hallName,
+      hallDocs: null,
+      hallImages: null,
+      hallDescription: null,
+      loaded: false
+    }
+
+    //bind the class functions with this.
+    this.generateImages = this.generateImages.bind(this);
+  }
+
   //===navigateToPage===
   //Desc: Handles navigation to next page.
   navigateToPage(toPass) {
@@ -15,7 +31,40 @@ class HallInfoPage extends Component {
 
   //===componentDidMount===
   //Desc: JS for once the render method is mounted.
-  componentDidMount(){
+  componentDidMount()
+  {
+    getDormByName(this.state.hallName)
+      .then((dormNameResult) => {
+        this.setState({hallDocs: dormNameResult});
+        this.setState({hallImages: dormNameResult.get("images")});
+        this.setState({hallDescription: dormNameResult.get("description")});
+        this.setState({loaded: true});
+      });
+  }
+
+  //===generateImages===
+  //Desc: Genereates images from database values.
+  generateImages(props) 
+  {
+    const imagesToAdd = props.images;
+
+    const toReturn = imagesToAdd.map((curImage) => 
+    
+      <Carousel.Item>
+        <img
+          className={InfoStyles.carouselImageExample}
+          src={curImage}
+          alt=""
+        />
+      </Carousel.Item>
+    
+    );
+
+    return(
+      <Carousel className={InfoStyles.imageCarousel}>
+        {toReturn}
+      </Carousel>
+    );
   }
 
   //===render===
@@ -32,7 +81,7 @@ class HallInfoPage extends Component {
                 <div className={InfoStyles.topBlock}>
                 </div>
                 <div className={InfoStyles.imageBlock}>
-                  {"hall image"}
+                <this.generateImages images={this.state.hallImages} />
                 </div>
                 <div className={InfoStyles.roomTypeBlock}>
                   {"room types"}
@@ -43,7 +92,16 @@ class HallInfoPage extends Component {
                   {"Hall Name"}
                 </div>
                 <div className={InfoStyles.descriptionBlock}>
-                  {"hall description"}
+                <Card bg={'light'} className={InfoStyles.infoCard}>
+                    <Card.Header><b>Hall Information:</b></Card.Header>
+                    <Card.Body>
+                      <Card.Text>
+                        {this.state.hallDescription}
+                        <br />
+                        <Button variant="primary">More Info</Button>
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
                 </div>
                 <div className={InfoStyles.amenitiesBlock}>
                   {"amenities"}

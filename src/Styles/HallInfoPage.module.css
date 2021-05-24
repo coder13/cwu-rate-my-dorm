@@ -73,6 +73,20 @@
   justify-content: center;
 }
 
+.imageCarousel {
+  height: 390px;
+  width: 595px;
+}
+
+.carouselImageExample {
+  height: 390px;
+  width: 595px;
+}
+
+.infoCard {
+  width: 95%;
+  height: 95%;
+}
 /*Getting rid of bootstrap padding / margins*/
 
 .row {
