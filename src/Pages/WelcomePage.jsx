@@ -11,14 +11,26 @@ import {Container,
         Col,
         Carousel,
         Card,
-        Button
+        Button,
+        Form
       } from 'react-bootstrap'
 import SearchImage from '../Assets/SearchCardTop.png'
 import WriteImage from '../Assets/WriteCardTop.png'
-import Wellington from '../Assets/Wellington.jpg'
+import {newSuggestion} from '../firestore'
 
 
 class WelcomePage extends Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+      suggestionDisplay: false,
+      suggestionText: ""
+    }
+
+    this.suggestionPopUpWindow = this.suggestionPopUpWindow.bind(this);
+    this.submitSuggestion = this.submitSuggestion.bind(this);
+  }
 
   //===navigateToPage===
   //Desc: Handles navigation to next page.
@@ -31,16 +43,54 @@ class WelcomePage extends Component {
   componentDidMount() {
   }
 
+  submitSuggestion() {
+  
+    newSuggestion(this.state.suggestionText);
+    this.setState({suggestionDisplay: false});
+    alert("Your suggestion was submited!");
+
+  }
+
+  suggestionPopUpWindow() {
+    return(
+    <div className={WelcomePageStyles.suggestionPopUpWindow}>
+          <div className={WelcomePageStyles.suggestionBox}>
+            <div className={WelcomePageStyles.suggestionBoxTitle}>
+              Leave a Suggestion:
+            </div>
+            <div className={WelcomePageStyles.suggestionBoxBody}>
+              <Form className={WelcomePageStyles.suggestionForm}>
+                <Form.Group>
+
+                  <Form.Control
+                    as="textarea"
+                    rows={7}
+                    className={WelcomePageStyles.suggestionTextBox}
+                    onChange={e => this.setState({ suggestionText: e.target.value })}
+                  />
+                  <Button 
+                    className = {WelcomePageStyles.suggestionBoxButton}
+                    onClick={this.submitSuggestion}
+                  >
+                    Submit
+                  </Button>
+
+                </Form.Group>
+              </Form>
+            </div>
+          </div>
+        </div>
+    );
+  }
+
   //===render===
   //Desc: Renders the html.
   render() {
     return(
       
       <Container fluid className={WelcomePageStyles.mainContaier}>
-      
-        <div className={WelcomePageStyles.suggestionPopUpWindow}>
-          Test
-        </div>
+
+        {this.state.suggestionDisplay ? <this.suggestionPopUpWindow/>: null}
 
         <Row className={WelcomePageStyles.mainRow}>
           
@@ -62,7 +112,7 @@ class WelcomePage extends Component {
                     </Card.Text>
                     <Button
                       variant="primary"
-                      onClick={() => { this.navigateToPage("ReviewPage") }}
+                      onClick={()=>{this.navigateToPage("ReviewPage")}}
                     >
                       Write a Review
                     </Button>
@@ -125,7 +175,7 @@ class WelcomePage extends Component {
                 <div className={WelcomePageStyles.suggestionText}>Have a suggestion for our site? Please let us know!</div>
                 <Button
                       variant="primary"
-                      onClick={() => { this.navigateToPage("ReviewPage") }}
+                      onClick={() => { this.setState({suggestionDisplay: true})}}
                     >Leave a suggestion</Button>
               </div>
             </Row>
