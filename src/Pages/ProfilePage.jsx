@@ -20,7 +20,7 @@ const ProfilePage = () => {
     )
   }
 
-  const { photoURL, displayName, email } = user;
+  const { photoURL } = user;
   
   return (
     <div>
