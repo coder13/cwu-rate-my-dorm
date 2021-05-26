@@ -516,7 +516,8 @@ class ReviewPage extends Component {
                       || this.state.firstQuarterYear === 0 || this.state.lastQuarterSeason === ""
                       || this.state.lastQuarterYear === 0 || this.state.roomType === ""
                       || this.state.floorNum === 0 || this.state.reviewText === "" 
-                      || this.state.showExistingReviewAlert === true || this.state.showMoveOutAlert === true}
+                      /*|| this.state.showExistingReviewAlert === true*/ || this.state.showMoveOutAlert === true} 
+                      // Commented above prevents user from uploading a review if they already have one created
                     onClick={this.submitReview}
                     size="xxl"
                   >
