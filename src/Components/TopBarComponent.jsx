@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Link } from 'react-router-dom';
-import { Navbar, Nav, Form, FormControl } from 'react-bootstrap';
+import { Navbar, Nav, Form, FormControl, Button, Dropdown } from 'react-bootstrap';
 import Styles from '../Styles/TopBarComponent.module.css';
 import CWULogo from '../Assets/CWU_Logo.png'
 import { UserContext } from '../providers/UserProvider';
@@ -8,9 +8,22 @@ import { auth } from "../firebase";
 
 function SignedInNav() {
   return (
+    
     <Nav className="justify-content-end">
-      <Nav.Link as={Link} to="/account">Account Settings</Nav.Link>
-      <Nav.Link as={Link} onClick={() => auth.signOut()} to="#">Sign-out</Nav.Link>
+      <Dropdown>
+        <Dropdown.Toggle variant="flat" id="dropdown-basic" className = {Styles.customBtn}>
+          My Account
+        </Dropdown.Toggle>
+      
+        <Dropdown.Menu align="right" className ={Styles.menu}>
+          <Dropdown.Item as={Link} to="/profile" className = {Styles.menuItem}>Profile</Dropdown.Item>
+          <Dropdown.Item as={Link} to="/account" className = {Styles.menuItem}>Settings</Dropdown.Item>
+          <Dropdown.Divider />
+              <Dropdown.Item as={Link} onClick={() => auth.signOut()} to="#"className = {Styles.menuItem}>Sign-out</Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+
+
     </Nav>
   );
 }
@@ -26,7 +39,11 @@ function SignedOutNav() {
           }
         }}
       >
-        Sign-in
+        <Button 
+          variant="flat" className = {Styles.customBtn}
+        >
+          Sign-in
+        </Button>
       </Nav.Link>
       <Nav.Link as={Link}
         to={{
@@ -36,7 +53,11 @@ function SignedOutNav() {
           }
         }}
       >
-        Sign-up
+        <Button 
+          variant="flat" className = {Styles.customBtn}
+        >
+          Sign-up
+        </Button>
       </Nav.Link>
     </Nav>
   );
@@ -56,8 +77,27 @@ function TopBarComponent() {
       </Form>
 
       <Nav className="ml-auto mr-auto justify-content-center">
-        <Nav.Link as={Link} to="/">Home</Nav.Link>
-        <Nav.Link as={Link} to="/ReviewPage">Leave A Review</Nav.Link>
+        <Nav.Link as={Link} to="/">
+          <Button 
+            variant="flat" className = {Styles.customBtn}
+          >
+            Home
+          </Button>
+        </Nav.Link>
+        <Nav.Link as={Link} to="/MapPage">
+          <Button 
+            variant="flat" className = {Styles.customBtn}
+          >
+            Read Reviews
+          </Button>
+        </Nav.Link>
+        <Nav.Link as={Link} to="/ReviewPage">
+          <Button 
+            variant="flat" className = {Styles.customBtn}
+          >
+            Write a Review
+          </Button>
+        </Nav.Link>
       </Nav>
 
       {user ? <SignedInNav /> : <SignedOutNav />}
