@@ -51,12 +51,20 @@ class WelcomePage extends Component {
 
   }
 
+  //===suggestionPopUpWindow===
+  //Desc: Shows suggestion overlay to user.
   suggestionPopUpWindow() {
     return(
     <div className={WelcomePageStyles.suggestionPopUpWindow}>
           <div className={WelcomePageStyles.suggestionBox}>
             <div className={WelcomePageStyles.suggestionBoxTitle}>
-              Leave a Suggestion:
+              <div className = {WelcomePageStyles.suggestionBoxText}>Leave a Suggestion:</div>
+              <div className = {WelcomePageStyles.suggestionBoxBack}>
+                <Button
+                      variant="light"
+                      onClick={() => { this.setState({suggestionDisplay: false})}}
+                    ><b>X</b></Button>
+              </div>
             </div>
             <div className={WelcomePageStyles.suggestionBoxBody}>
               <Form className={WelcomePageStyles.suggestionForm}>
@@ -71,6 +79,7 @@ class WelcomePage extends Component {
                   <Button 
                     className = {WelcomePageStyles.suggestionBoxButton}
                     onClick={this.submitSuggestion}
+                    variant="success"
                   >
                     Submit
                   </Button>
