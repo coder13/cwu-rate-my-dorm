@@ -71,6 +71,8 @@ class HallInfoPage extends Component {
   //Desc: Renders the html.
   render()
   {
+    if(this.state.loaded)
+    {
       return (
         <Container fluid className={InfoStyles.mainContainer}>
 
@@ -112,6 +114,11 @@ class HallInfoPage extends Component {
           </Container>
         </Container>
       )
+    }
+    else //List is still loading. 
+    {
+      return(<LoaderComponent />);
+    }
     }
     
   }
