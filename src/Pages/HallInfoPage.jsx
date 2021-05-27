@@ -91,7 +91,7 @@ class HallInfoPage extends Component {
               </div>
               <div className={InfoStyles.titleAndDescriptionSection}>
                 <div className={InfoStyles.titleBlock}>
-                  {"Hall Name"}
+                  {this.state.hallName}
                 </div>
                 <div className={InfoStyles.descriptionBlock}>
                 <Card bg={'light'} className={InfoStyles.infoCard}>
@@ -99,8 +99,6 @@ class HallInfoPage extends Component {
                     <Card.Body>
                       <Card.Text>
                         {this.state.hallDescription}
-                        <br />
-                        <Button variant="primary">More Info</Button>
                       </Card.Text>
                     </Card.Body>
                   </Card>
