@@ -129,6 +129,7 @@
     margin-top: 20px;
     display: flex;
     flex-direction: column;
+    background-color: rgb(246, 246, 246);
 }
 
 .reviewTemplateTitle {
@@ -166,7 +167,6 @@
     padding-right: 15px;
     padding-bottom: 2px;
     word-wrap: break-word;
-    background-color: white;
 }
 
 .reviewTemplateImages 
@@ -174,13 +174,14 @@
     display: flex;
     height: auto;
     padding-bottom: 5px;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 .reviewTemplateImageBorder 
 {
     height: 90px;
     width: 90px;
+    padding-right: 3px;
 }
 
 .reviewTemplateImageBorder:hover 
@@ -218,6 +219,15 @@
     top:0;
     right:0;
     cursor: pointer;
+}
+
+.noReviews{
+    font-size: large;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 40px;
 }
 
 .footer {
