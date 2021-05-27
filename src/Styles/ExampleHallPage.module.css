@@ -97,22 +97,22 @@
 .reviewsSection {
     height: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
 .reviewsTitle {
-    height: 60px;
-    padding-left: 15px;
+    height: 40px;
+    padding-left: 13px;
     padding-top: 10px;
+    width: 50%
 }
 
 .reviewsBlock {
-    width: 98%;
+    width: 50%;
     height: 100%;
-    border-radius: 5px;
     padding-bottom: 15px;
-    border: 1px solid lightgray;
 }
 
 .reviewsCard {
@@ -132,7 +132,7 @@
 }
 
 .reviewTemplateTitle {
-    height: 30px;
+    height: 25px;
     font-size: large;
     display: flex;
     flex-direction: row;
@@ -145,6 +145,15 @@
     flex-direction: row;
 }
 
+.reviewAuthor {
+    color: black;
+    font-weight: 500;
+}
+
+.reviewRating {
+    color: grey;
+}
+
 .reviewTemplateBody {
     flex: 3;
     display: flex;
@@ -155,6 +164,7 @@
     height: auto;
     padding-top: 2px;
     padding-right: 15px;
+    padding-bottom: 2px;
     word-wrap: break-word;
     background-color: white;
 }
