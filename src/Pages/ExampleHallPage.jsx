@@ -103,7 +103,7 @@ class ExampleHallPage extends Component {
     {
       return(
         <div className={ExampleStyles.reviewsBlock}>
-          <div className={ExampleStyles.noReviews}>No Reviws Yet...</div>
+          <div className={ExampleStyles.noReviews}>No Reviews Yet...</div>
         </div>
       );
     }
