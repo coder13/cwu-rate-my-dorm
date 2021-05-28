@@ -160,6 +160,18 @@ export async function getReviewsByDormName(dormName){
     return reviews;
 }
 
+//Get reviews by the  dorm name using getDormId to get the id first
+export async function getReviewIDByDormNameAndUser(dormName, email){
+    var reviewID;
+    var dormId = await getDormId(dormName); //gets dorm id
+    await firestore.collection("Dorms").doc(dormId).collection("Reviews").where("email", "==", email).limit(1).get().then((querySnapshot) => {
+        querySnapshot.forEach((review) => {
+            reviewID = review.id;
+        });  
+    });
+    return reviewID
+}
+
 //Get top 3 LIKED reiews
 /*
 export async function getTopReviews(dormName){
