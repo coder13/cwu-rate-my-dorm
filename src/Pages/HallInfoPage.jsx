@@ -86,7 +86,7 @@ class HallInfoPage extends Component {
                 <this.generateImages images={this.state.hallImages} />
                 </div>
                 <div className={InfoStyles.roomTypeBlock}>
-                  {"room types"}
+                  {this.state.hallDocs.get("roomTypes")}
                 </div>
               </div>
               <div className={InfoStyles.titleAndDescriptionSection}>
@@ -104,7 +104,7 @@ class HallInfoPage extends Component {
                   </Card>
                 </div>
                 <div className={InfoStyles.amenitiesBlock}>
-                  {"amenities"}
+                  {this.state.hallDocs.get("amenities")}
                 </div>
               </div>
               
