@@ -5,6 +5,7 @@ import { UserContext } from "../providers/UserProvider";
 import { auth } from "../firebase";
 import ReviewsBlockComponent from '../Components/ReviewsBlockComponent'
 import ProfileStyles from "../Styles/ProfilePage.module.css"
+import {getReviewsByUser} from "../firestore"
 
 const ProfilePage = () => {
 
@@ -12,7 +13,7 @@ const ProfilePage = () => {
   document.title = "Profile Page";
 
   const user = useContext(UserContext);
-  
+  const [reviews, setReviews] = useState([]);
   if (user === undefined) {
     return (
       <LoaderComponent />
@@ -25,7 +26,18 @@ const ProfilePage = () => {
     )
   }
 
-  const { photoURL } = user;
+  
+  useEffect(async () => {
+    try {
+      const rvws = await getReviewsByUser(user.uid)
+      setReviews(rvws);
+    } catch (e) {
+      console.error(e);
+      // error occured, maybe show user the error
+    }
+  }, [user.uid]);
+
+  const { photoURL, displayName, email } = user;
   
   return (
     <div className={ProfileStyles.windowDivSection}>
