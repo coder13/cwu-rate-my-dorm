@@ -40,7 +40,7 @@ class App extends React.Component {
                   <Switch>
                     <Route exact path="/" component={WelcomePage} />
                     <Route exact path="/MapPage" component={MapPage} />
-                    <Route exact path="/ExampleHallPage" component={ExampleHallPage} />
+                    <Route path="/halls/:hall" component={ExampleHallPage} />
                     <Route exact path="/ReviewPage" component={ReviewPage} />
                     <Route exact path="/signin" component={SignInPage} />
                     <Route exact path="/signUp" component={SignUp} />

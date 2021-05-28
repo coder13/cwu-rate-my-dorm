@@ -11,9 +11,10 @@ class ExampleHallPage extends Component {
   constructor(props)
   {
     super(props);
+
     this.state = 
     {
-      hallName: this.props.location.state.hallName,
+      hallName: this.props.match.params.hall,
       hallReviews: null,
       hallDocs: null,
       hallImages: null,
