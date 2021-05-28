@@ -1,10 +1,10 @@
 import { useContext } from "react";
 import { Link } from 'react-router-dom';
-import LoaderComponent from '../Components/LoaderComponent';
 import { UserContext } from "../providers/UserProvider";
-import { auth } from "../firebase";
+import LoaderComponent from '../Components/LoaderComponent';
 import ReviewsBlockComponent from '../Components/ReviewsBlockComponent'
 import ProfileStyles from "../Styles/ProfilePage.module.css"
+import { auth } from "../firebase";
 import {getReviewsByUser} from "../firestore"
 
 const ProfilePage = () => {
@@ -82,26 +82,6 @@ const ProfilePage = () => {
       </div>
 
     </div>
-
-
-
-    // <div>
-    //   <div>
-    //     <div
-    //       style={{
-    //         background: `url(${photoURL || 'https://res.cloudinary.com/dqcsk8rsc/image/upload/v1577268053/avatar-1-bitmoji_upgwhc.png'})  no-repeat center center`,
-    //         backgroundSize: "cover",
-    //         height: "200px",
-    //         width: "200px"
-    //       }}
-    //     />
-    //     <div>
-    //       <h2>{displayName}</h2>
-    //       <h3>{email}</h3>
-    //     </div>
-    //   </div>
-    //   <button onClick={() => {auth.signOut()}}>Sign out</button>
-    // </div>
   ) 
 };
 
