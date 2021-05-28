@@ -14,19 +14,7 @@ const ProfilePage = () => {
 
   const user = useContext(UserContext);
   const [reviews, setReviews] = useState([]);
-  if (user === undefined) {
-    return (
-      <LoaderComponent />
-    )
-  } else if (user === null) {
-    return (
-      <Link to="/signin">
-        Sign In
-      </Link>
-    )
-  }
 
-  
   useEffect(async () => {
     try {
       const rvws = await getReviewsByUser(user.uid)
@@ -36,6 +24,22 @@ const ProfilePage = () => {
       // error occured, maybe show user the error
     }
   }, [user.uid]);
+
+  if (user === undefined) {
+
+    return (
+      <LoaderComponent />
+    )
+
+  } else if (user === null) {
+
+    return (
+      <Link to="/signin">
+        Sign In
+      </Link>
+    )
+
+  }
 
   const { photoURL, displayName, email } = user;
   
