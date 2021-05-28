@@ -150,14 +150,12 @@ class ReviewPage extends Component {
           <div className={ReviewStyles.mainContainerSection}>
 
             <div className={ReviewStyles.sideSection}></div>
-
+            <div className= {ReviewStyles.reviewTitleBlock}> 
+                  Write a Review:
+                </div>
             <div className={ReviewStyles.content}>
         
               <div className={ReviewStyles.leftContentSide}>
-
-                <div className={ReviewStyles.reviewTitleBlock}>
-                  <h1>Leave a Review:</h1>
-                </div>
 
                 <div className={ReviewStyles.reviewDropDown}>
 

@@ -17,22 +17,19 @@
 
 .content {
     flex: 8;
-    margin-top: 15px;
     padding-top: 30px;
     padding-bottom: 30px;
     display: flex;
     flex-direction: row;
-    background-color: white;
-    border-radius: 5px;
-    border: gray 1px solid;
+    background-color: rgb(246, 246, 246);
     width: 100%;
-    min-height:90vh;
 }
 
 .leftContentSide {
     flex: 2;
     height: 100%;
     display: flex;
+    padding-top: 5px;
     flex-direction: column;
     margin-left: 30px;
 }
@@ -42,16 +39,8 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    margin-top: 25px;
 }
 
-.reviewTitleBlock {
-    flex: .7;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-}
 
 .reviewDropDown {
     flex: 2;
@@ -83,21 +72,25 @@
     align-items: center;
     border-radius: 10px;
 }
+.reviewTitleBlock {
+    flex: .7;
+    background-color: white;
+    padding-left: 40px;
+    font-size: 60px;
+    font-weight: bold;
+}
 
 .buttonSection {
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 15px;
+    margin-top: 25px;
 }
 
 .sliderBox {
-    height: 550px;
-    width: 400px;
     display: flex;
-    
-    border-radius: 5px;
+    width: 400px;
     justify-content: center;
     align-items: center;
 }
