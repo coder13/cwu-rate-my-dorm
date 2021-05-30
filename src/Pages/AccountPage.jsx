@@ -12,6 +12,9 @@ const AccountPage = () => {
   const [emailHasBeenSent, setEmailHasBeenSent] = useState(false);
   const [displayNameChanged, setDisplayNameChanged] = useState(false);
   
+  //Set Tab Name:
+  document.title = "Account Settings Page";
+
   if (user === undefined) {
     return (
       <LoaderComponent />

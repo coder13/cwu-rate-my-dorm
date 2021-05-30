@@ -14,6 +14,9 @@ const SignUp = () => {
   const [error, setError] = useState(null);
   const [passwordLongEnough, setPasswordLongEnough] = useState(false);
 
+  //Set Tab Name:
+  document.title = "Sign-Up Page";
+
   const redirect = location.state && location.state.from ? location.state.from : '/';
 
   const createUserWithEmailAndPasswordHandler = async (event) => {
