@@ -79,14 +79,21 @@ class HallInfoPage extends Component {
           <Container className={InfoStyles.middleSection}>
 
             <Row className={InfoStyles.infoAndImageSection}>
-              <div className={InfoStyles.ImageAndAmenititesSection}>
+              <div className={InfoStyles.ImageAndRoomSection}>
                 <div className={InfoStyles.topBlock}>
                 </div>
                 <div className={InfoStyles.imageBlock}>
                 <this.generateImages images={this.state.hallImages} />
                 </div>
                 <div className={InfoStyles.roomTypeBlock}>
+                <Card bg={'light'} className={InfoStyles.infoCard}>
+                    <Card.Header><b>Room Types:</b></Card.Header>
+                    <Card.Body>
+                      <Card.Text>
                   {this.state.hallDocs.get("roomTypes")}
+                  </Card.Text>
+                    </Card.Body>
+                  </Card>
                 </div>
               </div>
               <div className={InfoStyles.titleAndDescriptionSection}>
@@ -104,7 +111,14 @@ class HallInfoPage extends Component {
                   </Card>
                 </div>
                 <div className={InfoStyles.amenitiesBlock}>
+                <Card bg={'light'} className={InfoStyles.infoCard}>
+                <Card.Header><b>Hall Amenities:</b></Card.Header>
+                    <Card.Body>
+                      <Card.Text>
                   {this.state.hallDocs.get("amenities")}
+                  </Card.Text>
+                    </Card.Body>
+                  </Card>
                 </div>
               </div>
               
