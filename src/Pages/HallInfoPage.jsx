@@ -79,7 +79,7 @@ class HallInfoPage extends Component {
           <Container className={InfoStyles.middleSection}>
 
             <Row className={InfoStyles.infoAndImageSection}>
-              <div className={InfoStyles.ImageAndRoomSection}>
+              <div className={InfoStyles.imageAndRoomSection}>
                 <div className={InfoStyles.topBlock}>
                 </div>
                 <div className={InfoStyles.imageBlock}>
