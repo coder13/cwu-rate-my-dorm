@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import LoaderComponent from '../Components/LoaderComponent';
 import { UserContext } from "../providers/UserProvider";
 import { auth } from "../firebase";
+import ReviewsBlockComponent from '../Components/ReviewsBlockComponent'
 
 const ProfilePage = () => {
   const user = useContext(UserContext);
@@ -19,7 +20,7 @@ const ProfilePage = () => {
     )
   }
 
-  const { photoURL, displayName, email } = user;
+  const { photoURL } = user;
   
   return (
     <div>
@@ -33,8 +34,7 @@ const ProfilePage = () => {
           }}
         />
         <div>
-          <h2>{displayName}</h2>
-          <h3>{email}</h3>
+          <ReviewsBlockComponent reviews={null}/>
         </div>
       </div>
       <button onClick={() => {auth.signOut()}}>Sign out</button>

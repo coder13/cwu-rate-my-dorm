@@ -127,40 +127,36 @@ class HallInfoPage extends Component {
 
             <Row className={InfoStyles.infoAndImageSection}>
               <div className={InfoStyles.imageAndRoomSection}>
+                
                 <div className={InfoStyles.topBlock}>
                 </div>
+
                 <div className={InfoStyles.imageBlock}>
-                <this.generateImages images={this.state.hallImages} />
+                  <this.generateImages images={this.state.hallImages} />
                 </div>
-                {/* <div className={InfoStyles.roomTypeBlock}>
-                <Card bg={'light'} className={InfoStyles.infoCard}>
-                    <Card.Header><b>Room Types:</b></Card.Header>
-                    <Card.Body>
-                      <Card.Text>
-                  {this.state.hallDocs.get("roomTypes")}
-                  </Card.Text>
-                    </Card.Body>
-                  </Card>
-                </div> */}
-              <this.roomTypesBlockRender roomTypes={this.state.hallDocs.get("roomTypes")} />
+               
+                <this.roomTypesBlockRender roomTypes={this.state.hallDocs.get("roomTypes")} />
 
               </div>
+              
               <div className={InfoStyles.titleAndDescriptionSection}>
+                
                 <div className={InfoStyles.titleBlock}>
                   {this.state.hallName}
                 </div>
+
                 <div className={InfoStyles.descriptionBlock}>
-                <Card bg={'light'} className={InfoStyles.infoCard}>
+                  <Card bg={'light'} className={InfoStyles.infoCard}>
                     <Card.Header><b>Hall Information:</b></Card.Header>
                     <Card.Body>
                       <Card.Text>
                         {this.state.hallDescription}
                       </Card.Text>
                     </Card.Body>
-                </Card>
+                  </Card>
                 </div>
 
-                <this.amenitiesBlockRender amen ={this.state.hallDocs.get("amenities")} />
+                <this.amenitiesBlockRender amen={this.state.hallDocs.get("amenities")} />
 
               </div>
             </Row>

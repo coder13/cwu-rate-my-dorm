@@ -1,6 +1,5 @@
 import firebase from 'firebase/app';
-import React from "react";
-import { auth, firestore, storage, generateUserDocument } from './firebase';
+import { firestore, storage } from './firebase';
 import uuid from 'react-uuid';
 
 
@@ -94,13 +93,43 @@ export async function orderDorms(){
     return dorms;
 }
 
+//Updates the overall rating. Gets called everytime a new review is submited. Assumes each review has a rating.
+export async function updateOverallRating(dormName, revRating ){
+    console.log("called with " + revRating);
+    var dormId = await getDormId(dormName);
+    firestore.runTransaction((transaction) => {
+        let dormRef = firestore.collection('Dorms').doc(dormId);
+        return transaction.get(dormRef).then(doc => {
+            //update number of reviews
+            var newNumReviews = doc.data().numReviews + 1;
+
+            //update overall rating
+            var oldRatingTotal = 0;
+
+            if(doc.data().rating != null){ //if this is not the first review
+                oldRatingTotal = doc.data().rating * doc.data().numReviews; 
+            }
+
+            //calculate new rating
+            var newAvgRating = ((oldRatingTotal + parseInt(revRating) )/ newNumReviews).toFixed(1);
+
+            //commit to Firestore
+            transaction.update(dormRef, {
+                numReviews: newNumReviews,
+                rating: newAvgRating
+            });
+        });
+      });
+}
+
 // Get all info from all reviews by a user
-export async function getReviewsByUser(userID) {
-    var reviews = [];
-    await firestore.collection("Dorms").where('email', '==', userID).get().then((querySnapshot) => {
+export async function getReviewsByUser() {
+    var reviews = []; 
+    var user = firebase.auth().currentUser;
+    //console.log(user.email);
+    await firestore.collectionGroup('Reviews').where('authorID', '==', user.uid).orderBy("lastQuarterYear", "desc").orderBy("lastQuarterSeasonNum", "desc").get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-            reviews.push(doc.data());
-            //console.log(doc.data());
+            reviews.push(doc);
         });
     });
     return reviews;
@@ -127,6 +156,56 @@ export async function getReviewsByDormName(dormName){
             reviews.push(doc);
             //console.log(doc.id + " " + doc.get("rating"));         
         });  
+    });
+    return reviews;
+}
+
+//Get top 3 LIKED reiews
+/*
+export async function getTopReviews(dormName){
+    var topRev = [];
+    var topId = [];
+    var dormId = await getDormId(dormName);
+    await firestore.collection("Dorms").doc(dormId).collection("Reviews").orderBy("likes", "desc").limit(3).get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            topRev.push(doc);
+            topId.push(doc.id);
+        });
+    });
+    return [topRev, topId];
+} */
+
+
+//Get top 3 MOST RECENT reviews
+export async function getTopReviews(dormName){
+    var topRev = []; //these will be the actual review documents
+    var topId = []; //this will just be the ids of the top reviews
+    var dormId = await getDormId(dormName);
+    console.log("top");
+    await firestore.collection("Dorms").doc(dormId).collection("Reviews").orderBy("lastQuarterYear", "desc").orderBy("lastQuarterSeasonNum", "desc").limit(3).get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            topRev.push(doc);
+            topId.push(doc.id)
+            console.log(doc.id);
+        });
+    });
+    return [topRev, topId];
+}
+
+//Get reviews sorted by most recent. ***Uncomment commented parts to use top reviews***
+export async function getSortedReviews(dormName){
+    var reviews = [];
+    var dormId = await getDormId(dormName);
+    //var topRevId = await getTopReviews(dormName)[1];
+    console.log("sorted");
+    await firestore.collection("Dorms").doc(dormId).collection("Reviews").orderBy("lastQuarterYear", "desc").orderBy("lastQuarterSeasonNum", "desc").get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            //if(!(topRevId.includes(doc.id))){
+                reviews.push(doc); 
+                console.log(doc.id);
+            //}
+           
+        });
     });
     return reviews;
 }
@@ -164,7 +243,6 @@ export async function getDormByName(dormName){
 //add image to storage, dorm document images, and review document images. w/example of user file input
 export async function uploadImage(dormName, file){
     var newId = uuid(); //creates uuid for image
-    var dormId = await getDormId(dormName);
     var imgURL;
 
     var storageRef = storage.ref();
@@ -173,20 +251,12 @@ export async function uploadImage(dormName, file){
        
     await dormRef.put(file).then(async() => { //putting image in db                  
         await dormRef.getDownloadURL().then(async(url) => {//get the url of image    
-            //updating images in dorm images collection
-            var dorm = firestore.collection('Dorms').doc(dormId); //get the dorm where we want to update images
-            dorm.get().then(async(doc) => {
-                dorm.update({  //update dorm images 
-                    images: firebase.firestore.FieldValue.arrayUnion(url)          
-                });   
-            });
             imgURL = url;  
         }) //error getting url
         .catch((error) => { 
             console.log("Error getting URL", error);
         });
 
-     
     });    
     
     return imgURL;
@@ -230,12 +300,19 @@ export async function newReview(dormName, author, authorID, email, fQuarter, lQu
     var reviewDoc; //review document once it's created
     var dormID = await getDormId(dormName);
 
-    // Add review to firestore
+    //get the "number" of last quarter
+    var seasons = ['Winter', 'Spring', 'Summer', 'Fall'];
+    var lastSeasonNum = seasons.indexOf(lQuarter[1]);
+
     const dormRef = firestore.collection('Dorms').doc(dormID).collection('Reviews');
+    // Add review to firestore
     await dormRef.add({ // add returns a document reference in promise
         author: author,
-        firstQuarter: fQuarter,
-        lastQuarter: lQuarter,
+        firstQuarterYear: fQuarter[0],
+        firstQuarterSeason: fQuarter[1],
+        lastQuarterYear: lQuarter[0],
+        lastQuarterSeason: lQuarter[1],
+        lastQuarterSeasonNum: lastSeasonNum,
         dormName: dormName,
         email: email,
         floor: floor,
@@ -253,8 +330,9 @@ export async function newReview(dormName, author, authorID, email, fQuarter, lQu
         authorID: authorID
     })
     .then(async documentReference =>{
-        await documentReference.get().then(documentSnapshot =>{ //gets the document from the reference that add returns
+        await documentReference.get().then(async documentSnapshot =>{ //gets the document from the reference that add returns
             reviewDoc = documentSnapshot;
+            await updateOverallRating(dormName, reviewDoc.get('overallRating'));
         });
     });
     return reviewDoc;
