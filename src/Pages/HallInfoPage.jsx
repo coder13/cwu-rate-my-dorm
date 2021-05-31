@@ -21,6 +21,8 @@ class HallInfoPage extends Component {
 
     //bind the class functions with this.
     this.generateImages = this.generateImages.bind(this);
+    this.amenitiesBlockRender = this.amenitiesBlockRender.bind(this);
+    this.roomTypesBlockRender = this.roomTypesBlockRender.bind(this);
   }
 
   //===navigateToPage===
@@ -67,6 +69,51 @@ class HallInfoPage extends Component {
     );
   }
 
+  roomTypesBlockRender(props) {
+
+    const roomTypes = props.roomTypes;
+
+    const toReturn = roomTypes.map((value) =>
+      <p className={InfoStyles.exampleElementStyle}>{value}</p>
+    );
+
+    return(
+      <div className={InfoStyles.roomTypeBlock}>
+        <Card bg={'light'} className={InfoStyles.infoCard}>
+          <Card.Header><b>Room Types:</b></Card.Header>
+          <Card.Body>
+            <Card.Text>
+              {toReturn}
+            </Card.Text>
+          </Card.Body>
+        </Card>
+      </div>
+    );
+  }
+
+  //===amenitiesBlockRender===
+  //Desc: Genereates card for amenities.
+  amenitiesBlockRender(props) {
+
+    const amen = props.amen;
+    const toReturn = amen.map((value) => 
+      <p>{value}</p> 
+    );
+
+    return (
+      <div className={InfoStyles.amenitiesBlock}>
+        <Card bg={'light'} className={InfoStyles.infoCard}>
+          <Card.Header><b>Hall Amenities:</b></Card.Header>
+          <Card.Body>
+            <Card.Text>
+              {toReturn}
+            </Card.Text>
+          </Card.Body>
+        </Card>
+      </div>
+    );
+  }
+
   //===render===
   //Desc: Renders the html.
   render()
@@ -85,7 +132,7 @@ class HallInfoPage extends Component {
                 <div className={InfoStyles.imageBlock}>
                 <this.generateImages images={this.state.hallImages} />
                 </div>
-                <div className={InfoStyles.roomTypeBlock}>
+                {/* <div className={InfoStyles.roomTypeBlock}>
                 <Card bg={'light'} className={InfoStyles.infoCard}>
                     <Card.Header><b>Room Types:</b></Card.Header>
                     <Card.Body>
@@ -94,7 +141,9 @@ class HallInfoPage extends Component {
                   </Card.Text>
                     </Card.Body>
                   </Card>
-                </div>
+                </div> */}
+              <this.roomTypesBlockRender roomTypes={this.state.hallDocs.get("roomTypes")} />
+
               </div>
               <div className={InfoStyles.titleAndDescriptionSection}>
                 <div className={InfoStyles.titleBlock}>
@@ -108,20 +157,12 @@ class HallInfoPage extends Component {
                         {this.state.hallDescription}
                       </Card.Text>
                     </Card.Body>
-                  </Card>
+                </Card>
                 </div>
-                <div className={InfoStyles.amenitiesBlock}>
-                <Card bg={'light'} className={InfoStyles.infoCard}>
-                <Card.Header><b>Hall Amenities:</b></Card.Header>
-                    <Card.Body>
-                      <Card.Text>
-                  {this.state.hallDocs.get("amenities")}
-                  </Card.Text>
-                    </Card.Body>
-                  </Card>
-                </div>
+
+                <this.amenitiesBlockRender amen ={this.state.hallDocs.get("amenities")} />
+
               </div>
-              
             </Row>
           </Container>
         </Container>
@@ -134,7 +175,5 @@ class HallInfoPage extends Component {
     }
     
   }
-
-
 
 export default withRouter(HallInfoPage);
