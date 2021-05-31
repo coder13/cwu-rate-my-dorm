@@ -8,11 +8,7 @@
 }
 
 .mainContainerSection {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    max-width: 1800px;
-    min-width: 1800px;
+    width: 1200px;
 }
 
 .sideSection {
@@ -22,16 +18,19 @@
 .content {
     flex: 8;
     margin-top: 15px;
+    padding-top: 30px;
+    padding-bottom: 30px;
     display: flex;
     flex-direction: row;
     background-color: white;
     border-radius: 5px;
     border: gray 1px solid;
     width: 100%;
+    min-height:90vh;
 }
 
 .leftContentSide {
-    flex: 1;
+    flex: 2;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -43,6 +42,7 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    margin-top: 25px;
 }
 
 .reviewTitleBlock {
@@ -50,6 +50,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 20px;
 }
 
 .reviewDropDown {
@@ -61,6 +62,7 @@
 }
 
 .reviewText {
+    padding-top: 40px;
     flex: 1;
     display: flex;
     justify-content: center;
@@ -87,39 +89,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 15px;
 }
 
 .sliderBox {
     height: 550px;
-    width: 700px;
+    width: 400px;
     display: flex;
     
     border-radius: 5px;
     justify-content: center;
     align-items: center;
-}
-
-.submitButton {
-    width: 330px;
-    height: 110px;
-    background-color: #A30F32;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 4px 4px #838383;
-    color: white;
-    text-align: center;
-    cursor: pointer;
-    margin-bottom: 45px;
-}
-
-.submitButton:hover {
-    background-color: #820d28;
-    box-shadow: 0px 0px;
-    margin-top: 4px;
-    margin-left: 4px;
 }
 
 .form {
@@ -128,4 +108,22 @@
 
 .borderAdd {
     border: solid black 1px;
+}
+
+.quarterDropdown {
+    width: 230;
+}
+
+.successAlert {
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.dangerAlert {
+    margin-top: 10px;
+}
+
+.submitAlert {
+    margin: 40px;
+    margin-top: 20px;
 }
