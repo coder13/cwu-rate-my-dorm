@@ -1,0 +1,185 @@
+.mainDivSection {
+    min-width: 100vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: #E6E6E6;
+    width: 100%;
+}
+
+.mainContainerSection {
+    width: 1200px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    max-width: 1800px;
+    min-width: 1800px;
+    justify-content: center;  
+
+}
+
+.sideSection {
+    flex: 1;
+}
+
+.content {
+    flex: 8;
+    margin-top: 15px; 
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+    width: 100%;
+}
+
+.leftContentSide {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 30px;
+}
+
+.rightContentSide {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.reviewTitleBlock {
+    flex: .7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.reviewDropDown {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.reviewText {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.reviewImages {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sliderSection {
+    flex: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.buttonSection {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sliderBox {
+    height: 550px;
+    width: 700px;
+    display: flex;
+    
+    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
+}
+
+.form {
+    width: 90%;
+}
+
+.borderAdd {
+    border: solid black 1px;
+}
+
+
+.bottomSection{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: white;
+    height: 500px;
+    justify-content: center;
+}
+
+.mainContent{
+    flex:8;
+    display:flex;
+    flex-direction:column;
+    width: 100%;
+    min-height: 100%;
+    justify-content: center;  
+    height: auto; 
+}
+
+.imagesRow{
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    padding-bottom: 5px;
+    padding-left: 50px;
+
+}
+
+
+.imageBlock{
+    position: relative;
+    height: 200px;
+    width: 200px;
+    display: flex;
+    cursor: pointer;
+    overflow: hidden;
+
+}
+
+
+.imageBorder 
+{
+    height: 200px;
+    width: 200px;
+}
+
+.trash {
+    opacity: 0;
+    position: absolute;
+    background-color: rgba(200, 200, 200, 0.5);
+    width: 200px;
+    height: 200px;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    flex-wrap: wrap;
+
+}
+
+.trash:hover {
+    opacity: 1;
+    position: absolute;
+    background-color: rgba(200, 200, 200, 0.5);
+    width: 200px;
+    height: 200px;
+
+
+}
+
+.trashBtn {
+    opacity: 1;
+}
+
