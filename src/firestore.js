@@ -95,7 +95,6 @@ export async function orderDorms(){
 
 //Updates the overall rating. Gets called everytime a new review is submited. Assumes each review has a rating.
 export async function updateOverallRating(dormName, revRating ){
-    console.log("called with " + revRating);
     var dormId = await getDormId(dormName);
     firestore.runTransaction((transaction) => {
         let dormRef = firestore.collection('Dorms').doc(dormId);
@@ -104,14 +103,15 @@ export async function updateOverallRating(dormName, revRating ){
             var newNumReviews = doc.data().numReviews + 1;
 
             //update overall rating
-            var oldRatingTotal = 0;
+            var oldRatingTotal = 0.0;
+ 
 
             if(doc.data().rating != null){ //if this is not the first review
                 oldRatingTotal = doc.data().rating * doc.data().numReviews; 
             }
 
             //calculate new rating
-            var newAvgRating = ((oldRatingTotal + parseInt(revRating) )/ newNumReviews).toFixed(1);
+            var newAvgRating = (oldRatingTotal + revRating )/ newNumReviews;
 
             //commit to Firestore
             transaction.update(dormRef, {
@@ -241,6 +241,7 @@ export async function getDormByName(dormName){
 }
 
 //add image to storage, dorm document images, and review document images. w/example of user file input
+/*
 export async function uploadImage(dormName, file){
     var newId = uuid(); //creates uuid for image
     var imgURL;
@@ -251,6 +252,28 @@ export async function uploadImage(dormName, file){
        
     await dormRef.put(file).then(async() => { //putting image in db                  
         await dormRef.getDownloadURL().then(async(url) => {//get the url of image    
+            imgURL = url;  
+        }) //error getting url
+        .catch((error) => { 
+            console.log("Error getting URL", error);
+        });
+
+    });    
+    
+    return imgURL;
+}
+*/
+//add image to storage, dorm document images, and review document images. w/example of user file input
+//FOR REVIEW IMAGES
+export async function uploadImage(file){
+    var newId = uuid(); //creates uuid for image
+    var imgURL;
+
+    var storageRef = storage.ref();
+    var imagesRef = storageRef.child('reviewImages/' + newId);//this just creates a reference, just says where and how the image will be stored
+       
+    await imagesRef.put(file).then(async() => { //putting image in db                  
+        await imagesRef.getDownloadURL().then(async(url) => {//get the url of image    
             imgURL = url;  
         }) //error getting url
         .catch((error) => { 
@@ -293,6 +316,17 @@ export async function addImage(dormID, image) {
     } else return null;
 }
 
+export async function deleteImage(url){
+    var pictureRef = storage.refFromURL(url);
+    pictureRef.delete()
+    .then(() => {
+      console.log("Picture is deleted successfully from storage!");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
 // Add a new Review to firestore and return the document created
 export async function newReview(dormName, author, authorID, email, fQuarter, lQuarter,roomType, floor, review, images, overallRating, 
     locationRating, roomSizeRating, furnitureRating, commonAreasRating, cleanlinessRating, bathroomRating, likes) {
@@ -317,7 +351,7 @@ export async function newReview(dormName, author, authorID, email, fQuarter, lQu
         email: email,
         floor: floor,
         images: images,
-        overallRating: overallRating,
+        overallRating: parseInt(overallRating),
         review: review,
         roomType: roomType,
         locationRating: locationRating,
@@ -332,12 +366,127 @@ export async function newReview(dormName, author, authorID, email, fQuarter, lQu
     .then(async documentReference =>{
         await documentReference.get().then(async documentSnapshot =>{ //gets the document from the reference that add returns
             reviewDoc = documentSnapshot;
-            await updateOverallRating(dormName, reviewDoc.get('overallRating'));
         });
+        await updateOverallRating(dormName, reviewDoc.get('overallRating'));
     });
     return reviewDoc;
 }
 
+export async function editReview(revId, dormName, fQuarter, lQuarter,roomType, floor, review, images, overallRating, 
+    locationRating, roomSizeRating, furnitureRating, commonAreasRating, cleanlinessRating, bathroomRating, likes, oldRevRating){
+
+    var seasons = ['Winter', 'Spring', 'Summer', 'Fall'];
+    var lastSeasonNum = seasons.indexOf(lQuarter[1]);
+
+    var dormId = await getDormId(dormName);
+
+    var revRef = firestore.collection('Dorms').doc(dormId).collection('Reviews').doc(revId);
+
+    revRef.set({
+        firstQuarterYear: fQuarter[0],
+        firstQuarterSeason: fQuarter[1],
+        lastQuarterYear: lQuarter[0],
+        lastQuarterSeason: lQuarter[1],
+        lastQuarterSeasonNum: lastSeasonNum,
+        floor: floor,
+        images: images,
+        overallRating: parseInt(overallRating),
+        review: review,
+        roomType: roomType,
+        locationRating: locationRating,
+        roomSizeRating: roomSizeRating,
+        furnitureRating: furnitureRating,
+        commonAreasRating: commonAreasRating,
+        cleanlinessRating: cleanlinessRating,
+        bathroomRating: bathroomRating,
+        likes: likes,
+
+    }, 
+    { merge: true });
+
+    //firestore transaction to update overallRating of dorm affected
+    firestore.runTransaction((transaction) => {
+        let dormRef = firestore.collection('Dorms').doc(dormId);
+        return transaction.get(dormRef).then(doc => {
+            //get old overall rating total
+            var oldRatingTotal = doc.data().rating * doc.data().numReviews;
+            console.log("old rating total " + oldRatingTotal); 
+
+            //get new overall rating total
+            var newRatingTotal = (oldRatingTotal - oldRevRating) + parseInt(overallRating);
+            console.log("new rating total" + newRatingTotal);
+
+            //calculate new rating 
+            var newAvgRating = newRatingTotal / doc.data().numReviews;
+            console.log("average overall " + newAvgRating);
+
+            //commit to Firestore
+            transaction.update(dormRef, {
+                rating: newAvgRating
+            });
+        });
+    }); 
+
+}
+
+export async function deleteReview(dormName, revId, oldRevRating){
+    var dormId = await getDormId(dormName);
+    var deletedRating = oldRevRating;
+    console.log(deletedRating);
+
+    //delete review doc from firestore
+    firestore.collection("Dorms").doc(dormId).collection('Reviews').doc(revId).delete().then(() => {
+        console.log("Review successfully deleted!");
+    }).catch((error) => {
+        console.log("Error removing review: ", error);
+    });
+
+    //update overall rating of affected dorm
+    firestore.runTransaction((transaction) => {
+        let dormRef = firestore.collection('Dorms').doc(dormId);
+        return transaction.get(dormRef).then(doc => {
+            //update number of reviews
+            var newNumReviews = doc.data().numReviews - 1;
+
+            //update overall rating total
+            var oldRatingTotal = doc.data().rating * doc.data().numReviews; 
+            var newRatingTotal = oldRatingTotal - deletedRating;
+
+            //calculate new rating 
+            var newAvgRating;
+            if(newNumReviews >0){ //if this is the last review, make sure not to divide by 0
+                newAvgRating = newRatingTotal/ newNumReviews;
+            }else{
+                newAvgRating = null; //if this is the last review we want rating to be null
+            }
+
+            //commit to Firestore
+            transaction.update(dormRef, {
+                numReviews: newNumReviews,
+                rating: newAvgRating
+            });
+        });
+    }); 
+}
+
+//adds a suggestion to firestore in the collection 'suggestions'
+export async function newSuggestion(text){
+    var sDoc;
+    const sRef = firestore.collection('suggestions');
+
+    // Add suggestion to firestore
+    await sRef.add({ // add returns a document reference in promise
+        text:text
+    })
+    .then(async documentReference =>{
+        await documentReference.get().then(async documentSnapshot =>{ //gets the document from the reference that add returns
+            sDoc = documentSnapshot;
+        });
+    });
+
+    //console.log('Suggestion doc sumbitted:', sDoc.id);
+    return sDoc;
+}
 
 // Add a new user to firestore
 export function newUser(username, email, graduationYear) {
