@@ -125,6 +125,10 @@
     width: 90%;
 }
 
+.imageInput {
+    width: 85%;
+}
+
 .borderAdd {
     border: solid black 1px;
 }

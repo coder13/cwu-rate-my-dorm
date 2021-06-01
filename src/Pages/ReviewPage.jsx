@@ -107,7 +107,6 @@ class ReviewPage extends Component {
       this.setState({ loaded: true });
     }));
 
-    //console.log(auth.currentUser);
   }
   dormChanged(e) {
     // Updates roomTypes and floors when the dorm is changed
@@ -134,7 +133,6 @@ class ReviewPage extends Component {
     else this.setState({hallName: e.target.value});
     // Detects if user has already reviewed dorm, then links them to the edit page
     firestore.getReviewIDByDormNameAndUser(e.target.value, firebase.auth().currentUser.email).then((id) => {
-      //console.log("id:" + id);
       if (id != null) {
         this.setState({ showExistingReviewAlert: true })
       }
@@ -146,7 +144,6 @@ class ReviewPage extends Component {
 
   addImageHandler(e) {
     // Requires images to be under 8MB
-    console.log(e.target.files[0].size)
       if (this.state.image.length >= 5) {
         console.log("File limit reached.")
       }
@@ -168,9 +165,6 @@ class ReviewPage extends Component {
     this.setState({
       image: filteredImage,
       prevUrls: filteredUrls
-    }, () => {
-        console.log(this.state.image);
-        console.log(this.state.prevUrls);
     })
 
   }
@@ -372,7 +366,7 @@ class ReviewPage extends Component {
                 </div>
 
                 <div className={ReviewStyles.reviewImages}>
-                  <Form className={ReviewStyles.form}>
+                  <Form className={ReviewStyles.imageInput}>
                     <Form.Group>
                       <Form.File
                         id="exampleFormControlFile1"
@@ -381,7 +375,7 @@ class ReviewPage extends Component {
                       />
                     </Form.Group>
                   </Form>
-                  {this.state.image.length}/5
+                  {this.state.image.length}/5     
                 </div>
   
                 <div className = {ReviewStyles.imagesContainer}>
