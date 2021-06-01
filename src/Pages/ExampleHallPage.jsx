@@ -11,9 +11,10 @@ class ExampleHallPage extends Component {
   constructor(props)
   {
     super(props);
+
     this.state = 
     {
-      hallName: this.props.location.state.hallName,
+      hallName: this.props.match.params.hall,
       hallReviews: null,
       hallDocs: null,
       hallImages: null,
@@ -28,6 +29,7 @@ class ExampleHallPage extends Component {
     this.generateReviews = this.generateReviews.bind(this);
     this.generateImages = this.generateImages.bind(this);
     this.userImagePopup = this.userImagePopup.bind(this);
+    this.generateUserImages = this.generateUserImages.bind(this);
   }
 
   //===navigateToPage===
@@ -73,17 +75,36 @@ class ExampleHallPage extends Component {
     );
   }
 
+  //===generateUserImages===
+  generateUserImages(imageArr)
+  {
+    const toReturn = imageArr.map((curImage) =>
+
+      <img className={ExampleStyles.reviewTemplateImageBorder}
+        src={curImage}
+        alt=""
+        key ={curImage}
+        onClick={() => { this.setState({ displayCurUserImage: true }); this.setState({ currentUserImage: curImage }); }}
+      />
+
+    );
+
+    return(toReturn);
+  }
+
   //===generateReviews===
   //Desc: Genereates reviews from database values.
   generateReviews(props) 
   {
     const reviewsToAdd = props.reviews;
 
+    console.log(reviewsToAdd);
+
     if(reviewsToAdd <= 0)
     {
       return(
         <div className={ExampleStyles.reviewsBlock}>
-          <h5>No Reviws Yet...</h5>
+          <div className={ExampleStyles.noReviews}>No Reviews Yet...</div>
         </div>
       );
     }
@@ -92,11 +113,13 @@ class ExampleHallPage extends Component {
       curReview.get("images").length > 0 ? 
         <div key={curReview.id} className={ExampleStyles.reviewTemplate}>
           <div className={ExampleStyles.reviewTemplateTitle}>
-            <b>Author: </b> {curReview.get("author")}
+            <div className={ExampleStyles.reviewAuthor}>Author</div>
+            {": " + curReview.get("author")}
           </div>
 
           <div className={ExampleStyles.reviewTemplateRating}>
-            <b>Overall Rating: </b> {curReview.get("overallRating")}
+            <div className={ExampleStyles.reviewRating}>Overall Rating</div>
+            {": " +curReview.get("overallRating")}
           </div>
 
           <div className={ExampleStyles.reviewTemplateBody}>
@@ -107,11 +130,7 @@ class ExampleHallPage extends Component {
 
             <div className={ExampleStyles.reviewTemplateImages}>
 
-              <img className={ExampleStyles.reviewTemplateImageBorder}
-                src={curReview.get("images")}
-                alt=""
-                onClick={() => { this.setState({ displayCurUserImage: true }); this.setState({ currentUserImage: curReview.get("images") }); }}
-              />
+              {this.generateUserImages(curReview.get("images"))}
 
             </div>
 
@@ -122,11 +141,13 @@ class ExampleHallPage extends Component {
         <div key={curReview.id} className={ExampleStyles.reviewTemplate}>
           
           <div className={ExampleStyles.reviewTemplateTitle}>
-            <b>Author:</b> {curReview.get("author")}
+            <div className={ExampleStyles.reviewAuthor}>Author</div>
+            {": " + curReview.get("author")}
           </div>
 
           <div className={ExampleStyles.reviewTemplateRating}>
-            <b>Overall Rating:</b> {curReview.get("overallRating")}
+            <div className={ExampleStyles.reviewRating}>Overall Rating</div>
+            {": " +curReview.get("overallRating")}
           </div>
 
           <div className={ExampleStyles.reviewTemplateBody}>
@@ -222,11 +243,10 @@ class ExampleHallPage extends Component {
 
               </Row>
 
-              <Row className={ExampleStyles.reviewsTitle}>
-                <h2>User Reviews({this.state.hallReviews.length}):</h2>
-              </Row>
-
               <Row className={ExampleStyles.reviewsSection}>
+                <Row className={ExampleStyles.reviewsTitle}>
+                  <h2>User Reviews({this.state.hallReviews.length}):</h2>
+                </Row>
                 <this.generateReviews reviews={this.state.hallReviews} />
               </Row>
 

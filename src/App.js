@@ -17,6 +17,7 @@ import WelcomePage from './Pages/WelcomePage'
 import AppStyle from './App.module.css';
 import ReviewPage from './Pages/ReviewPage';
 import TopBarComp from './Components/TopBarComponent'
+import PrivateRoute from './Components/PrivateRoute';
 
 class App extends React.Component {
   
@@ -41,14 +42,14 @@ class App extends React.Component {
                   <Switch>
                     <Route exact path="/" component={WelcomePage} />
                     <Route exact path="/MapPage" component={MapPage} />
-                    <Route exact path="/ExampleHallPage" component={ExampleHallPage} />
                     <Route exact path="/HallInfoPage" component={HallInfoPage} />
-                    <Route exact path="/ReviewPage" component={ReviewPage} />
+                    <Route path="/halls/:hall" component={ExampleHallPage} />
+                    <PrivateRoute exact path="/ReviewPage"><ReviewPage /></PrivateRoute>
                     <Route exact path="/signin" component={SignInPage} />
                     <Route exact path="/signUp" component={SignUp} />
                     <Route exact path="/passwordReset" component={PasswordReset} />
-                    <Route exact path="/profile" component={ProfilePage} />
-                    <Route exact path="/account" component={AccountPage} />
+                    <PrivateRoute exact path="/profile"><ProfilePage/></PrivateRoute>
+                    <PrivateRoute exact path="/account"><AccountPage/></PrivateRoute>
                     <Route path="*">
                       <p>404: Page not Found</p>
                     </Route>

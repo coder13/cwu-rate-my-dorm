@@ -160,6 +160,18 @@ export async function getReviewsByDormName(dormName){
     return reviews;
 }
 
+//Get reviews by the  dorm name using getDormId to get the id first
+export async function getReviewIDByDormNameAndUser(dormName, email){
+    var reviewID;
+    var dormId = await getDormId(dormName); //gets dorm id
+    await firestore.collection("Dorms").doc(dormId).collection("Reviews").where("email", "==", email).limit(1).get().then((querySnapshot) => {
+        querySnapshot.forEach((review) => {
+            reviewID = review.id;
+        });  
+    });
+    return reviewID
+}
+
 //Get top 3 LIKED reiews
 /*
 export async function getTopReviews(dormName){
@@ -347,6 +359,26 @@ export function newUser(username, email, graduationYear) {
         graduationYear: graduationYear,
     })
 }
+
+//adds a suggestion to firestore in the collection 'suggestions'
+export async function newSuggestion(text){
+    var sDoc;
+    const sRef = firestore.collection('suggestions');
+
+    // Add suggestion to firestore
+    await sRef.add({ // add returns a document reference in promise
+        text:text
+    })
+    .then(async documentReference =>{
+        await documentReference.get().then(async documentSnapshot =>{ //gets the document from the reference that add returns
+            sDoc = documentSnapshot;
+        });
+    });
+
+    //console.log('Suggestion doc sumbitted:', sDoc.id);
+    return sDoc;
+}
+
 //newUser('', '', 2010);
 
 // Add edit functions

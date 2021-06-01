@@ -8,11 +8,7 @@
 }
 
 .mainContainerSection {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    max-width: 1800px;
-    min-width: 1800px;
+    width: 1200px;
 }
 
 .sideSection {
@@ -21,19 +17,19 @@
 
 .content {
     flex: 8;
-    margin-top: 15px;
+    padding-top: 30px;
+    padding-bottom: 30px;
     display: flex;
     flex-direction: row;
-    background-color: white;
-    border-radius: 5px;
-    border: gray 1px solid;
+    background-color: rgb(246, 246, 246);
     width: 100%;
 }
 
 .leftContentSide {
-    flex: 1;
+    flex: 2;
     height: 100%;
     display: flex;
+    padding-top: 5px;
     flex-direction: column;
     margin-left: 30px;
 }
@@ -45,12 +41,6 @@
     flex-direction: column;
 }
 
-.reviewTitleBlock {
-    flex: .7;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
 .reviewDropDown {
     flex: 2;
@@ -61,6 +51,7 @@
 }
 
 .reviewText {
+    padding-top: 40px;
     flex: 1;
     display: flex;
     justify-content: center;
@@ -81,20 +72,25 @@
     align-items: center;
     border-radius: 10px;
 }
+.reviewTitleBlock {
+    flex: .7;
+    background-color: white;
+    padding-left: 40px;
+    font-size: 60px;
+    font-weight: bold;
+}
 
 .buttonSection {
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 25px;
 }
 
 .sliderBox {
-    height: 550px;
-    width: 700px;
     display: flex;
-    
-    border-radius: 5px;
+    width: 400px;
     justify-content: center;
     align-items: center;
 }
@@ -105,4 +101,22 @@
 
 .borderAdd {
     border: solid black 1px;
+}
+
+.quarterDropdown {
+    width: 230;
+}
+
+.successAlert {
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.dangerAlert {
+    margin-top: 10px;
+}
+
+.submitAlert {
+    margin: 40px;
+    margin-top: 20px;
 }

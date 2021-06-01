@@ -94,14 +94,6 @@
       width: 950px;
   }
   
-  .reviewsSection {
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-  }
-  
   .reviewsTitle {
       height: 40px;
       padding-left: 13px;
