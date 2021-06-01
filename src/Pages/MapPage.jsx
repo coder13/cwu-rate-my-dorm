@@ -40,7 +40,7 @@ class MapPage extends Component {
   //===navigateToPage===
   //Desc: Handles navigation to next page.
   navigateToPage(toPass) {
-    this.props.history.push({pathname: "/ExampleHallPage", state:{hallName: toPass}});
+    this.props.history.push({pathname: "/halls/" + toPass});
   }
 
   //===buttonList===
