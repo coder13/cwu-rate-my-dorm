@@ -15,7 +15,8 @@ import ExampleHallPage from'./Pages/ExampleHallPage'
 import WelcomePage from './Pages/WelcomePage'
 import AppStyle from './App.module.css';
 import ReviewPage from './Pages/ReviewPage';
-import TopBarComp from './Components/TopBarComponent'
+import TopBarComp from './Components/TopBarComponent';
+import EditReviewPage from './Pages/EditReviewPage'
 
 class App extends React.Component {
   
@@ -47,6 +48,7 @@ class App extends React.Component {
                     <Route exact path="/passwordReset" component={PasswordReset} />
                     <Route exact path="/profile" component={ProfilePage} />
                     <Route exact path="/account" component={AccountPage} />
+                    <Route exact path="/EditReviewPage" component={EditReviewPage} />
                     <Route path="*">
                       <p>404: Page not Found</p>
                     </Route>
