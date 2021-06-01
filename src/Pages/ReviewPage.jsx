@@ -27,6 +27,7 @@ class ReviewPage extends Component {
       floors: [],
       reviewText:"",
       image: [], //files selected only, no url
+      prevUrls: [],
       urls: [],
       overallRating: 5,
       locationRating: 5,
@@ -150,26 +151,26 @@ class ReviewPage extends Component {
         console.log("File limit reached.")
       }
       else if (e.target.files[0].size > 2000000) {
-        console.log("Files cannot exceed 8MB")
+        console.log("Files cannot exceed 2MB")
       } 
       else {
       this.setState(prevState =>({
         image:[...prevState.image, e.target.files[0]],
-        urls:[...prevState.urls, URL.createObjectURL(e.target.files[0])]
+        prevUrls:[...prevState.prevUrls, URL.createObjectURL(e.target.files[0])]
       }))
     }
   }
 
   removeImageHandler(imgUrl) {
-    var i = this.state.urls.indexOf(imgUrl);
+    var i = this.state.prevUrls.indexOf(imgUrl);
     var filteredImage = this.state.image.slice(0,i).concat(this.state.image.slice(i + 1, this.state.image.length))
-    var filteredUrls = this.state.urls.filter(url => url !== imgUrl)
+    var filteredUrls = this.state.prevUrls.filter(url => url !== imgUrl)
     this.setState({
       image: filteredImage,
-      urls: filteredUrls
+      prevUrls: filteredUrls
     }, () => {
         console.log(this.state.image);
-        console.log(this.state.urls);
+        console.log(this.state.prevUrls);
     })
 
   }
@@ -380,9 +381,11 @@ class ReviewPage extends Component {
                       />
                     </Form.Group>
                   </Form>
+                  {this.state.image.length}/5
                 </div>
+  
                 <div className = {ReviewStyles.imagesContainer}>
-                  {this.state.urls.map(imgUrl => <div className = {ReviewStyles.imageButtonContainer}>
+                  {this.state.prevUrls.map(imgUrl => <div className = {ReviewStyles.imageButtonContainer}>
                     <img className = {ReviewStyles.imagePreview} src = {imgUrl}/>
                     <div className={ReviewStyles.imageCloseButton}>
                       <button type="button" class="btn btn-danger btn-sm" onClick={() => this.removeImageHandler(imgUrl)}>X</button> 
