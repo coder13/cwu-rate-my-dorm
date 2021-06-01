@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import {getDormByName} from '../firestore'
-import {Container, Row, Carousel, Card, Button} from 'react-bootstrap'
+import {Container, Row, Carousel, Card} from 'react-bootstrap'
 import LoaderComponent from '../Components/LoaderComponent';
 import InfoStyles from '../Styles/HallInfoPage.module.css';
 
@@ -52,14 +52,15 @@ class HallInfoPage extends Component {
 
     const toReturn = imagesToAdd.map((curImage) => 
     
-      <Carousel.Item>
+      <Carousel.Item
+        key = {curImage}
+      >
         <img
           className={InfoStyles.carouselImageExample}
           src={curImage}
           alt=""
         />
       </Carousel.Item>
-    
     );
 
     return(
@@ -72,9 +73,8 @@ class HallInfoPage extends Component {
   roomTypesBlockRender(props) {
 
     const roomTypes = props.roomTypes;
-
     const toReturn = roomTypes.map((value) =>
-      <p className={InfoStyles.exampleElementStyle}>{value}</p>
+      <p key = {value} className={InfoStyles.exampleElementStyle}>{value}</p>
     );
 
     return(
@@ -82,9 +82,7 @@ class HallInfoPage extends Component {
         <Card bg={'light'} className={InfoStyles.infoCard}>
           <Card.Header><b>Room Types:</b></Card.Header>
           <Card.Body>
-            <Card.Text>
               {toReturn}
-            </Card.Text>
           </Card.Body>
         </Card>
       </div>
@@ -97,7 +95,7 @@ class HallInfoPage extends Component {
 
     const amen = props.amen;
     const toReturn = amen.map((value) => 
-      <p>{value}</p> 
+      <p key = {value}>{value}</p> 
     );
 
     return (
@@ -105,9 +103,7 @@ class HallInfoPage extends Component {
         <Card bg={'light'} className={InfoStyles.infoCard}>
           <Card.Header><b>Hall Amenities:</b></Card.Header>
           <Card.Body>
-            <Card.Text>
               {toReturn}
-            </Card.Text>
           </Card.Body>
         </Card>
       </div>
