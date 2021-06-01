@@ -16,7 +16,6 @@ import WelcomePage from './Pages/WelcomePage'
 import AppStyle from './App.module.css';
 import ReviewPage from './Pages/ReviewPage';
 import TopBarComp from './Components/TopBarComponent'
-import withEmailVerification from './hooks/withEmailVerification';
 import PrivateRoute from './Components/PrivateRoute';
 
 class App extends React.Component {
@@ -42,7 +41,7 @@ class App extends React.Component {
                     <Route exact path="/" component={WelcomePage} />
                     <Route exact path="/MapPage" component={MapPage} />
                     <Route path="/halls/:hall" component={ExampleHallPage} />
-                    <PrivateRoute exact path="/ReviewPage">{withEmailVerification(<ReviewPage />)}</PrivateRoute>
+                    <PrivateRoute exact path="/ReviewPage"><ReviewPage /></PrivateRoute>
                     <Route exact path="/signin" component={SignInPage} />
                     <Route exact path="/signUp" component={SignUp} />
                     <Route exact path="/passwordReset" component={PasswordReset} />

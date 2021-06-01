@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import {Form, Col, Row, Button, Alert} from 'react-bootstrap'
 import ReviewStyles from '../Styles/ReviewPage.module.css';
 import LoaderComponent from '../Components/LoaderComponent.jsx';
+import withEmailVerification from '../hooks/withEmailVerification';
 import * as firestore from '../firestore.js';
 
 class ReviewPage extends Component {
@@ -586,4 +587,4 @@ class ReviewPage extends Component {
 
 }
 
-export default withRouter(ReviewPage);
+export default withEmailVerification(withRouter(ReviewPage));
