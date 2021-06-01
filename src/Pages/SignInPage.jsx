@@ -1,23 +1,38 @@
 import { useState } from 'react';
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { Alert, Form, Button } from 'react-bootstrap';
-import { auth, signInWithGoogle } from '../firebase';
+import { firestore, auth, signInWithGoogle } from '../firebase';
 import Styles from '../Styles/SignInPage.module.css';
 
 const SignInPage = () => {
   const history = useHistory();
   const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
 
-  const redirect = location.state && location.state.from ? location.state.from : '/';
+  const redirect = location.state && location.state.from
+    ? location.state.from
+    : (queryParams.redirect || '/');
 
   const signInWithEmailAndPasswordHandler = (event) => {
     event.preventDefault();
     auth.signInWithEmailAndPassword(email, password)
-      .then((result) => {
-        history.push(redirect);
+      .then(async ({ user }) => {
+        const userRef = firestore.doc(`users/${user.uid}`);
+
+        try {
+          // keep database updated everytime the user logs back in.
+          await userRef.set({
+            emailVerified: user.emailVerified,
+          }, {
+            merge: true,
+          });
+          history.push(redirect);
+        } catch (error) {
+          setError(error);
+        }
       })
       .catch(error => {
         setError(error);
