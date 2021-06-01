@@ -17,6 +17,9 @@ const SignUp = () => {
   const [emailVerificationLinkHasBeenResent, setEmailVerificationLinkHasBeenResent] = useState(null);
   const [user, setUser] = useState({});
 
+  //Set Tab Name:
+  document.title = "Sign-Up Page";
+
   const redirect = location.state && location.state.from ? location.state.from : '/';
 
   const createUserWithEmailAndPasswordHandler = async (event) => {

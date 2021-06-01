@@ -9,6 +9,9 @@ const PasswordReset = () => {
   const [emailHasBeenSent, setEmailHasBeenSent] = useState(false);
   const [error, setError] = useState(null);
 
+  //Set Tab Name:
+  document.title = "Password Reset Page";
+
   const sendResetEmail = event => {
     event.preventDefault();
     auth

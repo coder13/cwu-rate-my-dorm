@@ -41,6 +41,7 @@ class WelcomePage extends Component {
   //===componentDidMount===
   //Desc: JS for once the render method is mounted.
   componentDidMount() {
+    document.title = "CWU Rate My Dorm";
   }
 
   submitSuggestion() {

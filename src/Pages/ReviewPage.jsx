@@ -93,6 +93,10 @@ class ReviewPage extends Component {
   }
 
   componentDidMount() {
+
+    //Set Tab Name:
+    document.title = "Review Page";
+
     firebase.auth().onAuthStateChanged((user)=>{
       if (user == null)
         this.navigateToPage("signin");

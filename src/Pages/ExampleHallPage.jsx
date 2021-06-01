@@ -42,6 +42,10 @@ class ExampleHallPage extends Component {
   //Desc: JS for once the render method is mounted.
   componentDidMount()
   {
+
+    //Set Tab Name:
+    document.title = this.state.hallName;
+
     //Loading Hall reviews and information from database.
     getReviewsByDormName(this.state.hallName)
     .then((result)=>{

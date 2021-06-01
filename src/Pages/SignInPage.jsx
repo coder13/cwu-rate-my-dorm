@@ -12,6 +12,8 @@ const SignInPage = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
 
+  //Set Tab Name:
+  document.title = "Sign-In Page";
   const redirect = location.state && location.state.from
     ? location.state.from
     : (queryParams.redirect || '/');
