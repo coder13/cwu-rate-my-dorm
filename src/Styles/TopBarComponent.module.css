@@ -1,3 +1,46 @@
 .CWULogo {
   transform: scaleX(-1);
 }
+
+.menuItem{
+  color: #fff !important;
+  background-color:black !important;
+  border-color: white !important;
+}
+
+.menuItem:hover{
+  color: white!important;
+  background-color:#414141 !important;
+  border-color: white !important;
+}
+
+.menu{
+  color: #fff !important;
+  background-color:black !important;
+  border-color: white !important;
+}
+
+.customBtn{
+  border-radius: 10px;
+  height: 40px;
+  width: auto;
+
+  padding-left: 15px;
+  padding-right: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color:  black !important;
+  color: white !important;
+  cursor: pointer;
+  box-shadow: 4px 4px rgb(149, 14, 41) !important;
+}
+
+.customBtn:hover{
+  background-color:  #414141 !important;
+  color: white !important;
+  cursor: pointer;
+  box-shadow: 4px 4px rgb(149, 14, 41) !important;
+}
+
