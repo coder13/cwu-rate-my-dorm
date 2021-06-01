@@ -481,25 +481,6 @@ export async function deleteReview(dormName, revId, oldRevRating){
     }); 
 }
 
-//adds a suggestion to firestore in the collection 'suggestions'
-export async function newSuggestion(text){
-    var sDoc;
-    const sRef = firestore.collection('suggestions');
-
-    // Add suggestion to firestore
-    await sRef.add({ // add returns a document reference in promise
-        text:text
-    })
-    .then(async documentReference =>{
-        await documentReference.get().then(async documentSnapshot =>{ //gets the document from the reference that add returns
-            sDoc = documentSnapshot;
-        });
-    });
-
-    //console.log('Suggestion doc sumbitted:', sDoc.id);
-    return sDoc;
-}
-
 // Add a new user to firestore
 export function newUser(username, email, graduationYear) {
     firestore.collection('Users').add({
