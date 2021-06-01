@@ -15,6 +15,32 @@
     flex: 1;
 }
 
+.imagesContainer {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    padding-left: 25px;
+}
+
+.imageButtonContainer {
+    position: relative;
+}
+
+.imagePreview {
+    display: flex;
+    max-width: 98px;
+    margin: 4px;
+    border: 1px solid rgb(56, 56, 56);
+}
+
+.imageCloseButton {
+    position: absolute;
+    max-width: 50px;
+    right: 0px;
+    margin: 8px;
+    top: 0;
+}
+
 .content {
     flex: 8;
     padding-top: 30px;

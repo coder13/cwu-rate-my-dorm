@@ -70,10 +70,12 @@ class ReviewPage extends Component {
       //get url array
       var i;
       for(i=0; i<this.state.image.length; i++){
-        var imgUrl = await firestore.uploadImage(this.state.hallName, this.state.image[i]); //add to storage and dorm document, returns url
-        this.setState(({ //add url to urls
-          urls: [...this.state.urls, imgUrl]
-        }))
+        if(this.state.image[i] !== undefined){ //checks if file was selected
+          var imgUrl = await firestore.uploadImage(this.state.hallName, this.state.image[i]); //add to storage and dorm document, returns url
+          this.setState(({ //add url to urls
+            urls: [...this.state.urls, imgUrl]
+          }))
+        }
       }
 
       //create a new review
@@ -141,6 +143,37 @@ class ReviewPage extends Component {
     });
   }
 
+  addImageHandler(e) {
+    // Requires images to be under 8MB
+    console.log(e.target.files[0].size)
+      if (this.state.image.length >= 5) {
+        console.log("File limit reached.")
+      }
+      else if (e.target.files[0].size > 2000000) {
+        console.log("Files cannot exceed 8MB")
+      } 
+      else {
+      this.setState(prevState =>({
+        image:[...prevState.image, e.target.files[0]],
+        urls:[...prevState.urls, URL.createObjectURL(e.target.files[0])]
+      }))
+    }
+  }
+
+  removeImageHandler(imgUrl) {
+    var i = this.state.urls.indexOf(imgUrl);
+    var filteredImage = this.state.image.slice(0,i).concat(this.state.image.slice(i + 1, this.state.image.length))
+    var filteredUrls = this.state.urls.filter(url => url !== imgUrl)
+    this.setState({
+      image: filteredImage,
+      urls: filteredUrls
+    }, () => {
+        console.log(this.state.image);
+        console.log(this.state.urls);
+    })
+
+  }
+
   render()
   {
     if (this.state.loaded) {
@@ -156,6 +189,8 @@ class ReviewPage extends Component {
             <div className={ReviewStyles.content}>
         
               <div className={ReviewStyles.leftContentSide}>
+
+
 
                 <div className={ReviewStyles.reviewDropDown}>
 
@@ -341,17 +376,19 @@ class ReviewPage extends Component {
                       <Form.File
                         id="exampleFormControlFile1"
                         label="Add Pictures"
-                        onChange={e =>
-                          this.setState(prevState =>({
-                            image:[...prevState.image, e.target.files[0]]
-                          }))
-
-                        }
+                        onChange={e => this.addImageHandler(e)}
                       />
                     </Form.Group>
                   </Form>
                 </div>
-
+                <div className = {ReviewStyles.imagesContainer}>
+                  {this.state.urls.map(imgUrl => <div className = {ReviewStyles.imageButtonContainer}>
+                    <img className = {ReviewStyles.imagePreview} src = {imgUrl}/>
+                    <div className={ReviewStyles.imageCloseButton}>
+                      <button type="button" class="btn btn-danger btn-sm" onClick={() => this.removeImageHandler(imgUrl)}>X</button> 
+                    </div>
+                  </div>)}
+                </div>
               </div>
 
               <div className={ReviewStyles.rightContentSide}>
