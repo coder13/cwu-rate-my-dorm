@@ -6,6 +6,10 @@ import { auth } from "../firebase";
 import ReviewsBlockComponent from '../Components/ReviewsBlockComponent'
 
 const ProfilePage = () => {
+
+  //Set Tab Name:
+  document.title = "Profile Page";
+
   const user = useContext(UserContext);
   
   if (user === undefined) {

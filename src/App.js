@@ -12,6 +12,7 @@ import AccountPage from './Pages/AccountPage'
 import PasswordReset from "./Pages/PasswordReset";
 import MapPage from'./Pages/MapPage'
 import ExampleHallPage from'./Pages/ExampleHallPage'
+import HallInfoPage from'./Pages/HallInfoPage'
 import WelcomePage from './Pages/WelcomePage'
 import AppStyle from './App.module.css';
 import ReviewPage from './Pages/ReviewPage';
@@ -30,18 +31,18 @@ class App extends React.Component {
 
   render() {
     return (
-      <UserProvider>
-        <Router>
+      <Router>
+        <UserProvider>
 
           <div>
             <TopBarComp/>
 
             <div className={AppStyle.mainSection}>
 
-              <UserProvider>
                   <Switch>
                     <Route exact path="/" component={WelcomePage} />
                     <Route exact path="/MapPage" component={MapPage} />
+                    <Route exact path="/HallInfoPage" component={HallInfoPage} />
                     <Route path="/halls/:hall" component={ExampleHallPage} />
                     <PrivateRoute exact path="/ReviewPage"><ReviewPage /></PrivateRoute>
                     <Route exact path="/signin" component={SignInPage} />
@@ -54,13 +55,12 @@ class App extends React.Component {
                       <p>404: Page not Found</p>
                     </Route>
                   </Switch>
-              </UserProvider>
 
             </div>
 
           </div>
-        </Router>
-      </UserProvider>
+        </UserProvider>
+      </Router>
     )
   }
 }

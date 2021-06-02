@@ -35,13 +35,17 @@ class ExampleHallPage extends Component {
   //===navigateToPage===
   //Desc: Handles navigation to next page.
   navigateToPage(toPass) {
-    this.props.history.push({pathname: "/", state:{hallName: toPass}});
+    this.props.history.push({pathname: "/HallInfoPage", state:{hallName: toPass}});
   }
 
   //===componentDidMount===
   //Desc: JS for once the render method is mounted.
   componentDidMount()
   {
+
+    //Set Tab Name:
+    document.title = this.state.hallName;
+
     //Loading Hall reviews and information from database.
     getReviewsByDormName(this.state.hallName)
     .then((result)=>{
@@ -231,7 +235,7 @@ class ExampleHallPage extends Component {
                             {this.state.hallDescription}
                             <br />
                             <br />
-                            <Button variant="primary" onClick={() => { this.navigateToPage("InfoPage") }}>More Info</Button>
+                            <Button variant="primary" onClick={() => { this.navigateToPage(this.state.hallName) }}>More Info</Button>
                           </Card.Text>
                         </Card.Body>
                       </Card>

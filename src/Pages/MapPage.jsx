@@ -24,6 +24,8 @@ class MapPage extends Component {
       center: [47.003152, -120.539769]
     };
 
+    document.title = "Dorm Map Page";
+
     this.markers = null;
     this.mapRef = React.createRef();
 

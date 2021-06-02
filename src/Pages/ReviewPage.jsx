@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import {Form, Col, Row, Button, Alert} from 'react-bootstrap'
 import ReviewStyles from '../Styles/ReviewPage.module.css';
 import LoaderComponent from '../Components/LoaderComponent.jsx';
+import withEmailVerification from '../hooks/withEmailVerification';
 import * as firestore from '../firestore.js';
 
 class ReviewPage extends Component {
@@ -27,6 +28,7 @@ class ReviewPage extends Component {
       floors: [],
       reviewText:"",
       image: [], //files selected only, no url
+      prevUrls: [],
       urls: [],
       overallRating: 5,
       locationRating: 5,
@@ -70,10 +72,12 @@ class ReviewPage extends Component {
       //get url array
       var i;
       for(i=0; i<this.state.image.length; i++){
-        var imgUrl = await firestore.uploadImage(this.state.hallName, this.state.image[i]); //add to storage and dorm document, returns url
-        this.setState(({ //add url to urls
-          urls: [...this.state.urls, imgUrl]
-        }))
+        if(this.state.image[i] !== undefined){ //checks if file was selected
+          var imgUrl = await firestore.uploadImage(this.state.hallName, this.state.image[i]); //add to storage and dorm document, returns url
+          this.setState(({ //add url to urls
+            urls: [...this.state.urls, imgUrl]
+          }))
+        }
       }
 
       //create a new review
@@ -93,6 +97,10 @@ class ReviewPage extends Component {
   }
 
   componentDidMount() {
+
+    //Set Tab Name:
+    document.title = "Review Page";
+
     firebase.auth().onAuthStateChanged((user)=>{
       if (user == null)
         this.navigateToPage("signin");
@@ -104,7 +112,6 @@ class ReviewPage extends Component {
       this.setState({ loaded: true });
     }));
 
-    //console.log(auth.currentUser);
   }
   dormChanged(e) {
     // Updates roomTypes and floors when the dorm is changed
@@ -131,7 +138,6 @@ class ReviewPage extends Component {
     else this.setState({hallName: e.target.value});
     // Detects if user has already reviewed dorm, then links them to the edit page
     firestore.getReviewIDByDormNameAndUser(e.target.value, firebase.auth().currentUser.email).then((id) => {
-      //console.log("id:" + id);
       if (id != null) {
         this.setState({ showExistingReviewAlert: true })
       }
@@ -139,6 +145,33 @@ class ReviewPage extends Component {
         this.setState({ showExistingReviewAlert: false })
       }
     });
+  }
+
+  addImageHandler(e) {
+    // Requires images to be under 8MB
+      if (this.state.image.length >= 5) {
+        console.log("File limit reached.")
+      }
+      else if (e.target.files[0].size > 2000000) {
+        console.log("Files cannot exceed 2MB")
+      } 
+      else {
+      this.setState(prevState =>({
+        image:[...prevState.image, e.target.files[0]],
+        prevUrls:[...prevState.prevUrls, URL.createObjectURL(e.target.files[0])]
+      }))
+    }
+  }
+
+  removeImageHandler(imgUrl) {
+    var i = this.state.prevUrls.indexOf(imgUrl);
+    var filteredImage = this.state.image.slice(0,i).concat(this.state.image.slice(i + 1, this.state.image.length))
+    var filteredUrls = this.state.prevUrls.filter(url => url !== imgUrl)
+    this.setState({
+      image: filteredImage,
+      prevUrls: filteredUrls
+    })
+
   }
 
   render()
@@ -156,6 +189,8 @@ class ReviewPage extends Component {
             <div className={ReviewStyles.content}>
         
               <div className={ReviewStyles.leftContentSide}>
+
+
 
                 <div className={ReviewStyles.reviewDropDown}>
 
@@ -336,22 +371,27 @@ class ReviewPage extends Component {
                 </div>
 
                 <div className={ReviewStyles.reviewImages}>
-                  <Form className={ReviewStyles.form}>
+                  <Form className={ReviewStyles.imageInput}>
                     <Form.Group>
                       <Form.File
                         id="exampleFormControlFile1"
                         label="Add Pictures"
-                        onChange={e =>
-                          this.setState(prevState =>({
-                            image:[...prevState.image, e.target.files[0]]
-                          }))
-
-                        }
+                        onChange={e => this.addImageHandler(e)}
                       />
                     </Form.Group>
                   </Form>
+                  {this.state.image.length}/5     
                 </div>
-
+  
+                <div className = {ReviewStyles.imagesContainer}>
+                  {this.state.prevUrls.map(imgUrl => 
+                  <div className = {ReviewStyles.imageButtonContainer} key={imgUrl}>
+                    <img className = {ReviewStyles.imagePreview} src = {imgUrl} alt = ""/>
+                    <div className={ReviewStyles.imageCloseButton}>
+                      <button type="button" className="btn btn-danger btn-sm" onClick={() => this.removeImageHandler(imgUrl)}>X</button> 
+                    </div>
+                  </div>)}
+                </div>
               </div>
 
               <div className={ReviewStyles.rightContentSide}>
@@ -547,4 +587,4 @@ class ReviewPage extends Component {
 
 }
 
-export default withRouter(ReviewPage);
+export default withEmailVerification(withRouter(ReviewPage));
