@@ -15,7 +15,26 @@ class Admin extends Component {
   constructor(props){
     super(props);
     this.state = {
+      allReviews: null
     }
+
+    this.reviewsDisplay = this.reviewsDisplay.bind(this);
+  }
+
+  componentDidMount()
+  {
+
+    //Load in all reviews to a state:
+
+
+
+
+
+  }
+
+  reviewsDisplay()
+  {
+
   }
 
   //===render===
@@ -24,7 +43,11 @@ class Admin extends Component {
     return(
       
       <Container fluid>
+      
+      
       </Container>
+
+
     );
   }
 }
