@@ -50,7 +50,6 @@ class App extends React.Component {
                     <Route exact path="/passwordReset" component={PasswordReset} />
                     <PrivateRoute exact path="/profile"><ProfilePage/></PrivateRoute>
                     <PrivateRoute exact path="/account"><AccountPage/></PrivateRoute>
-                    {/*<PrivateRoute exact path="/EditReviewPage"><EditReviewPage /></PrivateRoute>*/}
                     <PrivateRoute exact path="/EditReviewPage/:revId/:hallName"><EditReviewPage /></PrivateRoute>
                     <Route path="*">
                       <p>404: Page not Found</p>
