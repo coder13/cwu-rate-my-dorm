@@ -7,39 +7,45 @@
     width: 100%;
 }
 
+
 .mainContainerSection {
+    /*
     width: 1200px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     width: 100%;
     max-width: 1800px;
     min-width: 1800px;
-    justify-content: center;  
-
+    justify-content: center;
+    */
+    width: 1200px;
+    display: flex; 
+    flex-direction: column;
 }
 
 .sideSection {
     flex: 1;
 }
 
-.content {
+.middleRow {
     flex: 8;
-    margin-top: 15px; 
     display: flex;
     flex-direction: row;
-    background-color: white;
+    background-color: rgb(246, 246, 246);
     width: 100%;
+    padding-top: 30px;
 }
 
-.leftContentSide {
+.leftRowSide {
     flex: 1;
     height: 100%;
     display: flex;
     flex-direction: column;
     margin-left: 30px;
+    padding-top: 5px;
 }
 
-.rightContentSide {
+.rightRowSide {
     flex: 1;
     height: 100%;
     display: flex;
@@ -69,7 +75,6 @@
 }
 
 .reviewImages {
-    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -84,15 +89,15 @@
 }
 
 .buttonSection {
-    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 25px;
 }
 
 .sliderBox {
     height: 550px;
-    width: 700px;
+    width: 400px;
     display: flex;
     
     border-radius: 5px;
@@ -113,26 +118,16 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    background-color: white;
-    height: 500px;
+    background-color: rgb(246, 246, 246);
     justify-content: center;
+    padding-bottom: 40px;
 }
 
-.mainContent{
-    flex:8;
-    display:flex;
-    flex-direction:column;
-    width: 100%;
-    min-height: 100%;
-    justify-content: center;  
-    height: auto; 
-}
 
 .imagesRow{
     display: flex;
     flex-direction: row;
     height: auto;
-    padding-bottom: 5px;
     padding-left: 50px;
 
 }
@@ -183,3 +178,24 @@
     opacity: 1;
 }
 
+.titleBlock {
+    width: 100%;
+    height: 100px;
+    padding-left: 40px;
+    font-size: 60px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    background-color: white;
+
+}
+
+.submitAlert {
+    margin: 40px;
+    margin-top: 20px;
+}
+
+.successAlert {
+    margin-top: 10px;
+    cursor: pointer;
+}
