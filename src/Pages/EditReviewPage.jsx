@@ -17,9 +17,9 @@ class EditReviewPage extends Component {
     //Set the states:
     
     this.state = {
-      revId: this.props.location.state.revId,
+      revId: this.props.match.params.revId,
       hallNames: [],
-      hallName: this.props.location.state.hallName, //this will be the most up to date hall name
+      hallName: this.props.match.params.hallName,
       oldHallName: null, //this is the initial hall name that gets passed in
       firstQuarterYear: null,
       firstQuarterSeason: null,
@@ -96,7 +96,6 @@ class EditReviewPage extends Component {
         this.navigateToPage("signin");
     });
 
-
     firestore.getDormNames().then((names) => {
       this.setState({ hallNames: names });
     }).then(()=>{
@@ -137,6 +136,8 @@ class EditReviewPage extends Component {
       });
 
     });
+    console.log("rev " + this.state.revId)
+    console.log("hall " + this.state.hallName);
 
   }
 
