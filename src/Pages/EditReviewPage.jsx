@@ -1,7 +1,7 @@
 import firebase from 'firebase/app';
 import React, { Component} from "react";
 import { withRouter } from "react-router-dom";
-import {Form, Col, Button} from 'react-bootstrap'
+import {Form, Col, Button, Row, Alert} from 'react-bootstrap'
 import ReviewStyles from '../Styles/EditReviewPage.module.css';
 import LoaderComponent from '../Components/LoaderComponent.jsx';
 import * as firestore from '../firestore.js';
@@ -15,81 +15,75 @@ class EditReviewPage extends Component {
     super(props);
 
     //Set the states:
+    
     this.state = {
       revId: this.props.location.state.revId,
       hallNames: [],
       hallName: this.props.location.state.hallName, //this will be the most up to date hall name
-      oldHallName: this.props.location.state.hallName, //this is the initial hall name that gets passed in
-      firstQuarterYear: this.props.location.state.firstQuarterYear,
-      firstQuarterSeason: this.props.location.state.firstQuarterSeason,
-      lastQuarterYear: this.props.location.state.lastQuarterYear,
-      lastQuarterSeason: this.props.location.state.lastQuarterSeason,
-      roomType: this.props.location.state.roomType,
-      roomTypes: this.props.location.state.roomTypes,
-      floorNum: this.props.location.state.floorNum,
-      floors: this.props.location.state.floors,
-      reviewText: this.props.location.state.reviewText,
+      oldHallName: null, //this is the initial hall name that gets passed in
+      firstQuarterYear: null,
+      firstQuarterSeason: null,
+      lastQuarterYear: null,
+      lastQuarterSeason: null,
+      roomType: null,
+      roomTypes: null,
+      floorNum: null,
+      floors: null,
+      reviewText: null,
       image: [], //files selected only, no url
-      urls: this.props.location.state.urls, 
-      overallRating: this.props.location.state.overallRating, //this will be the most p to date overall rating, this might get updated
-      oldOverallRating: this.props.location.state.overallRating, //this will be the old overall rating, this does not get updated
-      locationRating: this.props.location.state.locationRating,
-      roomSizeRating: this.props.location.state.roomSizeRating,
-      furnitureRating: this.props.location.state.furnitureRating,
-      commonAreasRating: this.props.location.state.commonAreasRating,
-      cleanlinessRating: this.props.location.state.cleanlinessRating,
-      bathroomRating: this.props.location.state.bathroomRating,
-      likes:this.props.location.state.likes,
-      curUserImage: null,
+      urls: null, //this is where the images that get added to images will be added once the review is submitted
+      overallRating: null, //this will be the most p to date overall rating, this might get updated
+      locationRating: null,
+      roomSizeRating: null,
+      furnitureRating: null,
+      commonAreasRating: null,
+      cleanlinessRating: null,
+      bathroomRating: null,
+      likes:null,
+      showSuccessAlert: false,
+      addedImages: [], // this will be the temporary urls for images added in this edit, this is like a copy of image but with temp urls instead of files, this and images will be the same
+      oldUrls: [] //this will be like a copy of urls, we will use these to display the previous images, files from image do not get added here, both this and urls will be the same we need this copy to avoid showing duplicates when images from image get added to urls 
     }
-    
     this.updateReview = this.updateReview.bind(this);
+    
+
   }
 
  async updateReview() 
   {
 
-    //Alert Example:
-    alert("Hall Name: " + this.state.hallName + "\n" +
-          "First Quarter: " + this.state.firstQuarterSeason + " " + this.state.firstQuarterYear + "\n" +
-          "Last Quarter: " + this.state.lastQuarterSeason + " " + this.state.lastQuarterYear + "\n" +
-          "Room Type: " + this.state.roomType + "\n" +
-          "Floor Num: " + this.state.floorNum + "\n" +
-          "Review Text: " + this.state.reviewText + "\n" +
-          "Image: " + this.state.image + "\n" +
-          "Overall Rating: " + this.state.overallRating + "\n" +
-          "Location Rating: " + this.state.locationRating + "\n" +
-          "Room Size Rating: " + this.state.roomSizeRating + "\n" +
-          "Furniture Rating: " + this.state.furnitureRating + "\n" +
-          "Common Area Rating: " + this.state.commonAreasRating + "\n" +
-          "Cleanliness Rating: " + this.state.cleanlinessRating + "\n" +
-          "Bathroom Rating: " + this.state.bathroomRating + "\n" +
-          "Author: " + firebase.auth().currentUser.displayName + "\n" +
-          "Email: " + firebase.auth().currentUser.email + "\n")
-
     //Add review to firebase:
+
+    var i;
+    for(i=0; i<this.state.image.length; i++){
+      if (this.state.image[i] !== undefined){
+        var imgUrl = await firestore.uploadImage(this.state.image[i]); //add to storage and dorm document, returns url
+        this.setState(({ //add url to urls
+          urls: [...this.state.urls, imgUrl]
+        })) 
+      }
+    }
     
     if(this.state.hallName !== this.state.oldHallName){ //if the hall changed, then we want to delete review and create new one in the collection of the new hall
-      firestore.newReview(this.state.hallName, firebase.auth().currentUser.displayName, firebase.auth().currentUser.uid,  //creates a new review and in the process update the overall rating
+      firestore.newReview(this.state.hallName, firebase.auth().currentUser.displayName, firebase.auth().currentUser.uid,  //creates a new review 
       firebase.auth().currentUser.email,[this.state.firstQuarterYear, this.state.firstQuarterSeason], 
       [this.state.lastQuarterYear, this.state.lastQuarterSeason], this.state.roomType, this.state.floorNum,
       this.state.reviewText,this.state.urls, this.state.overallRating, this.state.locationRating, this.state.roomSizeRating,
       this.state.furnitureRating, this.state.commonAreasRating,this.state.cleanlinessRating, this.state.bathroomRating, 
       this.state.likes);
 
-      firestore.deleteReview(this.state.oldHallName, this.state.revId, this.state.oldOverallRating); //will delete review and in the process update overall rating
+      firestore.deleteReview(this.state.oldHallName, this.state.revId); //will delete review 
     
     }else{
       firestore.editReview (this.state.revId, this.state.hallName, [this.state.firstQuarterYear, this.state.firstQuarterSeason], 
       [this.state.lastQuarterYear, this.state.lastQuarterSeason], this.state.roomType, this.state.floorNum, this.state.reviewText, 
       this.state.urls, this.state.overallRating, this.state.locationRating, this.state.roomSizeRating, this.state.furnitureRating, 
-      this.state.commonAreasRating, this.state.cleanlinessRating, this.state.bathroomRating, this.state.likes, this.state.oldOverallRating);
+      this.state.commonAreasRating, this.state.cleanlinessRating, this.state.bathroomRating, this.state.likes);
     }
   
-    //prompt user that review was updated:
-    alert("Your review has been updated!");
+    //prompt user that review was submitted:
+    this.setState({ showSuccessAlert: true });
 
-    this.navigateToPage("/MapPage"); //go back to page
   }
 
   navigateToPage(Page) {
@@ -103,12 +97,47 @@ class EditReviewPage extends Component {
     });
 
 
-    this.setState(firestore.getDormNames().then((names) => {
+    firestore.getDormNames().then((names) => {
       this.setState({ hallNames: names });
-      this.setState({ loaded: true });
-    }));
+    }).then(()=>{
+      firestore.getDormByName(this.state.hallName).then((dormNameResult) =>{
+        this.setState({roomTypes: dormNameResult.get("roomTypes")});
+        var numFloors = dormNameResult.get('floors');
+        let floors = [];
+        var x = 1;
+        while (x <= numFloors)
+        {
+          floors.push(x);
+          x++;
+        }
+        this.setState({floors: floors});
+      }).then(() =>{
+        firestore.getReviewById(this.state.hallName, this.state.revId).then((review) =>{
+          this.setState({hallName : review.get("dormName")});
+          this.setState({oldHallName : review.get("dormName")});
+          this.setState({firstQuarterYear : review.get("firstQuarterYear")});
+          this.setState({firstQuarterSeason : review.get("firstQuarterSeason")});
+          this.setState({lastQuarterYear : review.get("lastQuarterYear")});
+          this.setState({lastQuarterSeason : review.get("lastQuarterSeason")});
+          this.setState({roomType : review.get("roomType")});
+          this.setState({floorNum : review.get("floor")});
+          this.setState({reviewText : review.get("review")});
+          this.setState({urls : review.get("images")});
+          this.setState({oldUrls : review.get("images")});
+          this.setState({overallRating : review.get("overallRating")});
+          this.setState({locationRating : review.get("locationRating")});
+          this.setState({roomSizeRating : review.get("roomSizeRating")});
+          this.setState({furnitureRating : review.get("furnitureRating")});
+          this.setState({commonAreasRating : review.get("commonAreasRating")});
+          this.setState({cleanlinessRating : review.get("cleanlinessRating")});
+          this.setState({bathroomRating : review.get("bathroomRating")});
+          this.setState({likes : review.get("likes")});
+          this.setState({loaded: true});
+        });
+      });
 
-    //console.log(auth.currentUser);
+    });
+
   }
 
   dormChanged(e) { 
@@ -139,22 +168,46 @@ class EditReviewPage extends Component {
   }
 
   async addImage(event){
-    if(event.target.files[0] !== undefined){
-      var imgUrl = await firestore.uploadImage(event.target.files[0]); //add to storage and dorm document, returns url
-      this.setState(({ //add url to urls
-        urls: [...this.state.urls, imgUrl]
-      }))   
+    if ((this.state.image.length + this.state.urls.length) >= 5) {
+      console.log("File limit reached.")
+    }
+    else if (event.target.files[0].size > 2000000) {
+      console.log("Files cannot exceed 2MB")
+    } else{
+      if(event.target.files[0] !== undefined){
+        this.setState(({ //add url to image so it can get added to urls when review is submitted
+          image: [...this.state.image, event.target.files[0]]
+        })) 
+        
+        this.setState(({ //add temporary image url to images we want to display
+          addedImages: [...this.state.addedImages, URL.createObjectURL(event.target.files[0])]
+        }))
+      }
     }
   }
 
+  //delete image from document/ states/ storage
   deleteImage(imageUrl){
     alert("This image will be deleted");
     var urlArray = [...this.state.urls]; 
+    var oldUrlArray = [...this.state.oldUrls]; 
     var urlIndex = urlArray.indexOf(imageUrl)
-    if (urlIndex !== -1) { //check if image was already in document and delete from url array
+    if (urlIndex !== -1) { //check if image was already in document (urls) and delete from url array
       urlArray.splice(urlIndex, 1);
+      oldUrlArray.splice(urlIndex,1); //since old urls and urls are a copy of each other, we can delete from the same place
       this.setState({urls: urlArray});
+      this.setState({oldUrls: urlArray});
       firestore.deleteImage(imageUrl);//delete image from storage
+    }else{ //if image is not yet in the document
+      var fileArray = [...this.state.image]; 
+      var addedImages = [...this.state.addedImages];
+      var imageIndex = addedImages.indexOf(imageUrl);
+      if(imageIndex !==-1){ //check if image was added in this edit and delete from image array and from array of images we want to display
+        addedImages.splice(imageIndex, 1); //since image and added image are a copy of each other we can delete from the same place
+        fileArray.splice(imageIndex, 1);
+        this.setState({image:fileArray});
+        this.setState({addedImages:addedImages});
+      }
     }
 
   }
@@ -182,17 +235,18 @@ class EditReviewPage extends Component {
           
           <div className={ReviewStyles.sideSection}></div>
 
-          <div className={ReviewStyles.mainContent}>
+         {/* <div className={ReviewStyles.mainContent}> */}
+         <div className ={ReviewStyles.titleBlock}>Edit Review:</div>
 
     
 
-            <div className={ReviewStyles.content}>
+            <div className={ReviewStyles.middleRow}>
 
-              <div className={ReviewStyles.leftContentSide}>
+              <div className={ReviewStyles.leftRowSide}>
                 
-                <div className={ReviewStyles.reviewTitleBlock}>
+                {/*<div className={ReviewStyles.reviewTitleBlock}>
                   <h1>Edit Review:</h1>
-                </div>
+                </div> */}
 
                 <div className={ReviewStyles.reviewDropDown}>
 
@@ -363,10 +417,27 @@ class EditReviewPage extends Component {
                   </Form>
                 </div>
 
+                <div className={ReviewStyles.reviewImages}>
+                  <Form className={ReviewStyles.form}>
+                    <Form.Group>
+                      <Form.File 
+                        id="exampleFormControlFile1" 
+                        label="Add images"
+                        onChange={e => 
+
+                          {this.addImage(e)}
+
+                        }
+                      />
+                    </Form.Group>
+                  </Form>
+                  {this.state.urls.length + this.state.image.length} / 5
+                </div>
+
 
               </div>
 
-              <div className={ReviewStyles.rightContentSide}>
+              <div className={ReviewStyles.rightRowSide}>
                 <div className={ReviewStyles.sliderSection}>
 
                   <div className={ReviewStyles.sliderBox}>
@@ -507,81 +578,54 @@ class EditReviewPage extends Component {
                     </Form>
                   </div>
 
-                </div><div>
-                <style type="text/css">
-                  {`
-                  .btn-submit {
-                    width: 330px;
-                    height: 110px;
-                    background-color: #A30F32;
-                    font-size: 1.5rem;
-                    border-radius: 5px;
-                    display: flex;
-                    flex-direction: row;
-                    align-items: center;
-                    justify-content: center;
-                    box-shadow: 4px 4px #838383;
-                    color: white;
-                    text-align: center;
-                    cursor: pointer;
-                    margin-bottom: 45px;
-                  }
-                  .btn-submit:hover{
-                    color: white;
-                    background-color: #820d28;
-                  }
-                  .btn-xxl {
-                    padding: 1rem 1.5rem;
-                    font-size: 2.3rem;
-                  }
-                  `}
-                </style>
-
                 </div>
 
-                {/*
-                
-                <div className={ReviewStyles.buttonSection}>
-                  <Button variant="submit" 
-                    disabled={this.state.hallName === "" || this.state.firstQuarterSeason === ""
-                      || this.state.firstQuarterYear === 0 || this.state.lastQuarterSeason === ""
-                      || this.state.lastQuarterYear === 0 || this.state.roomType === ""
-                      || this.state.floorNum === 0 || this.state.reviewText === ""} 
-                    onClick={this.updateReview} 
-                    size="xxl"
-                  >
-                    Update Review
-                  </Button>
-                </div>
-                */}
               </div>
 
             </div>
                 
 
             <div className = {ReviewStyles.bottomSection}>
-                <div className={ReviewStyles.reviewImages}>
-                  <Form className={ReviewStyles.form}>
-                    <Form.Group>
-                      <Form.File 
-                        id="exampleFormControlFile1" 
-                        label="Add images"
-                        onChange={e => 
-
-                          {this.addImage(e)}
-
-                        }
-                      />
-                    </Form.Group>
-                  </Form>
-                </div>
-
-                
                 <div className = {ReviewStyles.imagesRow}>
                   
-                  {this.state.urls.map(url => this.renderImage(url))}
+                  {this.state.oldUrls.map(url => this.renderImage(url))}
+                  {this.state.addedImages.map(img => this.renderImage(img))}
 
 
+                </div>
+
+                <div>
+
+                <style type="text/css">
+                    {`
+                .btn-submit {
+                  width: 330px;
+                  height: 110px;
+                  background-color: #A30F32;
+                  font-size: 1.5rem;
+                  border-radius: 5px;
+                  display: flex;
+                  flex-direction: row;
+                  align-items: center;
+                  justify-content: center;
+                  box-shadow: 4px 4px #838383;
+                  color: white;
+                  text-align: center;
+                  cursor: pointer;
+                }
+                .btn-submit:hover{
+                  color: white;
+                  background-color: #820d28;
+                }
+                .btn-submit[disabled] {
+                  cursor: default;
+                }
+                .btn-xxl {
+                  padding: 1rem 1.5rem;
+                  font-size: 2.3rem;
+                }
+                `}
+                  </style>
                 </div>
 
           
@@ -597,11 +641,18 @@ class EditReviewPage extends Component {
                   >
                     Update Review
                   </Button>
+                  <Row>
+                    {this.state.showSuccessAlert && (<Col className={ReviewStyles.submitAlert}>
+                      <Alert className={ReviewStyles.successAlert} variant="success" onClick={()=> {this.navigateToPage("/profile")}} dismissible onClose={() => this.setState({ showSuccessAlert: false })}>
+                        <Alert.Heading>Review Updated! Return to profile page</Alert.Heading>
+                      </Alert>
+                    </Col>)}
+                  </Row>
                 </div>
 
             </div>
 
-          </div>
+          {/*</div>*/}
 
               
       
