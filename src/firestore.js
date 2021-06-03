@@ -379,6 +379,20 @@ export async function newSuggestion(text){
     return sDoc;
 }
 
+export async function getAllReviews() {
+    var dorms = await getDormDocs();
+    var i;
+    var reviews =[];
+    for(i=0; i<dorms.length; i++){
+        await getReviewsByDormId(dorms[i].id).then((querySnapshot) => {
+            querySnapshot.forEach((review) => {
+            reviews.push(review);
+            })
+        })
+    }
+    return reviews;
+}
+
 //newUser('', '', 2010);
 
 // Add edit functions
