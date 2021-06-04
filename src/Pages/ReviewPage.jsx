@@ -41,7 +41,8 @@ class ReviewPage extends Component {
       reviewID: "",
       showSuccessAlert: false,
       showMoveOutAlert: false,
-      showExistingReviewAlert: false
+      showExistingReviewAlert: false,
+      showFileLimit: false
     }
 
     this.submitReview = this.submitReview.bind(this);
@@ -139,7 +140,9 @@ class ReviewPage extends Component {
     // Detects if user has already reviewed dorm, then links them to the edit page
     firestore.getReviewIDByDormNameAndUser(e.target.value, firebase.auth().currentUser.email).then((id) => {
       if (id != null) {
-        this.setState({ showExistingReviewAlert: true })
+        this.setState({ 
+          reviewID: id,
+          showExistingReviewAlert: true })
       }
       else {
         this.setState({ showExistingReviewAlert: false })
@@ -148,18 +151,30 @@ class ReviewPage extends Component {
   }
 
   addImageHandler(e) {
-    // Requires images to be under 8MB
-      if (this.state.image.length >= 5) {
-        console.log("File limit reached.")
+    // Checks against each image to prevent duplicates
+    var duplicateImage = false;
+    for(var i=0; i<this.state.image.length; i++) {
+      if (e.target.files[0].name === this.state.image[i].name)
+        duplicateImage = true;
+    } 
+    if (!duplicateImage) {
+        // Limits images to 5 max
+        if (this.state.image.length >= 5) {
+          console.log("File limit reached.")
+          this.setState({showFileLimit: false})
+        }
+        // Limits file size to 2 MB
+        else if (e.target.files[0].size > 2000000) {
+          console.log("Files cannot exceed 2MB")
+          this.setState({showFileLimit: true})
+        } 
+        else {
+        this.setState(prevState =>({
+          showFileLimit: false,
+          image:[...prevState.image, e.target.files[0]],
+          prevUrls:[...prevState.prevUrls, URL.createObjectURL(e.target.files[0])]
+        }))
       }
-      else if (e.target.files[0].size > 2000000) {
-        console.log("Files cannot exceed 2MB")
-      } 
-      else {
-      this.setState(prevState =>({
-        image:[...prevState.image, e.target.files[0]],
-        prevUrls:[...prevState.prevUrls, URL.createObjectURL(e.target.files[0])]
-      }))
     }
   }
 
@@ -212,7 +227,7 @@ class ReviewPage extends Component {
 
                           </Form.Control>
                           {this.state.showExistingReviewAlert && (<Col md={{ span: 20, offset: 0 }}>
-                            <Alert variant="success" onClick={()=> {this.navigateToPage("/")}}  className={ReviewStyles.successAlert}>
+                            <Alert variant="success" onClick={()=> {this.navigateToPage(("/EditReviewPage/" + this.state.reviewID + "/" + this.state.hallName))}}  className={ReviewStyles.successAlert}>
                               Click here to start editing this review!
                             </Alert>
                           </Col>)}
@@ -380,9 +395,10 @@ class ReviewPage extends Component {
                       />
                     </Form.Group>
                   </Form>
-                  {this.state.image.length}/5     
+                  {this.state.image.length}/5 
                 </div>
-  
+                {this.state.showFileLimit && (<p className={ReviewStyles.fileLimitWarning}>Images cannot be more than 2 megabytes</p>)}
+
                 <div className = {ReviewStyles.imagesContainer}>
                   {this.state.prevUrls.map(imgUrl => 
                   <div className = {ReviewStyles.imageButtonContainer} key={imgUrl}>
@@ -554,7 +570,7 @@ class ReviewPage extends Component {
                       || this.state.firstQuarterYear === 0 || this.state.lastQuarterSeason === ""
                       || this.state.lastQuarterYear === 0 || this.state.roomType === ""
                       || this.state.floorNum === 0 || this.state.reviewText === "" 
-                      /*|| this.state.showExistingReviewAlert === true*/ || this.state.showMoveOutAlert === true} 
+                      || this.state.showExistingReviewAlert === true || this.state.showMoveOutAlert === true} 
                       // Commented above prevents user from uploading a review if they already have one created
                     onClick={this.submitReview}
                     size="xxl"
