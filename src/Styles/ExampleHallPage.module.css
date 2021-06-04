@@ -66,6 +66,18 @@
     margin-right: 15px;
 }
 
+.infoCardOverall {
+  font-size: xx-large;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.infoCardSub {
+    font-size:large;
+    font-weight: 400;
+    color:#919191;
+}
+
 .imageGalleryBlock {
     flex: 2;
     width: 100%;
