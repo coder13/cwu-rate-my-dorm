@@ -3,7 +3,6 @@ import { withRouter } from "react-router-dom";
 import {getReviewsByDormName, getDormByName, getRatings} from '../firestore'
 import {Container, Row, Carousel, Card, Button} from 'react-bootstrap'
 import LoaderComponent from '../Components/LoaderComponent';
-import XButton from '../Assets/xButton.png'
 import ExampleStyles from '../Styles/ExampleHallPage.module.css';
 
 class ExampleHallPage extends Component {
@@ -94,7 +93,10 @@ class ExampleHallPage extends Component {
     return (
       <div className={ExampleStyles.userImagePopUp} onClick={()=>{this.setState({displayCurUserImage: false})}}>
         <img className={ExampleStyles.userImage} src={this.state.currentUserImage} alt=""/>
-        <img className={ExampleStyles.topcorner} src={XButton} onClick={()=>{this.setState({displayCurUserImage: false})}} alt=""/>
+        <Button 
+          className={ExampleStyles.topcorner} 
+          variant="danger" 
+          onClick={()=>{this.setState({displayCurUserImage: false})}}><b>X</b></Button>
       </div>
     );
   }
