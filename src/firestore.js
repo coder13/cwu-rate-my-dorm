@@ -513,7 +513,18 @@ export async function newSuggestion(text){
     return sDoc;
 }
 
-
-//newUser('', '', 2010);
+export async function getAllReviews() {
+    var dorms = await getDormDocs();
+    var i;
+    var reviews =[];
+    for(i=0; i<dorms.length; i++){
+        await getReviewsByDormId(dorms[i].id).then((querySnapshot) => {
+            querySnapshot.forEach((review) => {
+            reviews.push(review);
+            })
+        })
+    }
+    return reviews;
+}
 
 export default firestore;
