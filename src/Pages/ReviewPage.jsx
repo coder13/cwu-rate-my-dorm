@@ -67,19 +67,21 @@ class ReviewPage extends Component {
     if (this.state.firstQuarterYear > this.state.lastQuarterYear
       || (this.state.firstQuarterYear === this.state.lastQuarterYear && firstSeasonVal > lastSeasonVal)) {
       this.setState({ showMoveOutAlert: true });
-    } else {
+    } else if (!this.state.showExistingReviewAlert){
       //Add review to firebase:
 
       //get url array
       var i;
+      this.state.urls = [];
       for(i=0; i<this.state.image.length; i++){
         if(this.state.image[i] !== undefined){ //checks if file was selected
-          var imgUrl = await firestore.uploadImage(this.state.hallName, this.state.image[i]); //add to storage and dorm document, returns url
+          var imgUrl = await firestore.uploadImage(this.state.image[i]); //add to storage and dorm document, returns url
           this.setState(({ //add url to urls
             urls: [...this.state.urls, imgUrl]
           }))
         }
       }
+      this.state.image = [];
 
       //create a new review
       firestore.newReview(this.state.hallName, firebase.auth().currentUser.displayName, firebase.auth().currentUser.uid, firebase.auth().currentUser.email,
@@ -87,10 +89,16 @@ class ReviewPage extends Component {
       this.state.urls, this.state.overallRating, this.state.locationRating, this.state.roomSizeRating, this.state.furnitureRating, this.state.commonAreasRating, 
       this.state.cleanlinessRating, this.state.bathroomRating, this.state.likes);
 
-
       //prompt user that review was submitted:
       this.setState({ showSuccessAlert: true });
+
+      // Detects if user has already reviewed dorm, then links them to the edit page
+      firestore.getReviewIDByDormNameAndUser(this.state.hallName, firebase.auth().currentUser.email).then((id) => {
+          this.setState({ reviewID: id })
+      });
+      this.state.showExistingReviewAlert = true;
     }
+    else {this.setState({showExistingReviewAlert: true});}
   }
 
   navigateToPage(Page) {
@@ -169,7 +177,7 @@ class ReviewPage extends Component {
           this.setState({showFileLimit: true})
         } 
         else {
-        this.setState(prevState =>({
+          this.setState(prevState =>({
           showFileLimit: false,
           image:[...prevState.image, e.target.files[0]],
           prevUrls:[...prevState.prevUrls, URL.createObjectURL(e.target.files[0])]
@@ -228,7 +236,7 @@ class ReviewPage extends Component {
                           </Form.Control>
                           {this.state.showExistingReviewAlert && (<Col md={{ span: 20, offset: 0 }}>
                             <Alert variant="success" onClick={()=> {this.navigateToPage(("/EditReviewPage/" + this.state.reviewID + "/" + this.state.hallName))}}  className={ReviewStyles.successAlert}>
-                              Click here to start editing this review!
+                              Click here to edit your review!
                             </Alert>
                           </Col>)}
                         </Col>
@@ -397,7 +405,10 @@ class ReviewPage extends Component {
                   </Form>
                   {this.state.image.length}/5 
                 </div>
-                {this.state.showFileLimit && (<p className={ReviewStyles.fileLimitWarning}>Images cannot be more than 2 megabytes</p>)}
+                {this.state.showFileLimit && 
+                (<Alert className={ReviewStyles.fileLimitWarning} variant="danger" dismissible onClose={() => this.setState({ showFileLimit: false })}>
+                    Images cannot be larger than 2 megabytes
+                  </Alert>)}
 
                 <div className = {ReviewStyles.imagesContainer}>
                   {this.state.prevUrls.map(imgUrl => 
