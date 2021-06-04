@@ -1,0 +1,201 @@
+.mainDivSection {
+    min-width: 100vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: #E6E6E6;
+    width: 100%;
+}
+
+
+.mainContainerSection {
+    /*
+    width: 1200px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1800px;
+    min-width: 1800px;
+    justify-content: center;
+    */
+    width: 1200px;
+    display: flex; 
+    flex-direction: column;
+}
+
+.sideSection {
+    flex: 1;
+}
+
+.middleRow {
+    flex: 8;
+    display: flex;
+    flex-direction: row;
+    background-color: rgb(246, 246, 246);
+    width: 100%;
+    padding-top: 30px;
+}
+
+.leftRowSide {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 30px;
+    padding-top: 5px;
+}
+
+.rightRowSide {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.reviewTitleBlock {
+    flex: .7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.reviewDropDown {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.reviewText {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.reviewImages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sliderSection {
+    flex: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.buttonSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 25px;
+}
+
+.sliderBox {
+    height: 550px;
+    width: 400px;
+    display: flex;
+    
+    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
+}
+
+.form {
+    width: 90%;
+}
+
+.borderAdd {
+    border: solid black 1px;
+}
+
+
+.bottomSection{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: rgb(246, 246, 246);
+    justify-content: center;
+    padding-bottom: 40px;
+}
+
+
+.imagesRow{
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    padding-left: 50px;
+
+}
+
+
+.imageBlock{
+    position: relative;
+    height: 200px;
+    width: 200px;
+    display: flex;
+    cursor: pointer;
+    overflow: hidden;
+
+}
+
+
+.imageBorder 
+{
+    height: 200px;
+    width: 200px;
+}
+
+.trash {
+    opacity: 0;
+    position: absolute;
+    background-color: rgba(200, 200, 200, 0.5);
+    width: 200px;
+    height: 200px;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    flex-wrap: wrap;
+
+}
+
+.trash:hover {
+    opacity: 1;
+    position: absolute;
+    background-color: rgba(200, 200, 200, 0.5);
+    width: 200px;
+    height: 200px;
+
+
+}
+
+.trashBtn {
+    opacity: 1;
+}
+
+.titleBlock {
+    width: 100%;
+    height: 100px;
+    padding-left: 40px;
+    font-size: 60px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    background-color: white;
+
+}
+
+.submitAlert {
+    margin: 40px;
+    margin-top: 20px;
+}
+
+.successAlert {
+    margin-top: 10px;
+    cursor: pointer;
+}

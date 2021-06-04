@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import AdminPageStyles from '../Styles/AdminPageStyles.module.css'
 import {Container, Button} from 'react-bootstrap'
-import { getAllReviews } from '../firestore'
+import { getAllReviews, deleteReview } from '../firestore'
 import LoaderComponent from '../Components/LoaderComponent'
 import XButton from '../Assets/xButton.png'
 
@@ -20,6 +20,7 @@ class Admin extends Component {
     this.generateReviews = this.generateReviews.bind(this);
     this.generateUserImages = this.generateUserImages.bind(this);
     this.userImagePopup = this.userImagePopup.bind(this);
+    this.deleteReviewAndRerender = this.deleteReviewAndRerender.bind(this);
   }
 
   componentDidMount()
@@ -40,6 +41,25 @@ class Admin extends Component {
         <img className={AdminPageStyles.topcorner} src={XButton} onClick={()=>{this.setState({displayCurUserImage: false})}} alt=""/>
       </div>
     );
+  }
+
+  deleteReviewAndRerender(curReview)
+  {
+    //Reset state to loading
+    this.setState({loaded: false});
+
+    //Delete the review:
+    deleteReview(curReview.get("dormName"), curReview.id)
+
+    alert("Review Deleted!");
+
+    //Get all reviews other then the deleted.
+    getAllReviews()
+      .then((result) => {
+        this.setState({allReviews: result});
+        this.setState({loaded: true})
+      });
+
   }
 
   //===generateReviews===
@@ -84,7 +104,7 @@ class Admin extends Component {
             </div>
 
             <div className = {AdminPageStyles.reviewButtonBox}>
-              <Button onClick={()=> {alert("Needs Firestore Func.")}} className ={AdminPageStyles.deleteButton} variant="danger">Delete</Button>
+              <Button onClick={()=> { this.deleteReviewAndRerender(curReview) }} className ={AdminPageStyles.deleteButton} variant="danger">Delete</Button>
             </div>
 
           </div>
@@ -110,7 +130,7 @@ class Admin extends Component {
           </div>
 
           <div className = {AdminPageStyles.reviewButtonBox}>
-            <Button onClick={()=> {alert("Needs Firestore Func.")}} className ={AdminPageStyles.deleteButton} variant="danger">Delete</Button>
+            <Button onClick={()=> { this.deleteReviewAndRerender(curReview) }} className ={AdminPageStyles.deleteButton} variant="danger">Delete</Button>
           </div>
 
         </div>
