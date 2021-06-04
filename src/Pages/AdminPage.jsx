@@ -50,15 +50,18 @@ class Admin extends Component {
 
     //Delete the review:
     deleteReview(curReview.get("dormName"), curReview.id)
+    .then(() => {
 
-    alert("Review Deleted!");
-
-    //Get all reviews other then the deleted.
-    getAllReviews()
+      alert("Review Deleted!");
+      
+      //Get all reviews other then the deleted.
+      getAllReviews()
       .then((result) => {
         this.setState({allReviews: result});
         this.setState({loaded: true})
       });
+
+    });
 
   }
 
