@@ -14,6 +14,7 @@ const AccountPage = () => {
   const [emailHasBeenSent, setEmailHasBeenSent] = useState(false);
   const [displayNameChanged, setDisplayNameChanged] = useState(false);
   const [emailChanged, setEmailChanged] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
   
   //Set Tab Name:
   document.title = "Account Settings Page";
@@ -62,6 +63,13 @@ const AccountPage = () => {
     }
   }
 
+  const sendEmailVerification = async () => {
+    await firebase.auth().currentUser.sendEmailVerification({
+      url: `${document.location.origin}/signin?redirect=${document.location.pathname}`
+    });
+    setEmailSent(true);
+  }
+
   const updateUserEmail = async (e) => {
     e.preventDefault();
     const userRef = firestore.doc(`users/${user.uid}`);
@@ -69,12 +77,17 @@ const AccountPage = () => {
     try {
       await userRef.set({
         email: emailRef.current.value,
+        emailVerified: false,
         photoURL,
       }, {
         merge: true
       });
-      await firebase.auth().currentUser.updateEmail(emailRef.current.value)
+      await firebase.auth().currentUser.updateEmail(emailRef.current.value);
 
+      await firebase.auth().currentUser.sendEmailVerification({
+        url: `${document.location.origin}/signin?redirect=${document.location.pathname}`
+      });
+  
       setEmailChanged(true);
     } catch (error) {
       setError(error);
@@ -106,8 +119,18 @@ const AccountPage = () => {
       )}
 
       {emailChanged && (
-        <Alert variant="success" dismissible onClick={() => setEmailChanged(false)}>
-          Email Changed!
+        <Alert variant="success" dismissible onClose={() => setEmailChanged(false)}>
+          <p>Email Changed!</p>
+          <Alert.Heading>Verifiy your email address</Alert.Heading>
+          Check you E-Mails (Spam folder included) for a confirmation E-Mail
+          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+          <p>Didn't Receive an email? <Alert.Link href='#' onClick={() => sendEmailVerification()}>Resend Email</Alert.Link></p>
+          {emailSent && (
+            <>
+              <hr />
+              <p>Email Sent!</p>
+            </>
+          )}
         </Alert>
       )}
       <h1>Account Settings</h1>

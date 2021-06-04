@@ -27,6 +27,7 @@ const SignInPage = () => {
         try {
           // keep database updated everytime the user logs back in.
           await userRef.set({
+            email: user.email,
             emailVerified: user.emailVerified,
           }, {
             merge: true,
