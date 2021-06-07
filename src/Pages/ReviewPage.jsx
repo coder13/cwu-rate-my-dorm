@@ -67,7 +67,7 @@ class ReviewPage extends Component {
     if (this.state.firstQuarterYear > this.state.lastQuarterYear
       || (this.state.firstQuarterYear === this.state.lastQuarterYear && firstSeasonVal > lastSeasonVal)) {
       this.setState({ showMoveOutAlert: true });
-    } else if (!this.state.showExistingReviewAlert){
+    } else if (!this.state.showExistingReviewAlert && this.state.reviewID === ""){
       //Add review to firebase:
 
       //get url array
@@ -89,16 +89,18 @@ class ReviewPage extends Component {
       this.state.urls, this.state.overallRating, this.state.locationRating, this.state.roomSizeRating, this.state.furnitureRating, this.state.commonAreasRating, 
       this.state.cleanlinessRating, this.state.bathroomRating, this.state.likes);
 
+      
       //prompt user that review was submitted:
-      this.setState({ showSuccessAlert: true });
+      this.setState({showSuccessAlert: true });
 
       // Detects if user has already reviewed dorm, then links them to the edit page
       firestore.getReviewIDByDormNameAndUser(this.state.hallName, firebase.auth().currentUser.email).then((id) => {
-          this.setState({ reviewID: id })
+        this.setState({ reviewID: id })
       });
-      this.state.showExistingReviewAlert = true;
     }
-    else {this.setState({showExistingReviewAlert: true});}
+    else {
+
+      this.setState({showExistingReviewAlert: true});}
   }
 
   navigateToPage(Page) {
@@ -241,7 +243,8 @@ class ReviewPage extends Component {
                           </Col>)}
                         </Col>
                       </Form.Row>
-
+                      {!this.state.showExistingReviewAlert && (
+                        <div>
                       <br />
 
                       <Form.Row>
@@ -369,13 +372,14 @@ class ReviewPage extends Component {
                           </Form.Control>
                         </Col>
                       </Form.Row>
-
+                      </div>)}
                     </Form.Group>
 
                   </Form>
 
                 </div>
-
+                {!this.state.showExistingReviewAlert && (
+                        <div>
                 <div className={ReviewStyles.reviewText}>
                   <Form className={ReviewStyles.form}>
                     <Form.Group>
@@ -418,10 +422,12 @@ class ReviewPage extends Component {
                       <button type="button" className="btn btn-danger btn-sm" onClick={() => this.removeImageHandler(imgUrl)}>X</button> 
                     </div>
                   </div>)}
-                </div>
+                </div></div>)}
               </div>
 
+                        
               <div className={ReviewStyles.rightContentSide}>
+              {!this.state.showExistingReviewAlert && (<div>
                 <div className={ReviewStyles.sliderSection}>
 
                   <div className={ReviewStyles.sliderBox}>
@@ -596,7 +602,7 @@ class ReviewPage extends Component {
                     </Alert>
                   </Col>)}
                 </Row>
-
+                </div>)}
               </div>
 
             </div>
