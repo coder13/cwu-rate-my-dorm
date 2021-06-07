@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from 'react-router-dom';
 import { UserContext } from "../providers/UserProvider";
 import LoaderComponent from '../Components/LoaderComponent';
@@ -24,6 +24,19 @@ const ProfilePage = () => {
       // error occured, maybe show user the error
     }
   }, [user.uid]);
+  
+  
+  //const [reviews, setReviews] = useState([]);
+
+  // useEffect(async () => {
+  //   try {
+  //     const rvws = await getReviewsByUser(user.uid)
+  //     setReviews(rvws);
+  //   } catch (e) {
+  //     console.error(e);
+  //     // error occured, maybe show user the error
+  //   }
+  // }, [user.uid]);
 
   if (user === undefined) {
 
@@ -81,6 +94,10 @@ const ProfilePage = () => {
 
         <div className={ProfileStyles.userReviewSection}>
           Reviews Section
+        </div>
+
+        <div className={ProfileStyles.userReviewSection}>
+          
         </div>
 
       </div>
