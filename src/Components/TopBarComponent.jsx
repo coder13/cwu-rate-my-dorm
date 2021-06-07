@@ -72,9 +72,39 @@ function TopBarComponent() {
         <img width={44} height={44} className={Styles.CWULogo} src={CWULogo} alt="Wildcat" />
       </Navbar.Brand>
           
-      <Form inline>
-        <FormControl type="text" name="search" placeholder="Search Rate My Dorm"/>
-      </Form>
+      <Dropdown>
+        <Dropdown.Toggle variant="flat" id="dropdown-basic" className = {Styles.customBtn}>
+        Search Rate My Dorm
+        </Dropdown.Toggle>
+      
+        <Dropdown.Menu align="right" className ={Styles.menu}>
+          <Dropdown.Item as={Link} to="/halls/Alford-Montgomery%20Hall" className = {Styles.menuItem}>Alford-Montgomery</Dropdown.Item>
+          <Dropdown.Item as={Link} to="/halls/Anderson%20Apartments" className = {Styles.menuItem}>Anderson</Dropdown.Item>
+          <Dropdown.Item as={Link} to="/halls/Barto%20Hall" className = {Styles.menuItem}>Barto</Dropdown.Item>
+          <Dropdown.Item as={Link} to="/halls/Beck%20Hall" className = {Styles.menuItem}>Beck</Dropdown.Item>
+          <Dropdown.Item as={Link} to="/halls/Brooklane%20Village%20Apartments" className = {Styles.menuItem}>Brooklane Village</Dropdown.Item>
+          <Dropdown.Item as={Link} to="/halls/Carmody-Munro%20Hall" className = {Styles.menuItem}>Carmody-Munro</Dropdown.Item>
+          <Dropdown.Item as={Link} to="/halls/Davies%20Hall" className = {Styles.menuItem}>Davies</Dropdown.Item>
+          <Dropdown.Item as={Link} to="/halls/Dugmore%20Hall" className = {Styles.menuItem}>Dugmore</Dropdown.Item>
+          <Dropdown.Item as={Link} to="/halls/Getz-Short%20Apartments" className = {Styles.menuItem}>Getz-Short</Dropdown.Item>
+          <Dropdown.Item as={Link} to="/halls/Green%20Hall" className = {Styles.menuItem}>Green</Dropdown.Item>
+          <Dropdown.Item as={Link} to="/halls/Hitchcock%20Hall" className = {Styles.menuItem}>Hitchcock</Dropdown.Item>
+          <Dropdown.Item as={Link} to="/halls/Kamola%20Hall" className = {Styles.menuItem}>Kamola</Dropdown.Item>
+          <Dropdown.Item as={Link} to="/halls/Kennedy%20Hall" className = {Styles.menuItem}>Kennedy</Dropdown.Item>
+          <Dropdown.Item as={Link} to="/halls/Meisner%20Hall" className = {Styles.menuItem}>Meisner</Dropdown.Item>
+          <Dropdown.Item as={Link} to="/halls/Moore%20Hall" className = {Styles.menuItem}>Moore</Dropdown.Item>
+          <Dropdown.Item as={Link} to="/halls/North%20Hall" className = {Styles.menuItem}>North</Dropdown.Item>
+          <Dropdown.Item as={Link} to="/halls/Quigley%20Hall" className = {Styles.menuItem}>Quigley</Dropdown.Item>
+          <Dropdown.Item as={Link} to="/halls/Sparks%20Hall" className = {Styles.menuItem}>Sparks</Dropdown.Item>
+          <Dropdown.Item as={Link} to="/halls/Stephens-Whitney%20Hall" className = {Styles.menuItem}>Stephens-Whitney</Dropdown.Item>
+          <Dropdown.Item as={Link} to="/halls/Student%20Village%20Apartments" className = {Styles.menuItem}>Student Village</Dropdown.Item>
+          <Dropdown.Item as={Link} to="/halls/Sue%20Lombard%20Hall" className = {Styles.menuItem}>Sue Lombard</Dropdown.Item>
+          <Dropdown.Item as={Link} to="/halls/Wahle%20Apartments" className = {Styles.menuItem}>Wahle</Dropdown.Item>
+          <Dropdown.Item as={Link} to="/halls/Wendell%20Hill%20Hall%20A" className = {Styles.menuItem}>Wendell A</Dropdown.Item>
+          <Dropdown.Item as={Link} to="/halls/Wendell%20Hill%20Hall%20B" className = {Styles.menuItem}>Wendell B</Dropdown.Item>
+          <Dropdown.Item as={Link} to="/halls/Wilson%20Hall" className = {Styles.menuItem}>Wilson</Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
 
       <Nav className="ml-auto mr-auto justify-content-center">
         <Nav.Link as={Link} to="/">
