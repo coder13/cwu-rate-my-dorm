@@ -2,25 +2,25 @@
   transform: scaleX(-1);
 }
 
-.menuItem{
+.menuItem {
   color: #fff !important;
-  background-color:black !important;
+  background-color: black !important;
   border-color: white !important;
 }
 
-.menuItem:hover{
-  color: white!important;
-  background-color:#414141 !important;
+.menuItem:hover {
+  color: white !important;
+  background-color: #414141 !important;
   border-color: white !important;
 }
 
-.menu{
+.menu {
   color: #fff !important;
-  background-color:black !important;
+  background-color: black !important;
   border-color: white !important;
 }
 
-.customBtn{
+.customBtn {
   border-radius: 10px;
   height: 40px;
   width: auto;
@@ -31,16 +31,49 @@
   align-items: center;
   justify-content: center;
 
-  background-color:  black !important;
+  background-color: black !important;
   color: white !important;
   cursor: pointer;
   box-shadow: 4px 4px rgb(149, 14, 41) !important;
 }
 
-.customBtn:hover{
-  background-color:  #414141 !important;
+.customBtn:hover {
+  background-color: #414141 !important;
   color: white !important;
   cursor: pointer;
   box-shadow: 4px 4px rgb(149, 14, 41) !important;
 }
 
+.searchBtn {
+  border-radius: 10px;
+  height: 40px;
+  width: auto;
+
+  padding-left: 25px;
+  padding-right: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: white !important;
+  color: grey !important;
+  cursor: pointer;
+}
+
+.sMenuItem {
+  color: darkslategray !important;
+  background-color: white !important;
+  border-color: grey !important;
+}
+
+.sMenuItem:hover {
+  color: white !important;
+  background-color: #414141 !important;
+  border-color: white !important;
+}
+
+.searchMenu {
+  color: darkslategray !important;
+  background-color: white !important;
+  border-color: grey !important;
+}
