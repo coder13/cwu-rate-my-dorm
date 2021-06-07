@@ -84,7 +84,7 @@ class ExampleHallPage extends Component {
       return(
         <div className={ExampleStyles.reviewsBlock}>
           <h5>No Reviws Yet...</h5>
-        </div>
+          </div>
       );
     }
 
