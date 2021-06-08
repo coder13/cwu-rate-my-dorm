@@ -68,30 +68,35 @@ const ProfilePage = () => {
         
         <div className={ProfileStyles.userColumnSection}>
 
-            <div className={ProfileStyles.userInfo}>
-              
-              <div className={ProfileStyles.userImageBox}>
+          <div className={ProfileStyles.userInfo}>
+            
+            <div className={ProfileStyles.userImageBox}>
               <div
-                  style={{
-                    background: `url(${photoURL || 'https://res.cloudinary.com/dqcsk8rsc/image/upload/v1577268053/avatar-1-bitmoji_upgwhc.png'})  no-repeat center center`,
-                    backgroundSize: "cover",
-                    height: "250px",
-                    width: "250px"
-                  }}
-                />
-              </div>
-
-              <div className={ProfileStyles.userNameBox}>
-                {user.displayName}
-              </div>
-
-              <div className={ProfileStyles.userGradYearBox}>
-                {user.email}
-              </div>
-
+                style={{
+                  background: `url(${photoURL || 'https://res.cloudinary.com/dqcsk8rsc/image/upload/v1577268053/avatar-1-bitmoji_upgwhc.png'})  no-repeat center center`,
+                  backgroundSize: "cover",
+                  height: "250px",
+                  width: "250px"
+                }}
+              />
             </div>
 
-            <div className={ProfileStyles.userColumnSpacer}>
+            <div className={ProfileStyles.userNameBox}>
+              {user.displayName}
+            </div>
+
+            <div className={ProfileStyles.userGradYearBox}>
+              {user.email}
+              {displayName}
+            </div>
+
+            <div className={ProfileStyles.userGradYearBox}>
+              {email}
+            </div>
+
+          </div>
+
+          <div className={ProfileStyles.userColumnSpacer}>
               User Column Spacer
             </div>
 
