@@ -485,6 +485,19 @@ export async function deleteReview(dormName, revId){
     
 }
 
+// deletes review document ONLY, not images from storage
+export async function deleteReviewOnly(dormName, revId){
+    var dormId = await getDormId(dormName);
+    //delete review doc from firestore
+    
+    firestore.collection("Dorms").doc(dormId).collection('Reviews').doc(revId).delete().then(() => {
+        console.log("Review successfully deleted!");
+    }).catch((error) => {
+        console.log("Error removing review: ", error);
+    });
+    
+}
+
 // Add a new user to firestore
 export function newUser(username, email, graduationYear) {
     firestore.collection('Users').add({
