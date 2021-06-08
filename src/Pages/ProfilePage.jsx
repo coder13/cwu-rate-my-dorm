@@ -5,7 +5,13 @@ import LoaderComponent from '../Components/LoaderComponent';
 import ReviewsBlockComponent from '../Components/ReviewsBlockComponent'
 import ProfileStyles from "../Styles/ProfilePage.module.css"
 import { auth } from "../firebase";
+<<<<<<< HEAD
 import {getReviewsByUser} from "../firestore"
+=======
+import ProfileStyles from "../Styles/ProfilePage.module.css";
+import React, { useEffect, useState } from "react";
+import {getReviewsByUser} from "../firestore";
+>>>>>>> 06926a5a9c98cfd74820f4279d50996a12960ba0
 
 const ProfilePage = () => {
 
@@ -82,11 +88,19 @@ const ProfilePage = () => {
               </div>
 
               <div className={ProfileStyles.userNameBox}>
+<<<<<<< HEAD
                 {user.displayName}
               </div>
 
               <div className={ProfileStyles.userGradYearBox}>
                 {user.email}
+=======
+                {displayName}
+              </div>
+
+              <div className={ProfileStyles.userGradYearBox}>
+                {email}
+>>>>>>> 06926a5a9c98cfd74820f4279d50996a12960ba0
               </div>
 
             </div>
@@ -99,12 +113,21 @@ const ProfilePage = () => {
 
         <div className={ProfileStyles.userReviewSection}>
           Reviews Section
+<<<<<<< HEAD
         </div>
 
         <div className={ProfileStyles.userReviewSection}>
           {reviews.length} reviews
         </div>
 
+=======
+        </div>
+
+        <div className={ProfileStyles.userReviewSection}>
+          {reviews.length} reviews
+        </div>
+
+>>>>>>> 06926a5a9c98cfd74820f4279d50996a12960ba0
       </div>
 
     </div>
