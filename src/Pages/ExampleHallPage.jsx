@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import {getReviewsByDormName, getDormByName} from '../firestore'
+import {getReviewsByDormName, getDormByName, getRatings} from '../firestore'
 import {Container, Row, Carousel, Card, Button} from 'react-bootstrap'
 import LoaderComponent from '../Components/LoaderComponent';
-import XButton from '../Assets/xButton.png'
 import ExampleStyles from '../Styles/ExampleHallPage.module.css';
 
 class ExampleHallPage extends Component {
@@ -19,7 +18,13 @@ class ExampleHallPage extends Component {
       hallDocs: null,
       hallImages: null,
       hallDescription: null,
-      hallRating: null,
+      overallRatingTotal: null,
+      locationRatingTotal: null,
+      roomSizeRatingTotal: null, 
+      furnitureRatingTotal: null,
+      commonAreasRatingTotal: null,
+      cleanlinessRatingTotal: null,
+      bathroomRatingTotal: null,
       currentUserImage: null,
       displayCurUserImage: false,
       loaded: false
@@ -64,6 +69,22 @@ class ExampleHallPage extends Component {
         this.setState({loaded: true});
       });
 
+    }).then(()=>{
+
+      getRatings(this.state.hallName)
+      .then((dormResult) => {
+        this.setState({
+          overallRatingTotal: dormResult[0],
+          locationRatingTotal: dormResult[1],
+          roomSizeRatingTotal: dormResult[2],
+          furnitureRatingTotal: dormResult[3],
+          commonAreasRatingTotal: dormResult[4],
+          cleanlinessRatingTotal: dormResult[5],
+          bathroomRatingTotal: dormResult[6],
+          loaded: true
+        });
+      });
+
     });
   }
 
@@ -74,7 +95,10 @@ class ExampleHallPage extends Component {
     return (
       <div className={ExampleStyles.userImagePopUp} onClick={()=>{this.setState({displayCurUserImage: false})}}>
         <img className={ExampleStyles.userImage} src={this.state.currentUserImage} alt=""/>
-        <img className={ExampleStyles.topcorner} src={XButton} onClick={()=>{this.setState({displayCurUserImage: false})}} alt=""/>
+        <Button 
+          className={ExampleStyles.topcorner} 
+          variant="danger" 
+          onClick={()=>{this.setState({displayCurUserImage: false})}}><b>X</b></Button>
       </div>
     );
   }
@@ -228,14 +252,30 @@ class ExampleHallPage extends Component {
                       <Card bg={'light'} className={ExampleStyles.infoCard}>
                         <Card.Header><b>Hall Information:</b></Card.Header>
                         <Card.Body>
+                          
+                          <div className={ExampleStyles.infoCardOverall}>
+                            Average Hall Rating: {this.state.overallRatingTotal}
+                          </div>
+
+                          <div className={ExampleStyles.infoCardSub}>
+                            <p>
+                              Location Rating: {this.state.locationRatingTotal}<br/>
+                              Room Size Rating: {this.state.roomSizeRatingTotal}<br/>
+                              Furiture Rating: {this.state.furnitureRatingTotal}<br/>
+                              Common Areas Rating: {this.state.commonAreasRatingTotal}<br/>
+                              Cleanliness Rating: {this.state.cleanlinessRatingTotal}<br/>
+                              Bathroom Rating: {this.state.bathroomRatingTotal}<br/>
+                            </p>
+                          </div>
+
                           <Card.Text>
-                            <h3>Average Hall Rating: {this.state.hallRating}</h3>
-                            <br />
+
                             <h5>Description:</h5>
                             {this.state.hallDescription}
                             <br />
                             <br />
                             <Button variant="primary" onClick={() => { this.navigateToPage(this.state.hallName) }}>More Info</Button>
+
                           </Card.Text>
                         </Card.Body>
                       </Card>
