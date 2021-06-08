@@ -77,31 +77,31 @@ function TopBarComponent() {
         Search Rate My Dorm
         </Dropdown.Toggle>
         <Dropdown.Menu align="right" className ={Styles.searchMenu}>
-          <Dropdown.Item as={Link} to="/halls/Alford-Montgomery%20Hall" className = {Styles.sMenuItem}>Alford-Montgomery</Dropdown.Item>
-          <Dropdown.Item as={Link} to="/halls/Anderson%20Apartments" className = {Styles.sMenuItem}>Anderson</Dropdown.Item>
-          <Dropdown.Item as={Link} to="/halls/Barto%20Hall" className = {Styles.sMenuItem}>Barto</Dropdown.Item>
-          <Dropdown.Item as={Link} to="/halls/Beck%20Hall" className = {Styles.sMenuItem}>Beck</Dropdown.Item>
-          <Dropdown.Item as={Link} to="/halls/Brooklane%20Village%20Apartments" className = {Styles.sMenuItem}>Brooklane Village</Dropdown.Item>
-          <Dropdown.Item as={Link} to="/halls/Carmody-Munro%20Hall" className = {Styles.sMenuItem}>Carmody-Munro</Dropdown.Item>
-          <Dropdown.Item as={Link} to="/halls/Davies%20Hall" className = {Styles.sMenuItem}>Davies</Dropdown.Item>
-          <Dropdown.Item as={Link} to="/halls/Dugmore%20Hall" className = {Styles.sMenuItem}>Dugmore</Dropdown.Item>
-          <Dropdown.Item as={Link} to="/halls/Getz-Short%20Apartments" className = {Styles.sMenuItem}>Getz-Short</Dropdown.Item>
-          <Dropdown.Item as={Link} to="/halls/Green%20Hall" className = {Styles.sMenuItem}>Green</Dropdown.Item>
-          <Dropdown.Item as={Link} to="/halls/Hitchcock%20Hall" className = {Styles.sMenuItem}>Hitchcock</Dropdown.Item>
-          <Dropdown.Item as={Link} to="/halls/Kamola%20Hall" className = {Styles.sMenuItem}>Kamola</Dropdown.Item>
-          <Dropdown.Item as={Link} to="/halls/Kennedy%20Hall" className = {Styles.sMenuItem}>Kennedy</Dropdown.Item>
-          <Dropdown.Item as={Link} to="/halls/Meisner%20Hall" className = {Styles.sMenuItem}>Meisner</Dropdown.Item>
-          <Dropdown.Item as={Link} to="/halls/Moore%20Hall" className = {Styles.sMenuItem}>Moore</Dropdown.Item>
-          <Dropdown.Item as={Link} to="/halls/North%20Hall" className = {Styles.sMenuItem}>North</Dropdown.Item>
-          <Dropdown.Item as={Link} to="/halls/Quigley%20Hall" className = {Styles.sMenuItem}>Quigley</Dropdown.Item>
-          <Dropdown.Item as={Link} to="/halls/Sparks%20Hall" className = {Styles.sMenuItem}>Sparks</Dropdown.Item>
-          <Dropdown.Item as={Link} to="/halls/Stephens-Whitney%20Hall" className = {Styles.sMenuItem}>Stephens-Whitney</Dropdown.Item>
-          <Dropdown.Item as={Link} to="/halls/Student%20Village%20Apartments" className = {Styles.sMenuItem}>Student Village</Dropdown.Item>
-          <Dropdown.Item as={Link} to="/halls/Sue%20Lombard%20Hall" className = {Styles.sMenuItem}>Sue Lombard</Dropdown.Item>
-          <Dropdown.Item as={Link} to="/halls/Wahle%20Apartments" className = {Styles.sMenuItem}>Wahle</Dropdown.Item>
-          <Dropdown.Item as={Link} to="/halls/Wendell%20Hill%20Hall%20A" className = {Styles.sMenuItem}>Wendell A</Dropdown.Item>
-          <Dropdown.Item as={Link} to="/halls/Wendell%20Hill%20Hall%20B" className = {Styles.sMenuItem}>Wendell B</Dropdown.Item>
-          <Dropdown.Item as={Link} to="/halls/Wilson%20Hall" className = {Styles.sMenuItem}>Wilson</Dropdown.Item>
+          <Dropdown.Item onClick={() => {window.location.href="/halls/Alford-Montgomery%20Hall"}} className = {Styles.sMenuItem}>Alford-Montgomery</Dropdown.Item>
+          <Dropdown.Item onClick={() => {window.location.href="/halls/Anderson%20Apartments"}} className = {Styles.sMenuItem}>Anderson</Dropdown.Item>
+          <Dropdown.Item onClick={() => {window.location.href="/halls/Barto%20Hall"}} className = {Styles.sMenuItem}>Barto</Dropdown.Item>
+          <Dropdown.Item onClick={() => {window.location.href="/halls/Beck%20Hall"}} className = {Styles.sMenuItem}>Beck</Dropdown.Item>
+          <Dropdown.Item onClick={() => {window.location.href="/halls/Brooklane%20Village%20Apartments"}} className = {Styles.sMenuItem}>Brooklane Village</Dropdown.Item>
+          <Dropdown.Item onClick={() => {window.location.href="/halls/Carmody-Munro%20Hall"}} className = {Styles.sMenuItem}>Carmody-Munro</Dropdown.Item>
+          <Dropdown.Item onClick={() => {window.location.href="/halls/Davies%20Hall"}} className = {Styles.sMenuItem}>Davies</Dropdown.Item>
+          <Dropdown.Item onClick={() => {window.location.href="/halls/Dugmore%20Hall"}} className = {Styles.sMenuItem}>Dugmore</Dropdown.Item>
+          <Dropdown.Item onClick={() => {window.location.href="/halls/Getz-Short%20Apartments"}} className = {Styles.sMenuItem}>Getz-Short</Dropdown.Item>
+          <Dropdown.Item onClick={() => {window.location.href="/halls/Green%20Hall"}} className = {Styles.sMenuItem}>Green</Dropdown.Item>
+          <Dropdown.Item onClick={() => {window.location.href="/halls/Hitchcock%20Hall"}} className = {Styles.sMenuItem}>Hitchcock</Dropdown.Item>
+          <Dropdown.Item onClick={() => {window.location.href="/halls/Kamola%20Hall"}} className = {Styles.sMenuItem}>Kamola</Dropdown.Item>
+          <Dropdown.Item onClick={() => {window.location.href="/halls/Kennedy%20Hall"}} className = {Styles.sMenuItem}>Kennedy</Dropdown.Item>
+          <Dropdown.Item onClick={() => {window.location.href="/halls/Meisner%20Hall"}} className = {Styles.sMenuItem}>Meisner</Dropdown.Item>
+          <Dropdown.Item onClick={() => {window.location.href="/halls/Moore%20Hall"}} className = {Styles.sMenuItem}>Moore</Dropdown.Item>
+          <Dropdown.Item onClick={() => {window.location.href="/halls/North%20Hall"}} className = {Styles.sMenuItem}>North</Dropdown.Item>
+          <Dropdown.Item onClick={() => {window.location.href="/halls/Quigley%20Hall"}} className = {Styles.sMenuItem}>Quigley</Dropdown.Item>
+          <Dropdown.Item onClick={() => {window.location.href="/halls/Sparks%20Hall"}} className = {Styles.sMenuItem}>Sparks</Dropdown.Item>
+          <Dropdown.Item onClick={() => {window.location.href="/halls/Stephens-Whitney%20Hall"}} className = {Styles.sMenuItem}>Stephens-Whitney</Dropdown.Item>
+          <Dropdown.Item onClick={() => {window.location.href="/halls/Student%20Village%20Apartments"}} className = {Styles.sMenuItem}>Student Village</Dropdown.Item>
+          <Dropdown.Item onClick={() => {window.location.href="/halls/Sue%20Lombard%20Hall"}} className = {Styles.sMenuItem}>Sue Lombard</Dropdown.Item>
+          <Dropdown.Item onClick={() => {window.location.href="/halls/Wahle%20Apartments"}} className = {Styles.sMenuItem}>Wahle</Dropdown.Item>
+          <Dropdown.Item onClick={() => {window.location.href="/halls/Wendell%20Hill%20Hall%20A"}} className = {Styles.sMenuItem}>Wendell A</Dropdown.Item>
+          <Dropdown.Item onClick={() => {window.location.href="/halls/Wendell%20Hill%20Hall%20B"}} className = {Styles.sMenuItem}>Wendell B</Dropdown.Item>
+          <Dropdown.Item onClick={() => {window.location.href="/halls/Wilson%20Hall"}} className = {Styles.sMenuItem}>Wilson</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
 
