@@ -4,8 +4,7 @@ import { UserContext } from "../providers/UserProvider";
 import LoaderComponent from '../Components/LoaderComponent';
 import ReviewsBlockComponent from '../Components/ReviewsBlockComponent'
 import ProfileStyles from "../Styles/ProfilePage.module.css"
-import { auth } from "../firebase";
-import {getReviewsByUser} from "../firestore"
+import { getReviewsByUser } from "../firestore"
 
 const ProfilePage = () => {
 
@@ -17,8 +16,9 @@ const ProfilePage = () => {
 
   useEffect(() => {
     const getReviews = async () => {
+      console.log('fetching reviews', user.uid);
       try {
-        const rvws = await getReviewsByUser(user.uid)
+        const rvws = await getReviewsByUser(user.uid);
         setReviews(rvws);
       } catch (e) {
         console.error(e);
@@ -30,18 +30,6 @@ const ProfilePage = () => {
       getReviews();
     }
   }, [user]);
-  
-  //const [reviews, setReviews] = useState([]);
-
-  // useEffect(async () => {
-  //   try {
-  //     const rvws = await getReviewsByUser(user.uid)
-  //     setReviews(rvws);
-  //   } catch (e) {
-  //     console.error(e);
-  //     // error occured, maybe show user the error
-  //   }
-  // }, [user.uid]);
 
   if (user === undefined) {
 
@@ -58,8 +46,6 @@ const ProfilePage = () => {
     )
 
   }
-
-  const { photoURL, displayName, email } = user;
   
   return (
     <div className={ProfileStyles.windowDivSection}>
@@ -73,7 +59,7 @@ const ProfilePage = () => {
             <div className={ProfileStyles.userImageBox}>
               <div
                 style={{
-                  background: `url(${photoURL || 'https://res.cloudinary.com/dqcsk8rsc/image/upload/v1577268053/avatar-1-bitmoji_upgwhc.png'})  no-repeat center center`,
+                  background: `url(${user.photoURL || 'https://res.cloudinary.com/dqcsk8rsc/image/upload/v1577268053/avatar-1-bitmoji_upgwhc.png'})  no-repeat center center`,
                   backgroundSize: "cover",
                   height: "250px",
                   width: "250px"
@@ -87,27 +73,14 @@ const ProfilePage = () => {
 
             <div className={ProfileStyles.userGradYearBox}>
               {user.email}
-              {displayName}
-            </div>
-
-            <div className={ProfileStyles.userGradYearBox}>
-              {email}
             </div>
 
           </div>
-
-          <div className={ProfileStyles.userColumnSpacer}>
-              User Column Spacer
-            </div>
-
         </div>
 
         <div className={ProfileStyles.userReviewSection}>
-          Reviews Section
-        </div>
-
-        <div className={ProfileStyles.userReviewSection}>
-          {reviews.length} reviews
+          <p>{reviews.length} reviews</p>
+          <ReviewsBlockComponent reviews={reviews} />
         </div>
 
       </div>

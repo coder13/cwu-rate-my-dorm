@@ -142,12 +142,14 @@ export async function getRatings(dormName){
 }
 
 // Get all info from all reviews by a user
-export async function getReviewsByUser() {
+export async function getReviewsByUser(userId) {
     var reviews = []; 
-    var user = firebase.auth().currentUser;
     //console.log(user.email);
-    await firestore.collectionGroup('Reviews').where('authorID', '==', user.uid).orderBy("lastQuarterYear", "desc").orderBy("lastQuarterSeasonNum", "desc").get().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
+    await firestore.collectionGroup('Reviews')
+    .where('authorID', '==', userId).orderBy("lastQuarterYear", "desc").orderBy("lastQuarterSeasonNum", "desc")
+    .get().then((querySnapshot) => {
+        console.log(querySnapshot);
+        querySnapshot.docs.forEach((doc) => {
             reviews.push(doc);
         });
     });

@@ -16,21 +16,18 @@
 }
 
 .userColumnSection {
-    flex: 2;
     border: 1px solid black;
     display: flex;
     flex-direction: column;
 }
 
 .userInfo {
-    flex: 2;
     border: 1px solid black;
     display: flex;
     flex-direction: column;
 }
 
 .userColumnSpacer {
-    flex: 4;
     display: flex;
     border: 1px solid black;
     justify-content: center;
@@ -38,7 +35,6 @@
 }
 
 .userImageBox {
-    flex: 5;
     border: 1px solid black;
     display: flex;
     justify-content: center;
@@ -46,7 +42,6 @@
 }
 
 .userNameBox {
-    flex: 1;
     border: 1px solid black;
     display: flex;
     justify-content: center;
@@ -66,9 +61,11 @@
 }
 
 .userReviewSection {
-    flex: 5;
+    flex: 1;
     border: 1px solid black;
     display: flex;
+    width: 100%;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
