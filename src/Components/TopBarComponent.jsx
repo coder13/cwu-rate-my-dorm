@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Link } from 'react-router-dom';
-import { Navbar, Nav, Form, FormControl, Button, Dropdown } from 'react-bootstrap';
+import { Navbar, Nav, Button, Dropdown } from 'react-bootstrap';
 import Styles from '../Styles/TopBarComponent.module.css';
 import CWULogo from '../Assets/CWU_Logo.png'
 import { UserContext } from '../providers/UserProvider';
