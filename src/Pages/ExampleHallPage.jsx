@@ -73,14 +73,16 @@ class ExampleHallPage extends Component {
 
       getRatings(this.state.hallName)
       .then((dormResult) => {
-        this.setState({overallRatingTotal: dormResult[0]});
-        this.setState({locationRatingTotal: dormResult[1]});
-        this.setState({roomSizeRatingTotal: dormResult[2]});
-        this.setState({furnitureRatingTotal: dormResult[3]});
-        this.setState({commonAreasRatingTotal: dormResult[4]});
-        this.setState({cleanlinessRatingTotal: dormResult[5]});
-        this.setState({bathroomRatingTotal: dormResult[6]});
-        this.setState({loaded: true});
+        this.setState({
+          overallRatingTotal: dormResult[0],
+          locationRatingTotal: dormResult[1],
+          roomSizeRatingTotal: dormResult[2],
+          furnitureRatingTotal: dormResult[3],
+          commonAreasRatingTotal: dormResult[4],
+          cleanlinessRatingTotal: dormResult[5],
+          bathroomRatingTotal: dormResult[6],
+          loaded: true
+        });
       });
 
     });
