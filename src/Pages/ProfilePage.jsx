@@ -15,16 +15,21 @@ const ProfilePage = () => {
   const user = useContext(UserContext);
   const [reviews, setReviews] = useState([]);
 
-  useEffect(async () => {
-    try {
-      const rvws = await getReviewsByUser(user.uid)
-      setReviews(rvws);
-    } catch (e) {
-      console.error(e);
-      // error occured, maybe show user the error
+  useEffect(() => {
+    const getReviews = async () => {
+      try {
+        const rvws = await getReviewsByUser(user.uid)
+        setReviews(rvws);
+      } catch (e) {
+        console.error(e);
+        // error occured, maybe show user the error
+      }
     }
-  }, [user.uid]);
-  
+
+    if (user?.uid) {
+      getReviews();
+    }
+  }, [user]);
   
   //const [reviews, setReviews] = useState([]);
 
@@ -97,7 +102,7 @@ const ProfilePage = () => {
         </div>
 
         <div className={ProfileStyles.userReviewSection}>
-          
+          {reviews.length} reviews
         </div>
 
       </div>
