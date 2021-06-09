@@ -35,6 +35,7 @@ class ExampleHallPage extends Component {
     this.generateImages = this.generateImages.bind(this);
     this.userImagePopup = this.userImagePopup.bind(this);
     this.generateUserImages = this.generateUserImages.bind(this);
+    this.topInfoSection = this.topInfoSection.bind(this);
   }
 
   //===navigateToPage===
@@ -54,12 +55,9 @@ class ExampleHallPage extends Component {
     //Loading Hall reviews and information from database.
     getReviewsByDormName(this.state.hallName)
     .then((result)=>{
-       
       this.setState({hallReviews: result});
-
     }
     ).then(()=>{
-
       getDormByName(this.state.hallName)
       .then((dormNameResult) => {
         this.setState({hallDocs: dormNameResult});
@@ -68,9 +66,7 @@ class ExampleHallPage extends Component {
         this.setState({hallRating: dormNameResult.get("rating")});
         this.setState({loaded: true});
       });
-
     }).then(()=>{
-
       getRatings(this.state.hallName)
       .then((dormResult) => {
         this.setState({
@@ -84,7 +80,6 @@ class ExampleHallPage extends Component {
           loaded: true
         });
       });
-
     });
   }
 
@@ -107,14 +102,12 @@ class ExampleHallPage extends Component {
   generateUserImages(imageArr)
   {
     const toReturn = imageArr.map((curImage) =>
-
       <img className={ExampleStyles.reviewTemplateImageBorder}
         src={curImage}
         alt=""
         key ={curImage}
         onClick={() => { this.setState({ displayCurUserImage: true }); this.setState({ currentUserImage: curImage }); }}
       />
-
     );
 
     return(toReturn);
@@ -157,9 +150,7 @@ class ExampleHallPage extends Component {
             </div>
 
             <div className={ExampleStyles.reviewTemplateImages}>
-
               {this.generateUserImages(curReview.get("images"))}
-
             </div>
 
           </div>
@@ -179,9 +170,11 @@ class ExampleHallPage extends Component {
           </div>
 
           <div className={ExampleStyles.reviewTemplateBody}>
+
             <div className={ExampleStyles.reviewTemplateDesc}>
               {curReview.get("review")}
             </div>
+
           </div>
 
         </div>
@@ -194,13 +187,67 @@ class ExampleHallPage extends Component {
     );
   }
 
+  //===topInfoSection===
+  //Desc: Renders the top info section:
+  topInfoSection()
+  {
+    return(
+      <div className={ExampleStyles.titleAndInformationSection}>
+
+        <div className={ExampleStyles.titleBlock}>
+          {this.state.hallName}
+        </div>
+
+        <div className={ExampleStyles.imageGalleryBlock}>
+
+          <div className={ExampleStyles.imageCarouselSection}>
+            <this.generateImages images={this.state.hallImages} />
+          </div>
+
+          <div className={ExampleStyles.infoBlock}>
+            <Card bg={'light'} className={ExampleStyles.infoCard}>
+              <Card.Header><b>Hall Information:</b></Card.Header>
+              <Card.Body>
+
+                <div className={ExampleStyles.infoCardOverall}>
+                  Average Hall Rating: {this.state.overallRatingTotal}
+                </div>
+
+                <div className={ExampleStyles.infoCardSub}>
+                  <p>
+                    Location Rating: {this.state.locationRatingTotal}<br />
+                    Room Size Rating: {this.state.roomSizeRatingTotal}<br />
+                    Furiture Rating: {this.state.furnitureRatingTotal}<br />
+                    Common Areas Rating: {this.state.commonAreasRatingTotal}<br />
+                    Cleanliness Rating: {this.state.cleanlinessRatingTotal}<br />
+                    Bathroom Rating: {this.state.bathroomRatingTotal}<br />
+                  </p>
+                </div>
+
+                <div>
+                  <h5>Description:</h5>
+                  {this.state.hallDescription}
+                  <br />
+                  <br />
+                  <Button variant="primary" onClick={() => { this.navigateToPage(this.state.hallName) }}>More Info</Button>
+                </div>
+
+              </Card.Body>
+            </Card>
+          </div>
+
+        </div>
+
+      </div>
+    );
+  }
+
   //===generateImages===
   //Desc: Genereates images from database values.
   generateImages(props) 
   {
     const imagesToAdd = props.images;
     const toReturn = imagesToAdd.map((curImage) => 
-    
       <Carousel.Item key={curImage}>
         <img
           className={ExampleStyles.carouselImageExample}
@@ -208,7 +255,6 @@ class ExampleHallPage extends Component {
           alt=""
         />
       </Carousel.Item>
-    
     );
 
     return(
@@ -231,60 +277,10 @@ class ExampleHallPage extends Component {
           {this.state.displayCurUserImage ? <this.userImagePopup/>: null}
 
           <Container fluid className={ExampleStyles.mainContainer}>
-
             <Container className={ExampleStyles.middleSection}>
 
               <Row className={ExampleStyles.infoAndTopReviewSection}>
-
-                <div className={ExampleStyles.titleAndInformationSection}>
-
-                  <div className={ExampleStyles.titleBlock}>
-                    {this.state.hallName}
-                  </div>
-
-                  <div className={ExampleStyles.imageGalleryBlock}>
-
-                    <div className={ExampleStyles.imageCarouselSection}>
-                      {<this.generateImages images={this.state.hallImages} />}
-                    </div>
-
-                    <div className={ExampleStyles.infoBlock}>
-                      <Card bg={'light'} className={ExampleStyles.infoCard}>
-                        <Card.Header><b>Hall Information:</b></Card.Header>
-                        <Card.Body>
-                          
-                          <div className={ExampleStyles.infoCardOverall}>
-                            Average Hall Rating: {this.state.overallRatingTotal}
-                          </div>
-
-                          <div className={ExampleStyles.infoCardSub}>
-                            <p>
-                              Location Rating: {this.state.locationRatingTotal}<br/>
-                              Room Size Rating: {this.state.roomSizeRatingTotal}<br/>
-                              Furiture Rating: {this.state.furnitureRatingTotal}<br/>
-                              Common Areas Rating: {this.state.commonAreasRatingTotal}<br/>
-                              Cleanliness Rating: {this.state.cleanlinessRatingTotal}<br/>
-                              Bathroom Rating: {this.state.bathroomRatingTotal}<br/>
-                            </p>
-                          </div>
-
-                          <Card.Text>
-
-                            <h5>Description:</h5>
-                            {this.state.hallDescription}
-                            <br />
-                            <br />
-                            <Button variant="primary" onClick={() => { this.navigateToPage(this.state.hallName) }}>More Info</Button>
-
-                          </Card.Text>
-                        </Card.Body>
-                      </Card>
-                    </div>
-
-                  </div>
-
-                </div>
-
+                <this.topInfoSection/>
               </Row>
 
               <Row className={ExampleStyles.reviewsSection}>
@@ -297,16 +293,13 @@ class ExampleHallPage extends Component {
               <Row className={ExampleStyles.footer}></Row>
 
             </Container>
-
           </Container>
+
         </div>
       )
     }
-    else //List is still loading. 
-    {
-      return(<LoaderComponent />);
-    }
-    
+    else return(<LoaderComponent />);
+
   }
 
 }
