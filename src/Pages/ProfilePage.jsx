@@ -72,7 +72,7 @@ const ProfilePage = () => {
             </div>
 
             <div className={ProfileStyles.userGradYearBox}>
-              {user.email}
+              {user.email} {/* should be changed to grad year */}
             </div>
 
           </div>

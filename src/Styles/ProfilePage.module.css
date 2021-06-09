@@ -12,13 +12,13 @@
     height: 1200px;
     background-color: white;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 .userColumnSection {
     border: 1px solid black;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 .userInfo {
@@ -65,7 +65,7 @@
     border: 1px solid black;
     display: flex;
     width: 100%;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
 }
