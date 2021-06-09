@@ -44,7 +44,7 @@ class ExampleHallPage extends Component {
   {
 
     //Set Tab Name:
-    document.title = this.state.hallName;
+    document.title = `CWU Rate My Dorm: ${this.state.hallName}`;
 
     //Loading Hall reviews and information from database.
     getReviewsByDormName(this.state.hallName)

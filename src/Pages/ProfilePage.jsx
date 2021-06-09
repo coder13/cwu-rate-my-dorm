@@ -8,7 +8,7 @@ import ReviewsBlockComponent from '../Components/ReviewsBlockComponent'
 const ProfilePage = () => {
 
   //Set Tab Name:
-  document.title = "Profile Page";
+  document.title = "CWU Rate My Dorm: Profile";
 
   const user = useContext(UserContext);
   

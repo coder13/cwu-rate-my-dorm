@@ -18,7 +18,7 @@ const SignUp = () => {
   const [user, setUser] = useState({});
 
   //Set Tab Name:
-  document.title = "Sign-Up Page";
+  document.title = "CWU Rate My Dorm: Sign-Up";
 
   const redirect = location.state && location.state.from ? location.state.from : '/';
 

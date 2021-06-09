@@ -17,7 +17,7 @@ const AccountPage = () => {
   const [emailSent, setEmailSent] = useState(false);
   
   //Set Tab Name:
-  document.title = "Account Settings Page";
+  document.title = "CWU Rate My Dorm: Account Settings";
 
   if (user === undefined) {
     return (

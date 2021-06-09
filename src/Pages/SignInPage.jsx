@@ -13,7 +13,8 @@ const SignInPage = () => {
   const [error, setError] = useState(null);
 
   //Set Tab Name:
-  document.title = "Sign-In Page";
+  document.title = "CWU Rate My Dorm: Sign-in";
+
   const redirect = location.state && location.state.from
     ? location.state.from
     : (queryParams.redirect || '/');

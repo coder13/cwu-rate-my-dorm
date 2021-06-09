@@ -91,6 +91,8 @@ class EditReviewPage extends Component {
   }
 
   componentDidMount() {
+    document.title = "CWU Rate My Dorm: Edit Review";
+
     firebase.auth().onAuthStateChanged((user)=>{
       if (user == null)
         this.navigateToPage("signin");
