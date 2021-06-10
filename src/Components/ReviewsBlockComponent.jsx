@@ -6,8 +6,7 @@ class ReviewsBlockComponent extends React.Component {
   constructor(props) {
     super(props); //Call parent constructor.
 
-    this.state={
-      passedReviews: props.reviews,
+    this.state = {
       displayCurUserImage: false
     }
 
@@ -17,75 +16,69 @@ class ReviewsBlockComponent extends React.Component {
   }
 
   //===generateReviews===
-  //Desc: Genereates reviews from database values.
-  generateReviews(props) 
+  //Desc: Generates reviews from database values.
+  generateReviews(reviews) 
   {
-    const reviewsToAdd = props.reviews;
-
-    console.log(reviewsToAdd);
-
-    if(reviewsToAdd <= 0)
+    if(!reviews || reviews.length <= 0)
     {
       return(
         <div className={ReviewsStyles.reviewsBlock}>
-          <div className={ReviewsStyles.noReviews}>No Reviws Yet...</div>
+          <div className={ReviewsStyles.noReviews}>No Reviews Yet...</div>
         </div>
       );
     }
 
-    const toReturn = reviewsToAdd.map((curReview) =>
-      curReview.get("images").length > 0 ? 
-        <div key={curReview.id} className={ReviewsStyles.reviewTemplate}>
-          <div className={ReviewsStyles.reviewTemplateTitle}>
-            <div className={ReviewsStyles.reviewAuthor}>Author</div>
-            {": " + curReview.get("author")}
-          </div>
+    return (
+      <div>
+        {reviews.map((curReview) => (
+          curReview.get("images").length > 0 ? 
+            <div key={curReview.id} className={ReviewsStyles.reviewTemplate}>
+              <div className={ReviewsStyles.reviewTemplateTitle}>
+                <div className={ReviewsStyles.reviewAuthor}>Author</div>
+                {": " + curReview.get("author")}
+              </div>
 
-          <div className={ReviewsStyles.reviewTemplateRating}>
-            <div className={ReviewsStyles.reviewRating}>Overall Rating</div>
-            {": " +curReview.get("overallRating")}
-          </div>
+              <div className={ReviewsStyles.reviewTemplateRating}>
+                <div className={ReviewsStyles.reviewRating}>Overall Rating</div>
+                {": " +curReview.get("overallRating")}
+              </div>
 
-          <div className={ReviewsStyles.reviewTemplateBody}>
+              <div className={ReviewsStyles.reviewTemplateBody}>
 
-            <div className={ReviewsStyles.reviewTemplateDesc}>
-              {curReview.get("review")}
+                <div className={ReviewsStyles.reviewTemplateDesc}>
+                  {curReview.get("review")}
+                </div>
+
+                <div className={ReviewsStyles.reviewTemplateImages}>
+
+                  {this.generateUserImages(curReview.get("images"))}
+
+                </div>
+
+              </div>
+
             </div>
+          : 
+            <div key={curReview.id} className={ReviewsStyles.reviewTemplate}>
+              
+              <div className={ReviewsStyles.reviewTemplateTitle}>
+                <div className={ReviewsStyles.reviewAuthor}>Author</div>
+                {": " + curReview.get("author")}
+              </div>
 
-            <div className={ReviewsStyles.reviewTemplateImages}>
+              <div className={ReviewsStyles.reviewTemplateRating}>
+                <div className={ReviewsStyles.reviewRating}>Overall Rating</div>
+                {": " +curReview.get("overallRating")}
+              </div>
 
-              {this.generateUserImages(curReview.get("images"))}
-
-            </div>
-
-          </div>
-
-        </div>
-       : 
-        <div key={curReview.id} className={ReviewsStyles.reviewTemplate}>
+              <div className={ReviewsStyles.reviewTemplateBody}>
+                <div className={ReviewsStyles.reviewTemplateDesc}>
+                  {curReview.get("review")}
+                </div>
+              </div>
           
-          <div className={ReviewsStyles.reviewTemplateTitle}>
-            <div className={ReviewsStyles.reviewAuthor}>Author</div>
-            {": " + curReview.get("author")}
-          </div>
-
-          <div className={ReviewsStyles.reviewTemplateRating}>
-            <div className={ReviewsStyles.reviewRating}>Overall Rating</div>
-            {": " +curReview.get("overallRating")}
-          </div>
-
-          <div className={ReviewsStyles.reviewTemplateBody}>
-            <div className={ReviewsStyles.reviewTemplateDesc}>
-              {curReview.get("review")}
-            </div>
-          </div>
-
         </div>
-    );
-
-    return(
-      <div className={ReviewsStyles.reviewsBlock}>
-        {toReturn}
+        ))}
       </div>
     );
   }
@@ -127,7 +120,7 @@ class ReviewsBlockComponent extends React.Component {
     return(
       <div>
         {this.state.displayCurUserImage ? <this.userImagePopup/>: null}
-        <this.generateReviews reviews = {this.state.passedReviews}/>
+        {this.generateReviews(this.props.reviews)}
       </div>
     
     );
