@@ -9,50 +9,50 @@
 .mainSection {
     max-width: 1550px;
     min-width: 1550px;
-    height: 1200px;
+    height: 1200px; /* MAKE VARIABLE FOR NUMEBR OF REVIEWS*/
     background-color: white;
     display: flex;
     flex-direction: row;
 }
 
 .userColumnSection {
-    border: 1px solid black;
     display: flex;
     flex-direction: row;
+    border-right: 2px solid grey;
 }
 
 .userInfo {
-    border: 1px solid black;
     display: flex;
     flex-direction: column;
 }
 
 .userColumnSpacer {
     display: flex;
-    border: 1px solid black;
     justify-content: center;
     align-items: center;
 }
 
 .userImageBox {
-    border: 1px solid black;
     display: flex;
     justify-content: center;
     align-items: center;
+    border: 1px solid black;
 }
 
 .userNameBox {
-    border: 1px solid black;
+    border-bottom: 1px solid grey;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 30px;
     font-weight: bold;
+    
+
 }
 
-.userGradYearBox {
-    flex: 1;
-    border: 1px solid black;
+.userEmail {
+    height:auto;
+    border-bottom: 1px solid grey;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -62,10 +62,25 @@
 
 .userReviewSection {
     flex: 1;
-    border: 1px solid black;
     display: flex;
     width: 100%;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.reviewCountBlock {
+    flex: 1;
+    width: 100%;
+    border-bottom: 3px solid grey;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 70px;
+    font-weight: bolder;
+}
+
+.reviewBlock {
+    flex: 7;
+    width: 100%;;
 }

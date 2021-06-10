@@ -71,16 +71,23 @@ const ProfilePage = () => {
               {user.displayName}
             </div>
 
-            <div className={ProfileStyles.userGradYearBox}>
-              {user.email} {/* should be changed to grad year */}
+            <div className={ProfileStyles.userEmail}>
+              {user.email}
             </div>
 
           </div>
         </div>
 
         <div className={ProfileStyles.userReviewSection}>
-          <p>{reviews.length} reviews</p>
-          <ReviewsBlockComponent reviews={reviews} />
+          
+          <div className={ProfileStyles.reviewCountBlock}>
+            <p>Number of Reviews: {reviews.length} </p>
+          </div>
+
+          <div  className={ProfileStyles.reviewBlock}>
+            <ReviewsBlockComponent reviews={reviews} />
+          </div>
+          
         </div>
 
       </div>
