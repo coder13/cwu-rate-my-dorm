@@ -107,13 +107,13 @@ const AccountPage = () => {
       )}
 
       {emailHasBeenSent && (
-        <Alert variant="success" dismissible onClick={() => setEmailHasBeenSent(false)}>
+        <Alert variant="success" dismissible onClose={() => setEmailHasBeenSent(false)}>
           An email has been sent to your address!
         </Alert>
       )}
 
       {displayNameChanged && (
-        <Alert variant="success" dismissible onClick={() => setDisplayNameChanged(false)}>
+        <Alert variant="success" dismissible onClose={() => setDisplayNameChanged(false)}>
           Display Name Changed!
         </Alert>
       )}
