@@ -10,7 +10,6 @@ class ExampleHallPage extends Component {
   constructor(props)
   {
     super(props);
-
     this.state = 
     {
       hallName: this.props.match.params.hall,
@@ -99,6 +98,7 @@ class ExampleHallPage extends Component {
   }
 
   //===generateUserImages===
+  //Desc: Creates tags for user images in each review.
   generateUserImages(imageArr)
   {
     const toReturn = imageArr.map((curImage) =>
@@ -133,6 +133,7 @@ class ExampleHallPage extends Component {
     const toReturn = reviewsToAdd.map((curReview) =>
       curReview.get("images").length > 0 ? 
         <div key={curReview.id} className={ExampleStyles.reviewTemplate}>
+
           <div className={ExampleStyles.reviewTemplateTitle}>
             <div className={ExampleStyles.reviewAuthor}>Author</div>
             {": " + curReview.get("author")}
@@ -144,7 +145,6 @@ class ExampleHallPage extends Component {
           </div>
 
           <div className={ExampleStyles.reviewTemplateBody}>
-
             <div className={ExampleStyles.reviewTemplateDesc}>
               {curReview.get("review")}
             </div>
@@ -152,7 +152,6 @@ class ExampleHallPage extends Component {
             <div className={ExampleStyles.reviewTemplateImages}>
               {this.generateUserImages(curReview.get("images"))}
             </div>
-
           </div>
 
         </div>
@@ -170,11 +169,9 @@ class ExampleHallPage extends Component {
           </div>
 
           <div className={ExampleStyles.reviewTemplateBody}>
-
             <div className={ExampleStyles.reviewTemplateDesc}>
               {curReview.get("review")}
             </div>
-
           </div>
 
         </div>
@@ -298,6 +295,7 @@ class ExampleHallPage extends Component {
         </div>
       )
     }
+    
     else return(<LoaderComponent />);
 
   }
