@@ -1,4 +1,4 @@
-import firebase from 'firebase/app';
+
 import { firestore, storage } from './firebase';
 import uuid from 'react-uuid';
 
