@@ -96,6 +96,13 @@
     width: 950px;
 }
 
+.likeButton {
+    display: flex;
+    float: right;
+    margin-left: auto;
+    padding: 8px;
+}
+
 .reviewsSection {
     height: 100%;
     display: flex;
