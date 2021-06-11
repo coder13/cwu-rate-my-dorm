@@ -1,5 +1,5 @@
 
-import { firestore, storage } from './firebase';
+import { firestore, storage, auth } from './firebase';
 import uuid from 'react-uuid';
 
 
@@ -526,6 +526,37 @@ export async function newSuggestion(text){
 
     //console.log('Suggestion doc sumbitted:', sDoc.id);
     return sDoc;
+}
+
+
+// Adds a like to a review if user has not liked it, or removes a like if the user has liked the review
+export async function likeOrUnlikeReview(reviewID, dormName) {
+    var dormID = await getDormId(dormName);
+    var reviewDoc = firestore.collection('Dorms').doc(dormID).collection('Reviews').doc(reviewID);
+    await firestore.collection('Dorms').doc(dormID).collection('Reviews').doc(reviewID).get().then ((review) => {
+        var userID = auth.currentUser.uid;
+        // Nobody has liked the review yet, initialize usersLiked with this user.
+        if (review.get('usersLiked') === undefined) {
+            reviewDoc.update({
+                usersLiked: [userID],
+                likes: 1
+            })
+        }
+        // User has already liked this review; remove them from the list of users and deincrement likes
+        else if (review.get('usersLiked').includes(userID)) {
+            reviewDoc.update({
+                usersLiked: review.get('usersLiked').filter(user => user !== userID),
+                likes: review.get('likes')-1
+            })
+        }
+        // User has not reviewed this yet; add them to the list of users and increment likes.
+        else {
+            reviewDoc.update({
+                usersLiked: [...review.get('usersLiked'), userID],
+                likes: review.get('likes')+1
+            })
+        }
+    })
 }
 
 export async function getAllReviews() {
