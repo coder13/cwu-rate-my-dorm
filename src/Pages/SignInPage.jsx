@@ -40,7 +40,6 @@ const SignInPage = () => {
       .catch(error => {
         setError(error);
         setPassword('');
-        console.error('Error signing in with password and email', error);
       });
   }
 

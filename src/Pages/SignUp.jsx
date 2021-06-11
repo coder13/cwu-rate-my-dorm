@@ -82,7 +82,7 @@ const SignUp = () => {
         {emailVerificationLinkHasBeenSent && (
           <Alert variant="success" dismissible onClose={() => setEmailVerificationLinkHasBeenSent(false)}>
             <Alert.Heading>Verifiy your email address</Alert.Heading>
-            <p>Check you E-Mails (Spam folder included) for a confirmation E-Mail</p>
+            <p>Check your E-Mails (Spam folder included) for a confirmation E-Mail</p>
             {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
             <p>Didn't Receive an email? <Alert.Link href='#' onClick={() => resendEmail()}>Resend Email</Alert.Link></p>
             { emailVerificationLinkHasBeenResent && (

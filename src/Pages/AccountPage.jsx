@@ -122,7 +122,7 @@ const AccountPage = () => {
         <Alert variant="success" dismissible onClose={() => setEmailChanged(false)}>
           <p>Email Changed!</p>
           <Alert.Heading>Verifiy your email address</Alert.Heading>
-          Check you E-Mails (Spam folder included) for a confirmation E-Mail
+          Check your E-Mails (Spam folder included) for a confirmation E-Mail
           {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
           <p>Didn't Receive an email? <Alert.Link href='#' onClick={() => sendEmailVerification()}>Resend Email</Alert.Link></p>
           {emailSent && (
