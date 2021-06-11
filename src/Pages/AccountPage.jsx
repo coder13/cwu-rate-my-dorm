@@ -107,13 +107,13 @@ const AccountPage = () => {
       )}
 
       {emailHasBeenSent && (
-        <Alert variant="success" dismissible onClick={() => setEmailHasBeenSent(false)}>
+        <Alert variant="success" dismissible onClose={() => setEmailHasBeenSent(false)}>
           An email has been sent to your address!
         </Alert>
       )}
 
       {displayNameChanged && (
-        <Alert variant="success" dismissible onClick={() => setDisplayNameChanged(false)}>
+        <Alert variant="success" dismissible onClose={() => setDisplayNameChanged(false)}>
           Display Name Changed!
         </Alert>
       )}
@@ -122,7 +122,7 @@ const AccountPage = () => {
         <Alert variant="success" dismissible onClose={() => setEmailChanged(false)}>
           <p>Email Changed!</p>
           <Alert.Heading>Verifiy your email address</Alert.Heading>
-          Check you E-Mails (Spam folder included) for a confirmation E-Mail
+          Check your E-Mails (Spam folder included) for a confirmation E-Mail
           {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
           <p>Didn't Receive an email? <Alert.Link href='#' onClick={() => sendEmailVerification()}>Resend Email</Alert.Link></p>
           {emailSent && (
