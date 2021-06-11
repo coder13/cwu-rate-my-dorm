@@ -9,7 +9,7 @@ import { getReviewsByUser } from "../firestore"
 const ProfilePage = () => {
 
   //Set Tab Name:
-  document.title = "Profile Page";
+  document.title = "CWU Rate My Dorm: Profile";
 
   const user = useContext(UserContext);
   const [reviews, setReviews] = useState([]);

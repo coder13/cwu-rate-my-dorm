@@ -25,6 +25,8 @@ class Admin extends Component {
 
   componentDidMount()
   {
+    document.title = "CWU Rate My Dorm: Moderate Reviews";
+
     //Load in all reviews to a state:
     getAllReviews()
       .then((result) => {

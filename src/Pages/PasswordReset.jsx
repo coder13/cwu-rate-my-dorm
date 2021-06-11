@@ -10,7 +10,7 @@ const PasswordReset = () => {
   const [error, setError] = useState(null);
 
   //Set Tab Name:
-  document.title = "Password Reset Page";
+  document.title = "CWU Rate My Dorm: Reset Password";
 
   const sendResetEmail = event => {
     event.preventDefault();

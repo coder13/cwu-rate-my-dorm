@@ -110,7 +110,7 @@ class ReviewPage extends Component {
   componentDidMount() {
 
     //Set Tab Name:
-    document.title = "Review Page";
+    document.title = "CWU Rate My Dorm: Leave Review";
 
     firebase.auth().onAuthStateChanged((user)=>{
       if (user == null)
