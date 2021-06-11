@@ -15,12 +15,11 @@ class EditReviewPage extends Component {
     super(props);
 
     //Set the states:
-    
     this.state = {
       revId: this.props.match.params.revId,
       hallNames: [],
       hallName: this.props.match.params.hallName,
-      oldHallName: null, //this is the initial hall name that gets passed in
+      oldHallName: null, //this will be the initial hall name in the review
       firstQuarterYear: null,
       firstQuarterSeason: null,
       lastQuarterYear: null,
@@ -31,8 +30,8 @@ class EditReviewPage extends Component {
       floors: null,
       reviewText: null,
       image: [], //files selected only, no url
-      urls: null, //this is where the images that get added to images will be added once the review is submitted
-      overallRating: null, //this will be the most p to date overall rating, this might get updated
+      urls: null, //this is where the images that get added to image will be added once the review is submitted
+      overallRating: null, 
       locationRating: null,
       roomSizeRating: null,
       furnitureRating: null,
@@ -41,23 +40,20 @@ class EditReviewPage extends Component {
       bathroomRating: null,
       likes:null,
       showSuccessAlert: false,
-      addedImages: [], // this will be the temporary urls for images added in this edit, this is like a copy of image but with temp urls instead of files, this and images will be the same
-      oldUrls: [], //this will be like a copy of urls, we will use these to display the previous images, files from image do not get added here, both this and urls will be the same we need this copy to avoid showing duplicates when images from image get added to urls 
+      addedImages: [], // these will be the temporary urls for images added in this edit, this is a copy of image but with temporary urls instead of files
+      oldUrls: [], //this will be a copy of urls, files from image will not get added here, these are the old reviewe images that get displayed, we need this copy to avoid displaying duplicates when images from image get added to urls 
       urlsToDelete: [], //these will be the urls we are going to delete from the storage
       showImageSizeAlert: false,
       showImageLimitAlert: false,
       showMoveOutAlert: false,
       showExistingReviewAlert: false,
       existingReviewId: null,
-
-
-
+      invalidRoomType: false,
+      invalidFloor: false
     }
+
     this.updateReview = this.updateReview.bind(this);
     this.existingReview = this.existingReview.bind(this);
-
-
-    
 
   }
 
@@ -79,9 +75,7 @@ class EditReviewPage extends Component {
       || (this.state.firstQuarterYear === this.state.lastQuarterYear && firstSeasonVal > lastSeasonVal)) {
       this.setState({ showMoveOutAlert: true });
     } else{
-
-      //Add review to firebase:
-
+      //Add images to storage and to the url array which will be the images array in the review document:
       var i;
       for(i=0; i<this.state.image.length; i++){
         if (this.state.image[i] !== undefined){
@@ -100,7 +94,7 @@ class EditReviewPage extends Component {
         this.state.furnitureRating, this.state.commonAreasRating,this.state.cleanlinessRating, this.state.bathroomRating, 
         this.state.likes);
 
-        firestore.deleteReviewOnly(this.state.oldHallName, this.state.revId); 
+        firestore.deleteReviewOnly(this.state.oldHallName, this.state.revId); //deletes review in the old hall collection
       
       }else{
         firestore.editReview (this.state.revId, this.state.hallName, [this.state.firstQuarterYear, this.state.firstQuarterSeason], 
@@ -117,9 +111,7 @@ class EditReviewPage extends Component {
       for(x=0;x<this.state.urlsToDelete.length; x++){
         firestore.deleteImage(this.state.urlsToDelete[x]);
       }
-
     }
-
   }
 
   navigateToPage(Page) {
@@ -148,147 +140,156 @@ class EditReviewPage extends Component {
         this.setState({floors: floors});
       }).then(() =>{
         firestore.getReviewById(this.state.hallName, this.state.revId).then((review) =>{
-          this.setState({hallName : review.get("dormName")});
-          this.setState({oldHallName : review.get("dormName")});
-          this.setState({firstQuarterYear : review.get("firstQuarterYear")});
-          this.setState({firstQuarterSeason : review.get("firstQuarterSeason")});
-          this.setState({lastQuarterYear : review.get("lastQuarterYear")});
-          this.setState({lastQuarterSeason : review.get("lastQuarterSeason")});
-          this.setState({roomType : review.get("roomType")});
-          this.setState({floorNum : review.get("floor")});
-          this.setState({reviewText : review.get("review")});
-          this.setState({urls : review.get("images")});
-          this.setState({oldUrls : review.get("images")});
-          this.setState({overallRating : review.get("overallRating")});
-          this.setState({locationRating : review.get("locationRating")});
-          this.setState({roomSizeRating : review.get("roomSizeRating")});
-          this.setState({furnitureRating : review.get("furnitureRating")});
-          this.setState({commonAreasRating : review.get("commonAreasRating")});
-          this.setState({cleanlinessRating : review.get("cleanlinessRating")});
-          this.setState({bathroomRating : review.get("bathroomRating")});
-          this.setState({likes : review.get("likes")});
-          this.setState({loaded: true});
+          this.setState({hallName : review.get("dormName"),
+          oldHallName : review.get("dormName"),
+          firstQuarterYear : review.get("firstQuarterYear"),
+          firstQuarterSeason : review.get("firstQuarterSeason"),
+          lastQuarterYear : review.get("lastQuarterYear"),
+          lastQuarterSeason : review.get("lastQuarterSeason"),
+          roomType : review.get("roomType"),
+          floorNum : review.get("floor"),
+          reviewText : review.get("review"),
+          urls : review.get("images"),
+          oldUrls : review.get("images"),
+          overallRating : review.get("overallRating"),
+          locationRating : review.get("locationRating"),
+          roomSizeRating : review.get("roomSizeRating"),
+          furnitureRating : review.get("furnitureRating"),
+          commonAreasRating : review.get("commonAreasRating"),
+          cleanlinessRating : review.get("cleanlinessRating"),
+          bathroomRating : review.get("bathroomRating"),
+          likes : review.get("likes"),
+          loaded: true
+          });
         });
       });
-
     });
+    
     console.log("rev " + this.state.revId)
     console.log("hall " + this.state.hallName);
-
   }
 
-  dormChanged(e) { 
-    // Updates roomTypes and floors when the dorm is changed
+  dormChanged(e) { // Updates roomTypes and floors when the dorm is changed, sets alerts if a review from this user for this dorm exists
+    if (e.target.value !== "") {
+      this.setState({loaded: false}); //we need to reload since the user might reselect old dorm so  we might need to reset some of the fields
+      
+      var numFloors = 0;
+      firestore.getDormByName(e.target.value).then((doc) => {
+        this.setState({hallName: doc.get('name')});
+        numFloors = doc.get('floors');
+        var x = 1;
+        let floors = [];
 
-        if (e.target.value !== "") {
-          var numFloors = 0;
-          firestore.getDormByName(e.target.value).then((doc) => {
-            this.setState({hallName: doc.get('name')});
-            numFloors = doc.get('floors');
-            var x = 1;
-            let floors = [];
-    
-            while (x <= numFloors)
-            {
-              floors.push(x);
-              x++;
-            }
-    
-            this.setState({ floors });
-    
-            this.setState({roomTypes: doc.get('roomTypes')});
-
-            //makes sure the current review room type and floor num are valid 
-
-            //checks that room type is available in this dorm
-            var rooms = this.state.roomTypes;
-            var r;
-            var validRoom = false;
-            for(r =0; r.length; r++){
-              if(this.state.roomType === rooms[r]){
-                validRoom = true;
-              }
-            }
-
-            if(validRoom === false){
-              this.setState({roomType: null});
-            }
-
-            //checks that the floor is not greater than the max floor in this new dorm
-            if(this.state.floorNum > numFloors){
-              this.setState({floorNum: null});
-            }
-    
-          });
+        while (x <= numFloors)
+        {
+          floors.push(x);
+          x++;
         }
-        else this.setState({hallName: e.target.value});
+        
+        this.setState({ floors });
+        this.setState({roomTypes: doc.get('roomTypes')});
 
-        firestore.getReviewIDByDormNameAndUser(e.target.value, firebase.auth().currentUser.email).then((id) => {
-          if (id != null) {
-            this.setState({existingReviewId: id});
-            this.setState({showExistingReviewAlert: true});
-    
-          }else{ 
-    
-            this.setState({showExistingReviewAlert: false});
+        //makes sure the current review room type and floor num are valid 
+        //checks that room type is valid in this dorm
+        var rooms = this.state.roomTypes;
+        var r;
+        var validRoom = false;
+        for(r =0; r < rooms.length; r++){
+          if(this.state.roomType === rooms[r]){
+            validRoom = true;
           }
-        });
+        }
+
+        if(validRoom === false){ //if the initial roomtype is not valid for this new dorm set roomType to null
+          this.setState({invalidRoomType: true});
+        }else{
+          this.setState({invalidRoomType: false});
+        }
+
+        //checks that the floor is not greater than the max floor in this new dorm, if floor isn't valid set floorNum to null
+        if(this.state.floorNum > numFloors){
+          this.setState({invalidFloor: true});
+        }else{
+          this.setState({invalidFloor: false});
+        }
+
+        this.setState({loaded: true})
+
+      });
+    } else this.setState({hallName: e.target.value});
+
+    //checks if user already made a review for new dorm and shows alert except when the old hall is reselected (within the same edit process & review)
+    firestore.getReviewIDByDormNameAndUser(e.target.value, firebase.auth().currentUser.email).then((id) => {
+      if (id != null && (this.state.oldHallName !== e.target.value)) {
+        this.setState({existingReviewId: id});
+        this.setState({showExistingReviewAlert: true});
+      }else{ 
+        this.setState({showExistingReviewAlert: false});
+        this.setState({existingReviewId: null});
+      }
+    });
+    
   }
 
   async addImage(event){
-    var duplicateImage = false;
-    for(var i=0; i<this.state.image.length; i++) {
-      if (event.target.files[0].name === this.state.image[i].name)
-        duplicateImage = true;
-    } 
 
-    if(!duplicateImage){ //if file name isn't already in image
-      if ((this.state.image.length + this.state.urls.length) >= 5) {
-        console.log("File limit reached.");
-        this.setState({showImageLimitAlert: true});
-      }
-      else if (event.target.files[0].size > 2000000) {
-        console.log("Files cannot exceed 2MB");
-        this.setState({showImageSizeAlert: true});
-      } else{
-        if(event.target.files[0] !== undefined){
-          this.setState(({ //add url to image so it can get added to urls when review is submitted
+    if(event.target.files[0] !== undefined){
+      var duplicateImage = false;
+      for(var i=0; i<this.state.image.length; i++) {
+        if (event.target.files[0].name === this.state.image[i].name)
+          duplicateImage = true;
+      } 
+
+      if(!duplicateImage){ //if file name isn't already in image
+        if ((this.state.image.length + this.state.urls.length) >= 5) {
+          console.log("File limit reached.");
+          this.setState({showImageLimitAlert: true});
+        }
+        else if (event.target.files[0].size > 2000000) {
+          console.log("Files cannot exceed 2MB");
+          this.setState({showImageSizeAlert: true});
+        } else{
+          this.setState(({ //add file to "image" so it can get added to urls when review is submitted
             image: [...this.state.image, event.target.files[0]]
           }));
           
-          this.setState(({ //add temporary image url to images we want to display
+          this.setState(({ //add temporary url to images we want to display
             addedImages: [...this.state.addedImages, URL.createObjectURL(event.target.files[0])]
           }));
 
           this.setState({showImageSizeAlert:false, showImageLimitAlert: false});
+          
         }
       }
     }
   }
 
-  //delete image from document/ states/ storage
+  //delete image from document/ states/
   deleteImage(imageUrl){
-    alert("This image will be deleted");
     var urlArray = [...this.state.urls]; 
     var oldUrlArray = [...this.state.oldUrls]; 
     var urlIndex = urlArray.indexOf(imageUrl)
-    if (urlIndex !== -1) { //check if image was already in document (urls) and delete from url array
+
+    if (urlIndex !== -1) { //check if image was already in document (urls) and delete from url array, add to urls to delete
       urlArray.splice(urlIndex, 1);
       oldUrlArray.splice(urlIndex,1); //since old urls and urls are a copy of each other, we can delete from the same place
-      this.setState({urls: urlArray});
-      this.setState({oldUrls: oldUrlArray});
-      this.setState({ urlsToDelete: [...this.state.urlsToDelete, imageUrl]}); 
+      this.setState({urls: urlArray,
+      oldUrls: oldUrlArray,
+      urlsToDelete: [...this.state.urlsToDelete, imageUrl]
+      });
+
     }else{ //if image is not yet in the document
       var fileArray = [...this.state.image]; 
       var addedImages = [...this.state.addedImages];
       var imageIndex = addedImages.indexOf(imageUrl);
+
       if(imageIndex !==-1){ //check if image was added in this edit and delete from image array and from array of images we want to display
         addedImages.splice(imageIndex, 1); //since image and added image are a copy of each other we can delete from the same place
         fileArray.splice(imageIndex, 1);
         this.setState({image:fileArray, addedImages:addedImages});
       }
-    }
 
+    }
   }
 
   renderImage(imageUrl) {
@@ -303,13 +304,11 @@ class EditReviewPage extends Component {
   }
 
   existingReview(){
-    console.log("existing review func called");
     console.log("existing review "+ this.state.existingReviewId);
     console.log("existing review in " + this.state.existingRevDorm);
 
     this.props.history.push({pathname: "/EditReviewPage/" + this.state.existingReviewId + "/" + this.state.hallName});
     window.location.reload();
-
   }
   
   render()
@@ -326,12 +325,12 @@ class EditReviewPage extends Component {
               <div className ={ReviewStyles.titleBlock}>Edit Review:</div>
             
               <div className ={ReviewStyles.middleRow}>
+
                 <div className={ReviewStyles.leftRowSide}>
 
                   <div className={ReviewStyles.existingReviewDropDown}>
 
                     <Form className={ReviewStyles.form}>
-
                       <Form.Group controlId="">
                         <Form.Row>
                           <Form.Label column lg={2}>
@@ -357,9 +356,13 @@ class EditReviewPage extends Component {
                         </Form.Row>
                       </Form.Group>
                     </Form>
+
                   </div>
+
                 </div>
+
                 <div className ={ReviewStyles.rightRowSide}></div>
+
               </div>
 
             </div>
@@ -376,11 +379,9 @@ class EditReviewPage extends Component {
 
                   <div className={ReviewStyles.leftRowSide}>
 
-
                     <div className={ReviewStyles.reviewDropDown}>
 
                       <Form className={ReviewStyles.form}>
-
                         <Form.Group controlId="">
                           <Form.Row>
                             <Form.Label column lg={2}>
@@ -501,8 +502,6 @@ class EditReviewPage extends Component {
                                 defaultValue={this.state.roomType}
                                 disabled={this.state.hallName === ""}
                                 onChange={e => this.setState({roomType: e.target.value})}
-
-                              
                               >
                                 <option value="">Choose...</option>
                                 {this.state.roomTypes.map(type => (<option key={type}>{type}</option>))}
@@ -529,17 +528,15 @@ class EditReviewPage extends Component {
                               </Form.Control>
                             </Col>
                           </Form.Row>
-
                         </Form.Group>
-
                       </Form>
                     
                     </div>
 
                     <div className={ReviewStyles.reviewText}>
+
                       <Form className={ReviewStyles.form}>
                         <Form.Group>
-
                           <Form.Label>
                             Review: 
                           </Form.Label>
@@ -549,36 +546,37 @@ class EditReviewPage extends Component {
                             rows={7} 
                             onChange={e => this.setState({reviewText: e.target.value})}
                           />
-                        
                         </Form.Group>
                       </Form>
+
                     </div>
 
                     <div className={ReviewStyles.reviewImages}>
+
                       <Form className={ReviewStyles.form}>
                         <Form.Group>
                           <Form.File 
                             id="exampleFormControlFile1" 
                             label="Add images"
                             onChange={e => 
-
                               {this.addImage(e)}
-
                             }
                           />
                         </Form.Group>
                       </Form>
+
                       {(this.state.oldUrls.length + this.state.image.length)} / 5 
                       
                     </div>
 
-
                   </div>
 
                   <div className={ReviewStyles.rightRowSide}>
+
                     <div className={ReviewStyles.sliderSection}>
 
                       <div className={ReviewStyles.sliderBox}>
+
                         <Form className={ReviewStyles.form}>
                           <Form.Group controlId="">
                               <Form.Label>
@@ -711,9 +709,9 @@ class EditReviewPage extends Component {
                                   {this.state.bathroomRating}
                                 </Col>
                               </Form.Row>
-                          </Form.Group>
-                          
+                          </Form.Group> 
                         </Form>
+
                       </div>
 
                     </div>
@@ -723,11 +721,11 @@ class EditReviewPage extends Component {
               </div>
                     
               <div className = {ReviewStyles.bottomSection}>
+
                   <div className = {ReviewStyles.imagesRow}>
-                    
+
                     {this.state.oldUrls.map(url => this.renderImage(url))}
                     {this.state.addedImages.map(img => this.renderImage(img))}
-
 
                   </div>
 
@@ -775,18 +773,18 @@ class EditReviewPage extends Component {
                   }
                   `}
                     </style>
+
                   </div>
 
-            
-
                   <div className={ReviewStyles.buttonSection}>
+
                     <Button variant="submit" 
                       disabled={this.state.hallName === "" || this.state.firstQuarterSeason === ""
                         || this.state.firstQuarterYear === 0 || this.state.lastQuarterSeason === ""
                         || this.state.lastQuarterYear === 0 || this.state.roomType === ""
                         || this.state.floorNum === 0 || this.state.reviewText === ""
                         || this.state.showExistingReviewAlert === true || this.state.showMoveOutAlert === true
-                        || this.state.floorNum === null || this.state.roomType === null} 
+                        || this.state.invalidRoomType === true || this.state.invalidFloor === true} 
                       onClick={this.updateReview} 
                       size="xxl"
                     >
@@ -799,13 +797,13 @@ class EditReviewPage extends Component {
                         </Alert>
                       </Col>)}
                     </Row>
+
                   </div>
 
                 </div>
+
             </div>
         }
-
-        
 
       </div>
     )
